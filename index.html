@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alice Real Estate — Đà Nẵng</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDFAF6;
+    --bg-card: #FFFFFF;
+    --sand: #F5EDE3;
+    --sand-dark: #E8DDD0;
+    --ocean: #1B7A6E;
+    --ocean-deep: #155F56;
+    --ocean-light: #E6F4F1;
+    --ocean-wash: #D0EDE8;
+    --sky: #87CEEB;
+    --sky-light: #E8F4FA;
+    --coral: #E07A5F;
+    --coral-light: #F5D0C5;
+    --gold: #D4A853;
+    --text-primary: #1C2B2A;
+    --text-secondary: #4A6360;
+    --text-muted: #8A9E9B;
+    --border: #DDD7CE;
+    --border-light: #EDE8E1;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Outfit', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 4vw;
+    background: rgba(253,250,246,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-light);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
+
+  .logo {
+    font-family: var(--serif); font-size: 1.3rem;
+    letter-spacing: -.01em; color: var(--ocean);
+  }
+  .logo span { color: var(--coral); }
+
+  .nav-mid { display: flex; align-items: center; gap: 2.5rem; }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-secondary);
+    font-size: .82rem; font-weight: 500; letter-spacing: .04em;
+    text-transform: uppercase; transition: color .25s;
+  }
+  .nav-links a:hover { color: var(--ocean); }
+
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+
+  .lang-switcher {
+    display: flex; border: 1.5px solid var(--border); border-radius: 99px;
+    overflow: hidden;
+  }
+  .lang-btn {
+    background: none; border: none; padding: .4rem .7rem;
+    font-family: var(--sans); font-size: .72rem; font-weight: 600;
+    letter-spacing: .03em; cursor: pointer; color: var(--text-muted);
+    transition: all .2s;
+  }
+  .lang-btn.active { background: var(--ocean); color: #fff; }
+  .lang-btn:not(:last-child) { border-right: 1.5px solid var(--border); }
+
+  .nav-cta {
+    background: var(--ocean); color: #fff; border: none;
+    padding: .6rem 1.5rem; border-radius: 99px;
+    font-family: var(--sans); font-size: .8rem; font-weight: 500;
+    cursor: pointer; transition: all .25s;
+  }
+  .nav-cta:hover { background: var(--ocean-deep); transform: translateY(-1px); }
+
+  .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 4vw 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(to top, var(--sand) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: 0; right: 0;
+    width: 55vw; height: 100%;
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(135,206,235,.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(27,122,110,.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content { max-width: 620px; position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-size: .73rem; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--ocean);
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp .8s .2s forwards;
+  }
+  .hero-tag::before {
+    content: ''; width: 28px; height: 1.5px; background: var(--coral);
+  }
+
+  .wave-emoji { font-size: 1.1rem; }
+
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+    line-height: 1.1; letter-spacing: -.02em;
+    opacity: 0; animation: fadeUp .8s .35s forwards;
+  }
+  .hero h1 em { font-style: italic; color: var(--ocean); }
+  .hero h1 .coral { color: var(--coral); }
+
+  .hero-sub {
+    margin-top: 1.5rem; font-size: 1.02rem; line-height: 1.75;
+    color: var(--text-secondary); font-weight: 300; max-width: 480px;
+    opacity: 0; animation: fadeUp .8s .5s forwards;
+  }
+
+  .hero-btns {
+    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp .8s .65s forwards;
+  }
+  .btn-primary {
+    background: var(--ocean); color: #fff; border: none;
+    padding: .85rem 2.2rem; border-radius: 99px;
+    font-family: var(--sans); font-size: .88rem; font-weight: 500;
+    cursor: pointer; transition: all .25s;
+  }
+  .btn-primary:hover { background: var(--ocean-deep); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(27,122,110,.25); }
+  .btn-outline {
+    background: transparent; color: var(--text-primary);
+    border: 1.5px solid var(--border); padding: .85rem 2.2rem;
+    border-radius: 99px; font-family: var(--sans); font-size: .88rem;
+    font-weight: 500; cursor: pointer; transition: all .25s;
+  }
+  .btn-outline:hover { border-color: var(--ocean); color: var(--ocean); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 4rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--border);
+    opacity: 0; animation: fadeUp .8s .8s forwards;
+  }
+  .stat-num { font-family: var(--serif); font-size: 2rem; color: var(--ocean); line-height: 1; }
+  .stat-label { font-size: .72rem; color: var(--text-muted); margin-top: .35rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 500; }
+
+  .hero-visual {
+    position: absolute; right: 3vw; top: 50%; transform: translateY(-50%);
+    width: 40vw; max-width: 520px; aspect-ratio: 3/4;
+    border-radius: 20px; overflow: hidden;
+    opacity: 0; animation: fadeIn 1s .5s forwards;
+  }
+  .hero-visual-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(170deg, var(--sky-light) 0%, var(--ocean-wash) 40%, var(--sand) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .hero-visual-inner svg { width: 180px; opacity: .1; }
+  .hero-visual-inner::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+    background: linear-gradient(to top, var(--sand-dark), transparent); opacity: .5;
+  }
+  .hero-visual-inner::after {
+    content: '🌊'; position: absolute; bottom: 25%; left: 50%;
+    transform: translateX(-50%); font-size: 3rem; opacity: .12;
+  }
+  .location-badge {
+    position: absolute; bottom: 24px; left: 24px; right: 24px;
+    background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+    border-radius: 12px; padding: 1rem 1.2rem;
+    display: flex; align-items: center; gap: .8rem; z-index: 2;
+  }
+  .location-badge .pin {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--coral-light); display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .location-badge .pin svg { width: 16px; height: 16px; color: var(--coral); }
+  .loc-text { font-size: .82rem; font-weight: 500; }
+  .loc-sub { font-size: .7rem; color: var(--text-muted); margin-top: .1rem; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 4vw; }
+  .section-tag {
+    font-size: .72rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--coral);
+    display: flex; align-items: center; gap: .5rem; margin-bottom: 1rem;
+  }
+  .section-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--coral); }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+    letter-spacing: -.015em; line-height: 1.15;
+  }
+  .section-sub {
+    color: var(--text-secondary); font-weight: 300;
+    font-size: .95rem; line-height: 1.7; max-width: 500px; margin-top: .8rem;
+  }
+
+  /* ── LISTINGS ── */
+  .listings { background: var(--bg); }
+  .listings-header {
+    display: flex; justify-content: space-between; align-items: end;
+    flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .listings-filters { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .filter-btn {
+    background: var(--bg-card); border: 1.5px solid var(--border);
+    padding: .5rem 1.2rem; border-radius: 99px;
+    font-family: var(--sans); font-size: .78rem; font-weight: 500;
+    color: var(--text-secondary); cursor: pointer; transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--ocean); color: var(--ocean); }
+  .filter-btn.active { background: var(--ocean); color: #fff; border-color: var(--ocean); }
+
+  .listings-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .listing-card {
+    background: var(--bg-card); border-radius: 16px;
+    overflow: hidden; border: 1px solid var(--border-light);
+    transition: transform .3s, box-shadow .3s; cursor: pointer;
+  }
+  .listing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px rgba(0,0,0,.08);
+  }
+  .listing-card.hidden { display: none; }
+  .listing-img {
+    width: 100%; aspect-ratio: 16/10; position: relative; overflow: hidden;
+  }
+  .listing-img-bg {
+    width: 100%; height: 100%; transition: transform .4s;
+  }
+  .listing-card:hover .listing-img-bg { transform: scale(1.05); }
+  .listing-badge {
+    position: absolute; top: 12px; left: 12px;
+    padding: .3rem .75rem; border-radius: 99px;
+    font-size: .68rem; font-weight: 600; letter-spacing: .03em;
+    backdrop-filter: blur(8px);
+  }
+  .badge-sale { background: rgba(27,122,110,.88); color: #fff; }
+  .badge-rent { background: rgba(224,122,95,.88); color: #fff; }
+  .badge-new { background: rgba(212,168,83,.88); color: #fff; }
+  .listing-price-tag {
+    position: absolute; bottom: 12px; right: 12px;
+    background: rgba(28,43,42,.82); backdrop-filter: blur(8px);
+    color: #fff; padding: .35rem .85rem; border-radius: 8px;
+    font-family: var(--serif); font-size: 1rem; font-weight: 600;
+  }
+  .listing-body { padding: 1.25rem 1.4rem 1.4rem; }
+  .listing-title {
+    font-family: var(--serif); font-size: 1.05rem;
+    margin-bottom: .3rem; line-height: 1.3;
+  }
+  .listing-loc {
+    font-size: .78rem; color: var(--text-muted); display: flex;
+    align-items: center; gap: .35rem; margin-bottom: 1rem;
+  }
+  .listing-loc svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .listing-meta {
+    display: flex; gap: 1.2rem; padding-top: .85rem;
+    border-top: 1px solid var(--border-light);
+  }
+  .listing-meta-item {
+    display: flex; align-items: center; gap: .35rem;
+    font-size: .76rem; color: var(--text-secondary);
+  }
+  .listing-meta-item svg { width: 14px; height: 14px; opacity: .55; }
+  .listings-cta { text-align: center; margin-top: 2.5rem; }
+
+  .limg-1 { background: linear-gradient(135deg, var(--sky-light) 0%, var(--ocean-wash) 50%, var(--sand) 100%); }
+  .limg-2 { background: linear-gradient(160deg, #d4e8e0 0%, var(--ocean-light) 40%, #f0e6d6 100%); }
+  .limg-3 { background: linear-gradient(145deg, var(--coral-light) 0%, var(--sand) 50%, var(--sky-light) 100%); }
+  .limg-4 { background: linear-gradient(170deg, var(--ocean-wash) 0%, var(--sky-light) 40%, var(--sand-dark) 100%); }
+  .limg-5 { background: linear-gradient(130deg, #e8d8c8 0%, var(--ocean-light) 60%, var(--sky-light) 100%); }
+  .limg-6 { background: linear-gradient(155deg, var(--sky-light) 0%, var(--coral-light) 50%, var(--sand) 100%); }
+  .limg-icon {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    font-size: 2.5rem; opacity: .15;
+  }
+
+  @media (max-width: 960px) {
+    .listings-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .listings-grid { grid-template-columns: 1fr; }
+    .listings-header { flex-direction: column; align-items: start; }
+  }
+
+  /* ── AREAS STRIP ── */
+  .areas {
+    background: var(--ocean); color: #fff; padding: 3rem 4vw;
+    display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+    overflow: hidden; position: relative;
+  }
+  .areas::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 120px, rgba(255,255,255,.04) 120px, rgba(255,255,255,.04) 121px);
+  }
+  .areas-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .1em;
+    opacity: .6; font-weight: 500; flex-shrink: 0;
+  }
+  .area-tags { display: flex; gap: .6rem; flex-wrap: wrap; position: relative; }
+  .area-tag {
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    padding: .5rem 1.2rem; border-radius: 99px;
+    font-size: .82rem; font-weight: 400; letter-spacing: .02em;
+    transition: background .2s;
+  }
+  .area-tag:hover { background: rgba(255,255,255,.22); }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .about-portrait {
+    aspect-ratio: 4/5; border-radius: 16px; overflow: hidden;
+    background: linear-gradient(160deg, var(--sky-light), var(--ocean-wash), var(--sand));
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .about-portrait::before {
+    content: ''; position: absolute; inset: 14px;
+    border: 1px solid rgba(255,255,255,.6); border-radius: 10px;
+  }
+  .about-portrait .placeholder-icon { font-size: 4rem; opacity: .15; }
+
+  .about-body { max-width: 460px; }
+  .about-body p {
+    color: var(--text-secondary); line-height: 1.8; font-weight: 300; margin-top: 1.2rem;
+  }
+
+  .about-highlights {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; margin-top: 2.5rem;
+  }
+  .highlight {
+    padding: 1.1rem; border-radius: 10px;
+    background: var(--bg); border: 1px solid var(--border-light);
+  }
+  .highlight-icon { font-size: 1.1rem; margin-bottom: .4rem; }
+  .highlight strong { font-size: .82rem; display: block; margin-bottom: .15rem; }
+  .highlight span { font-size: .72rem; color: var(--text-muted); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { text-align: center; background: var(--sand); }
+  .testimonials .section-tag { justify-content: center; }
+  .testimonials .section-sub { margin-left: auto; margin-right: auto; }
+
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3rem; text-align: left;
+  }
+  .testi-card {
+    background: var(--bg-card); border: 1px solid var(--border-light);
+    border-radius: 16px; padding: 2rem;
+    transition: transform .3s, box-shadow .3s; position: relative;
+  }
+  .testi-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.06); }
+  .testi-card::before {
+    content: '\201C'; position: absolute; top: 16px; right: 20px;
+    font-family: var(--serif); font-size: 3.5rem; color: var(--ocean-wash); line-height: 1;
+  }
+  .testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+  .testi-stars svg { width: 14px; height: 14px; fill: var(--gold); }
+  .testi-text {
+    font-size: .9rem; line-height: 1.75; color: var(--text-secondary);
+    font-weight: 300; font-style: italic;
+  }
+  .testi-author {
+    display: flex; align-items: center; gap: .8rem; margin-top: 1.5rem;
+    padding-top: 1.2rem; border-top: 1px solid var(--border-light);
+  }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--ocean-light); display: flex;
+    align-items: center; justify-content: center;
+    font-family: var(--serif); font-size: .85rem; color: var(--ocean);
+  }
+  .testi-name { font-weight: 600; font-size: .83rem; }
+  .testi-role { font-size: .7rem; color: var(--text-muted); margin-top: .1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 4rem 4vw 2rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: start;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-brand .logo { font-size: 1.1rem; }
+  .footer-brand p { font-size: .8rem; color: var(--text-muted); margin-top: .5rem; max-width: 260px; line-height: 1.6; }
+  .footer-links { display: flex; gap: 3.5rem; }
+  .footer-col h4 { font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: .7rem; }
+  .footer-col a { display: block; text-decoration: none; color: var(--text-secondary); font-size: .83rem; margin-bottom: .45rem; transition: color .2s; }
+  .footer-col a:hover { color: var(--ocean); }
+  .footer-copy {
+    width: 100%; text-align: center; padding-top: 2rem;
+    border-top: 1px solid var(--border-light); margin-top: 1rem;
+    font-size: .7rem; color: var(--text-muted);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  .reveal { opacity:0; transform:translateY(28px); transition: opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1); }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .hero-visual { display: none; }
+    .hero-content { max-width: 100%; }
+    .about { grid-template-columns: 1fr; gap: 2.5rem; }
+    .testi-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .mobile-toggle { display: block; }
+    .hero-stats { gap: 1.2rem; flex-wrap: wrap; }
+    .hero h1 { font-size: 2rem; }
+    section { padding: 4rem 5vw; }
+    .areas { gap: 1.5rem; padding: 2rem 5vw; }
+    .footer-links { flex-direction: column; gap: 1.5rem; }
+    .about-highlights { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<script>
+const T = {
+  en: {
+    navAbout: "About", navTestimonials: "Testimonials", navContact: "Contact", navListings: "Listings",
+    navCta: "Get in Touch",
+    heroTag: "Đà Nẵng Real Estate",
+    heroH1: 'Your <em>beachside</em> home in <span class="coral">Đà Nẵng</span>',
+    heroSub: "Discover coastal living at its finest. From Mỹ Khê beachfront villas to Sơn Trà hillside retreats — Alice guides you to the perfect property in Vietnam's most livable city.",
+    btnListings: "Browse Listings", btnCall: "Schedule a Call",
+    stat1: "250+", stat1L: "Homes Sold",
+    stat2: "12", stat2L: "Years Experience",
+    stat3: "98%", stat3L: "Client Satisfaction",
+    locText: "Đà Nẵng, Vietnam", locSub: "Mỹ Khê · Sơn Trà · Hải Châu · Ngũ Hành Sơn",
+    areasLabel: "Neighborhoods we serve",
+    areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
+    aboutTag: "About Alice", aboutTitle: "Real estate,<br>made personal",
+    aboutP1: "With over a decade of experience in the Đà Nẵng market, I bring a thoughtful, client-first approach to every transaction. Whether you're looking for a beachfront villa, a modern apartment, or a smart investment property — I'm here to guide you.",
+    aboutP2: "I work with local and international buyers alike, offering full support in English, Vietnamese, and Russian. Let's find the home that fits your life by the sea.",
+    h1Title: "Licensed Agent", h1Sub: "Đà Nẵng certified",
+    h2Title: "Local Expert", h2Sub: "Every beach & neighborhood",
+    h3Title: "Trilingual", h3Sub: "EN · VI · RU support",
+    h4Title: "Full Service", h4Sub: "Buy, sell & invest",
+    testiTag: "Client Stories", testiTitle: "What people are saying",
+    testiSub: "Trusted by homeowners and investors in Đà Nẵng.",
+    t1Text: "\u201CAlice made buying our beachfront apartment in Mỹ Khê seamless. She understood exactly what we needed and handled every detail with care. Couldn\u2019t recommend her more.\u201D",
+    t1Name: "Maria & James K.", t1Role: "Beachfront Buyers",
+    t2Text: "\u201CWe sold our villa in Sơn Trà in just two weeks, above asking price. Alice\u2019s market knowledge and negotiation skills are exceptional.\u201D",
+    t2Name: "David R.", t2Role: "Villa Seller",
+    t3Text: "\u201CAs an investor, Alice helped me acquire three properties in Đà Nẵng this year. She understands the numbers, the neighborhoods, and the long game.\u201D",
+    t3Name: "Svetlana P.", t3Role: "Property Investor",
+    listTag: "Featured Listings", listTitle: "Properties in Đà Nẵng",
+    listSub: "Hand-picked homes, villas, and apartments available now.",
+    filterAll: "All", filterSale: "For Sale", filterRent: "For Rent",
+    listMore: "View All Listings",
+    l1Title: "Penthouse 02BR for Rent — Hai Chau M038", l1Loc: "Hải Châu, Đà Nẵng", l1Price: "$1,461/mo", l1Badge: "For Rent", l1Type: "rent",
+    l2Title: "Villa for Rent at Premier Village P120", l2Loc: "Premier Village, Đà Nẵng", l2Price: "$4,573/mo", l2Badge: "For Rent", l2Type: "rent",
+    l3Title: "Private Pool 03BR Villa — Mỹ An T187", l3Loc: "Mỹ An, Ngũ Hành Sơn", l3Price: "$1,870/mo", l3Badge: "For Rent", l3Type: "rent",
+    l4Title: "02BR Apartment at Filmore Building F402", l4Loc: "Filmore Building, Đà Nẵng", l4Price: "$1,615/mo", l4Badge: "For Rent", l4Type: "rent",
+    l5Title: "02BR Apartment at Sam Tower S030", l5Loc: "Sam Tower, Đà Nẵng", l5Price: "$1,615/mo", l5Badge: "For Rent", l5Type: "rent",
+    l6Title: "02BR Apartment — Khê Mỹ, Ngũ Hành Sơn K026", l6Loc: "Khê Mỹ, Ngũ Hành Sơn", l6Price: "$990/mo", l6Badge: "For Rent", l6Type: "rent",
+    bedLabel: "Beds", bathLabel: "Baths", areaLabel: "m²",
+    footerDesc: "Helping families find their perfect beachside home in Đà Nẵng since 2014.",
+    footNav: "Navigate", footContact: "Contact",
+    copy: "\u00A9 2026 Alice Real Estate. All rights reserved."
+  },
+  vi: {
+    navAbout: "Giới thiệu", navTestimonials: "Đánh giá", navContact: "Liên hệ", navListings: "Bất động sản",
+    navCta: "Liên Hệ Ngay",
+    heroTag: "Bất Động Sản Đà Nẵng",
+    heroH1: 'Ngôi nhà <em>bên biển</em> của bạn tại <span class="coral">Đà Nẵng</span>',
+    heroSub: "Khám phá cuộc sống ven biển tuyệt vời nhất. Từ biệt thự Mỹ Khê đến khu nghỉ dưỡng Sơn Trà — Alice đồng hành cùng bạn tìm bất động sản hoàn hảo tại thành phố đáng sống nhất Việt Nam.",
+    btnListings: "Xem Bất Động Sản", btnCall: "Đặt Lịch Tư Vấn",
+    stat1: "250+", stat1L: "Căn Đã Bán",
+    stat2: "12", stat2L: "Năm Kinh Nghiệm",
+    stat3: "98%", stat3L: "Khách Hài Lòng",
+    locText: "Đà Nẵng, Việt Nam", locSub: "Mỹ Khê · Sơn Trà · Hải Châu · Ngũ Hành Sơn",
+    areasLabel: "Khu vực phục vụ",
+    areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
+    aboutTag: "Về Alice", aboutTitle: "Bất động sản,<br>theo cách riêng",
+    aboutP1: "Với hơn 10 năm kinh nghiệm tại thị trường Đà Nẵng, tôi mang đến cách tiếp cận tận tâm, lấy khách hàng làm trung tâm. Dù bạn tìm biệt thự ven biển, căn hộ hiện đại hay cơ hội đầu tư — tôi sẵn sàng đồng hành.",
+    aboutP2: "Tôi hỗ trợ khách hàng trong nước và quốc tế, tư vấn bằng tiếng Anh, tiếng Việt và tiếng Nga. Hãy cùng tìm ngôi nhà bên biển phù hợp với bạn.",
+    h1Title: "Chứng Chỉ Hành Nghề", h1Sub: "Đà Nẵng",
+    h2Title: "Chuyên Gia Địa Phương", h2Sub: "Am hiểu mọi khu vực",
+    h3Title: "Ba Ngôn Ngữ", h3Sub: "EN · VI · RU",
+    h4Title: "Dịch Vụ Trọn Gói", h4Sub: "Mua, bán & đầu tư",
+    testiTag: "Khách Hàng Nói Gì", testiTitle: "Đánh giá từ khách hàng",
+    testiSub: "Được tin tưởng bởi hàng trăm chủ nhà và nhà đầu tư tại Đà Nẵng.",
+    t1Text: "\u201CAlice giúp chúng tôi mua căn hộ ven biển Mỹ Khê thật dễ dàng. Chị hiểu chính xác nhu cầu và xử lý mọi chi tiết rất chu đáo.\u201D",
+    t1Name: "Maria & James K.", t1Role: "Người mua nhà ven biển",
+    t2Text: "\u201CBiệt thự Sơn Trà của chúng tôi bán trong 2 tuần, vượt giá kỳ vọng. Kiến thức thị trường và kỹ năng đàm phán của Alice thật tuyệt vời.\u201D",
+    t2Name: "David R.", t2Role: "Người bán biệt thự",
+    t3Text: "\u201CLà nhà đầu tư, Alice đã giúp tôi mua 3 bất động sản tại Đà Nẵng năm nay. Chị hiểu rõ con số, khu vực và tầm nhìn dài hạn.\u201D",
+    t3Name: "Svetlana P.", t3Role: "Nhà đầu tư bất động sản",
+    listTag: "Bất Động Sản Nổi Bật", listTitle: "Bất động sản tại Đà Nẵng",
+    listSub: "Nhà, biệt thự và căn hộ được chọn lọc, sẵn sàng cho bạn.",
+    filterAll: "Tất cả", filterSale: "Bán", filterRent: "Cho thuê",
+    listMore: "Xem Tất Cả",
+    l1Title: "Penthouse 02PN cho thuê — Hải Châu M038", l1Loc: "Hải Châu, Đà Nẵng", l1Price: "34 tr/tháng", l1Badge: "Cho thuê", l1Type: "rent",
+    l2Title: "Biệt thự cho thuê tại Premier Village P120", l2Loc: "Premier Village, Đà Nẵng", l2Price: "107 tr/tháng", l2Badge: "Cho thuê", l2Type: "rent",
+    l3Title: "Biệt thự 03PN hồ bơi riêng — Mỹ An T187", l3Loc: "Mỹ An, Ngũ Hành Sơn", l3Price: "44 tr/tháng", l3Badge: "Cho thuê", l3Type: "rent",
+    l4Title: "Căn hộ 02PN tại Filmore Building F402", l4Loc: "Filmore Building, Đà Nẵng", l4Price: "38 tr/tháng", l4Badge: "Cho thuê", l4Type: "rent",
+    l5Title: "Căn hộ 02PN tại Sam Tower S030", l5Loc: "Sam Tower, Đà Nẵng", l5Price: "38 tr/tháng", l5Badge: "Cho thuê", l5Type: "rent",
+    l6Title: "Căn hộ 02PN — Khê Mỹ, Ngũ Hành Sơn K026", l6Loc: "Khê Mỹ, Ngũ Hành Sơn", l6Price: "23 tr/tháng", l6Badge: "Cho thuê", l6Type: "rent",
+    bedLabel: "PN", bathLabel: "WC", areaLabel: "m²",
+    footerDesc: "Đồng hành cùng gia đình tìm ngôi nhà ven biển hoàn hảo tại Đà Nẵng từ 2014.",
+    footNav: "Điều Hướng", footContact: "Liên Hệ",
+    copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền."
+  },
+  ru: {
+    navAbout: "О нас", navTestimonials: "Отзывы", navContact: "Контакты", navListings: "Объекты",
+    navCta: "Связаться",
+    heroTag: "Недвижимость Дананга",
+    heroH1: 'Ваш дом <em>у моря</em> в <span class="coral">Дананге</span>',
+    heroSub: "Откройте лучшую прибрежную жизнь. От вилл на пляже Мỹ Кхе до уединённых домов на полуострове Сơн Трà — Alice поможет найти идеальную недвижимость в самом комфортном городе Вьетнама.",
+    btnListings: "Смотреть объекты", btnCall: "Записаться на звонок",
+    stat1: "250+", stat1L: "Домов продано",
+    stat2: "12", stat2L: "Лет опыта",
+    stat3: "98%", stat3L: "Довольных клиентов",
+    locText: "Дананг, Вьетнам", locSub: "Мỹ Кхе · Сơн Трà · Хải Тяу · Нгу Хань Шон",
+    areasLabel: "Районы, которые мы обслуживаем",
+    areas: ["Хай Тяу", "Сон Тра", "Нгу Хань Шон", "Мы Ан", "Кхе Мы", "Тхань Кхе", "Лиен Тяу", "Хой Ан"],
+    aboutTag: "Об Alice", aboutTitle: "Недвижимость —<br>это личное",
+    aboutP1: "Более 10 лет опыта на рынке Дананга. Я помогаю с покупкой виллы у моря, современной квартиры или инвестиционного объекта — с вниманием к каждой детали.",
+    aboutP2: "Я работаю с местными и международными покупателями, консультирую на английском, вьетнамском и русском языках. Найдём ваш дом у моря вместе.",
+    h1Title: "Лицензия", h1Sub: "Сертификат Дананга",
+    h2Title: "Местный эксперт", h2Sub: "Каждый район и пляж",
+    h3Title: "Три языка", h3Sub: "EN · VI · RU",
+    h4Title: "Полный сервис", h4Sub: "Покупка, продажа, инвестиции",
+    testiTag: "Отзывы клиентов", testiTitle: "Что говорят наши клиенты",
+    testiSub: "Нам доверяют сотни владельцев и инвесторов в Дананге.",
+    t1Text: "\u201CAlice сделала покупку квартиры на пляже Мỹ Кхе лёгкой и приятной. Она точно поняла наши пожелания и позаботилась обо всём.\u201D",
+    t1Name: "Мария и Джеймс К.", t1Role: "Покупатели у моря",
+    t2Text: "\u201CМы продали виллу в Сơн Трà за две недели, выше запрашиваемой цены. Знание рынка и переговорные навыки Alice — на высшем уровне.\u201D",
+    t2Name: "Давид Р.", t2Role: "Продавец виллы",
+    t3Text: "\u201CКак инвестор, я ценю точность. Alice помогла мне купить три объекта в Дананге в этом году — каждый оказался отличной сделкой.\u201D",
+    t3Name: "Светлана П.", t3Role: "Инвестор",
+    listTag: "Избранные объекты", listTitle: "Недвижимость в Дананге",
+    listSub: "Лучшие дома, виллы и квартиры, доступные прямо сейчас.",
+    filterAll: "Все", filterSale: "Продажа", filterRent: "Аренда",
+    listMore: "Все объекты",
+    l1Title: "Пентхаус 02 спальни в аренду — Хай Тяу M038", l1Loc: "Хай Тяу, Дананг", l1Price: "$1,461/мес", l1Badge: "Аренда", l1Type: "rent",
+    l2Title: "Вилла в аренду в Premier Village P120", l2Loc: "Premier Village, Дананг", l2Price: "$4,573/мес", l2Badge: "Аренда", l2Type: "rent",
+    l3Title: "Вилла 03 спальни с бассейном — Мы Ан T187", l3Loc: "Мы Ан, Нгу Хань Шон", l3Price: "$1,870/мес", l3Badge: "Аренда", l3Type: "rent",
+    l4Title: "Апартаменты 02 спальни, Filmore Building F402", l4Loc: "Filmore Building, Дананг", l4Price: "$1,615/мес", l4Badge: "Аренда", l4Type: "rent",
+    l5Title: "Апартаменты 02 спальни, Sam Tower S030", l5Loc: "Sam Tower, Дананг", l5Price: "$1,615/мес", l5Badge: "Аренда", l5Type: "rent",
+    l6Title: "Апартаменты 02 спальни — Кхе Мы, Нгу Хань Шон K026", l6Loc: "Кхе Мы, Нгу Хань Шон", l6Price: "$990/мес", l6Badge: "Аренда", l6Type: "rent",
+    bedLabel: "Спальни", bathLabel: "Ванные", areaLabel: "м²",
+    footerDesc: "Помогаем семьям найти идеальный дом у моря в Дананге с 2014 года.",
+    footNav: "Навигация", footContact: "Контакты",
+    copy: "\u00A9 2026 Alice Real Estate. Все права защищены."
+  }
+};
+</script>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">Alice<span>.</span></div>
+  <div class="nav-mid">
+    <ul class="nav-links">
+      <li><a href="#listings" data-t="navListings">Listings</a></li>
+      <li><a href="#about" data-t="navAbout">About</a></li>
+      <li><a href="#testimonials" data-t="navTestimonials">Testimonials</a></li>
+      <li><a href="#contact" data-t="navContact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('vi')">VI</button>
+      <button class="lang-btn" onclick="setLang('ru')">RU</button>
+    </div>
+    <button class="nav-cta" data-t="navCta">Get in Touch</button>
+  </div>
+  <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">
+    <svg width="22" height="16" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="#1C2B2A" stroke-width="1.5"/><line x1="4" y1="8" x2="22" y2="8" stroke="#1C2B2A" stroke-width="1.5"/><line x1="8" y1="15" x2="22" y2="15" stroke="#1C2B2A" stroke-width="1.5"/></svg>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span data-t="heroTag">Đà Nẵng Real Estate</span> <span class="wave-emoji">🌊</span></div>
+    <h1 data-t-html="heroH1">Your <em>beachside</em> home in <span class="coral">Đà Nẵng</span></h1>
+    <p class="hero-sub" data-t="heroSub">Discover coastal living at its finest.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" data-t="btnListings">Browse Listings</button>
+      <button class="btn-outline" data-t="btnCall">Schedule a Call</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num" data-t="stat1">250+</div><div class="stat-label" data-t="stat1L">Homes Sold</div></div>
+      <div><div class="stat-num" data-t="stat2">12</div><div class="stat-label" data-t="stat2L">Years Experience</div></div>
+      <div><div class="stat-num" data-t="stat3">98%</div><div class="stat-label" data-t="stat3L">Client Satisfaction</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-visual-inner" style="background:url('https://highendrealdanang.com/wp-content/uploads/2025/12/banner1.jpg') center/cover no-repeat">
+    </div>
+    <div class="location-badge">
+      <div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+      <div>
+        <div class="loc-text" data-t="locText">Đà Nẵng, Vietnam</div>
+        <div class="loc-sub" data-t="locSub">Mỹ Khê · Sơn Trà · Hải Châu · Ngũ Hành Sơn</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<div class="areas">
+  <div class="areas-label" data-t="areasLabel">Neighborhoods we serve</div>
+  <div class="area-tags" id="areaTags"></div>
+</div>
+
+<!-- LISTINGS -->
+<section class="listings" id="listings">
+  <div class="listings-header">
+    <div>
+      <div class="section-tag" data-t="listTag">Featured Listings</div>
+      <h2 class="section-title reveal" data-t="listTitle">Properties in Đà Nẵng</h2>
+      <p class="section-sub reveal" data-t="listSub">Hand-picked homes, villas, and apartments available now.</p>
+    </div>
+    <div class="listings-filters reveal">
+      <button class="filter-btn active" data-filter="all" data-t="filterAll">All</button>
+      <button class="filter-btn" data-filter="sale" data-t="filterSale">For Sale</button>
+      <button class="filter-btn" data-filter="rent" data-t="filterRent">For Rent</button>
+    </div>
+  </div>
+
+  <div class="listings-grid" id="listingsGrid">
+    <!-- Card 1 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2026/03/1.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l1Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l1Price">$1,461/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l1Title">Oceanfront Villa with Private Pool</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l1Loc">Mỹ Khê Beach, Ngũ Hành Sơn</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>4 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>3 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>320 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2026/01/Premier-1.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l2Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l2Price">$4,573/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l2Title">Modern Penthouse — Panoramic Sea View</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l2Loc">An Thượng, Ngũ Hành Sơn</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>2 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>2 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>145 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2026/01/my-an-4.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l3Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l3Price">$1,870/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l3Title">Tropical Garden House near Marble Mountains</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l3Loc">Hòa Hải, Ngũ Hành Sơn</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>3 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>2 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>210 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2026/01/filmore-16.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l4Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l4Price">$1,615/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l4Title">Beachfront Studio Apartment</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l4Loc">Phạm Văn Đồng, Sơn Trà</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>1 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>1 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>52 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 5 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2026/01/sam-tower-13.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l5Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l5Price">$1,615/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l5Title">Luxury 3BR with Rooftop Terrace</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l5Loc">Hải Châu District Center</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>3 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>2 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>185 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 6 -->
+    <div class="listing-card reveal" data-type="rent">
+      <div class="listing-img">
+        <div class="listing-img-bg" style="background:url('https://highendrealdanang.com/wp-content/uploads/2025/12/apartment-ngu-hanh-son-9.jpg') center/cover no-repeat"></div>
+        <div class="listing-badge badge-rent" data-t="l6Badge">For Rent</div>
+        <div class="listing-price-tag" data-t="l6Price">$990/mo</div>
+      </div>
+      <div class="listing-body">
+        <div class="listing-title" data-t="l6Title">Riverside Villa — Sơn Trà Peninsula</div>
+        <div class="listing-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="l6Loc">Thọ Quang, Sơn Trà</span></div>
+        <div class="listing-meta">
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>4 <span data-t="bedLabel">Beds</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>3 <span data-t="bathLabel">Baths</span></div>
+          <div class="listing-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>280 <span data-t="areaLabel">m²</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="listings-cta reveal">
+    <button class="btn-primary" data-t="listMore">View All Listings</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-portrait reveal" style="background:url('https://highendrealdanang.com/wp-content/uploads/2025/12/banner5-1203x800.jpg') center/cover no-repeat">
+  </div>
+  <div class="about-body reveal">
+    <div class="section-tag" data-t="aboutTag">About Alice</div>
+    <h2 class="section-title" data-t-html="aboutTitle">Real estate,<br>made personal</h2>
+    <p data-t="aboutP1"></p>
+    <p data-t="aboutP2"></p>
+    <div class="about-highlights">
+      <div class="highlight"><div class="highlight-icon">📜</div><strong data-t="h1Title"></strong><span data-t="h1Sub"></span></div>
+      <div class="highlight"><div class="highlight-icon">🗺️</div><strong data-t="h2Title"></strong><span data-t="h2Sub"></span></div>
+      <div class="highlight"><div class="highlight-icon">🌐</div><strong data-t="h3Title"></strong><span data-t="h3Sub"></span></div>
+      <div class="highlight"><div class="highlight-icon">🤝</div><strong data-t="h4Title"></strong><span data-t="h4Sub"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="section-tag" data-t="testiTag">Client Stories</div>
+  <h2 class="section-title reveal" data-t="testiTitle">What people are saying</h2>
+  <p class="section-sub reveal" data-t="testiSub"></p>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars"><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg></div>
+      <p class="testi-text" data-t="t1Text"></p>
+      <div class="testi-author"><div class="testi-avatar">M</div><div><div class="testi-name" data-t="t1Name"></div><div class="testi-role" data-t="t1Role"></div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars"><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg></div>
+      <p class="testi-text" data-t="t2Text"></p>
+      <div class="testi-author"><div class="testi-avatar">D</div><div><div class="testi-name" data-t="t2Name"></div><div class="testi-role" data-t="t2Role"></div></div></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars"><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg><svg viewBox="0 0 20 20"><polygon points="10,1.5 12.5,7 18.5,7.5 14,11.5 15.5,17.5 10,14 4.5,17.5 6,11.5 1.5,7.5 7.5,7"/></svg></div>
+      <p class="testi-text" data-t="t3Text"></p>
+      <div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name" data-t="t3Name"></div><div class="testi-role" data-t="t3Role"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-brand">
+    <div class="logo">Alice<span>.</span></div>
+    <p data-t="footerDesc"></p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h4 data-t="footNav">Navigate</h4>
+      <a href="#listings" data-t="navListings">Listings</a>
+      <a href="#about" data-t="navAbout">About</a>
+      <a href="#testimonials" data-t="navTestimonials">Testimonials</a>
+      <a href="#contact" data-t="navContact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4 data-t="footContact">Contact</h4>
+      <a href="mailto:alicepham89@gmail.com">alicepham89@gmail.com</a>
+      <a href="tel:+84787664959">+84 787 664 959</a>
+      <a href="https://zalo.me/84787664959">Zalo</a>
+      <a href="#">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-copy" data-t="copy"></div>
+</footer>
+
+<script>
+  let currentLang = 'en';
+  function setLang(lang) {
+    currentLang = lang;
+    const s = T[lang];
+    document.querySelectorAll('[data-t]').forEach(el => {
+      const k = el.getAttribute('data-t');
+      if (s[k]) el.textContent = s[k];
+    });
+    document.querySelectorAll('[data-t-html]').forEach(el => {
+      const k = el.getAttribute('data-t-html');
+      if (s[k]) el.innerHTML = s[k];
+    });
+    document.getElementById('areaTags').innerHTML = s.areas.map(a => '<span class="area-tag">' + a + '</span>').join('');
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim().toLowerCase() === lang);
+    });
+    document.documentElement.lang = lang;
+  }
+  setLang('en');
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Listing filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      document.querySelectorAll('.listing-card').forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-type') === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
