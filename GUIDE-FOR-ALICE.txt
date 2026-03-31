@@ -1,0 +1,90 @@
+HOW TO ADD / EDIT LISTINGS ON YOUR WEBSITE
+===========================================
+
+Your website pulls listings directly from a Google Sheet.
+To add, edit, or remove a listing — just edit the spreadsheet!
+
+
+STEP 1: CREATE YOUR GOOGLE SHEET
+---------------------------------
+1. Go to sheets.google.com and create a new spreadsheet
+2. Name it something like "Alice Listings"
+3. In Row 1, type these column headers exactly:
+
+   Title | Price | Location | Beds | Baths | Area | Image | Type
+
+4. Starting from Row 2, fill in your listings. Example:
+
+   Title:     Modern 02BR Apartment in Hai Chau
+   Price:     $1,461/mo
+   Location:  Hai Chau, Da Nang
+   Beds:      2
+   Baths:     2
+   Area:      95
+   Image:     (paste the image URL here — see below)
+   Type:      rent
+
+   For the Type column, enter either "rent" or "sale"
+
+
+STEP 2: ADD IMAGES
+-------------------
+Option A — Use Google Drive:
+  1. Upload the photo to Google Drive
+  2. Right-click → Share → "Anyone with the link"
+  3. Copy the link. It will look like:
+     https://drive.google.com/file/d/XXXXX/view
+  4. Change it to:
+     https://drive.google.com/uc?id=XXXXX
+  5. Paste this URL in the Image column
+
+Option B — Use Imgur (easier):
+  1. Go to imgur.com and click "New Post"
+  2. Upload your photo
+  3. Right-click the uploaded image → "Copy image address"
+  4. Paste this URL in the Image column
+
+Option C — Use any direct image URL:
+  If the image is already online somewhere, just paste the URL.
+  It should end in .jpg, .png, or .webp
+
+
+STEP 3: PUBLISH YOUR SHEET
+----------------------------
+1. In Google Sheets, go to: File → Share → Publish to web
+2. Select "Entire Document" and "Web page"
+3. Click "Publish"
+4. Now look at your browser's address bar. The URL looks like:
+   https://docs.google.com/spreadsheets/d/1aBcDeFgHiJkLmNoPqRsTuVwXyZ/edit
+5. The Sheet ID is the long string between /d/ and /edit:
+   1aBcDeFgHiJkLmNoPqRsTuVwXyZ
+
+
+STEP 4: CONNECT TO YOUR WEBSITE
+---------------------------------
+1. Open index.html in a text editor (or ask your developer)
+2. Near the top of the <script> section, find this line:
+   const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+3. Replace YOUR_SHEET_ID_HERE with your actual Sheet ID
+4. Save the file
+
+
+DONE! Your website will now show whatever is in your Google Sheet.
+
+
+HOW TO MANAGE LISTINGS
+-----------------------
+- Add a listing:    Add a new row in the spreadsheet
+- Edit a listing:   Change any cell in the spreadsheet
+- Remove a listing: Delete the row from the spreadsheet
+
+Changes appear on the website within a few minutes (Google caches
+the data briefly).
+
+
+TIPS
+-----
+- Keep photos under 2MB for fast loading
+- Use landscape photos (wider than tall) — they look best
+- The "Area" column is in square meters (m2) — just enter the number
+- You can have as many listings as you want — no limit!
