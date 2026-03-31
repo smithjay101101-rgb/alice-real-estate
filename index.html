@@ -240,9 +240,7 @@
     font-family: var(--mono); font-size: .6rem; font-weight: 500;
     letter-spacing: .05em; text-transform: uppercase;
   }
-  .badge-sale { background: var(--ink); color: #fff; }
   .badge-rent { background: var(--accent); color: #fff; }
-  .badge-new { background: rgba(245,158,11,.9); color: #fff; }
   .listing-price-tag {
     position: absolute; bottom: 12px; right: 12px;
     background: rgba(24,24,27,.85); backdrop-filter: blur(8px);
@@ -407,6 +405,49 @@
     letter-spacing: .04em;
   }
 
+  /* ── CONTACT MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(24,24,27,.4); backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius-card);
+    padding: 2.5rem; max-width: 380px; width: 90vw;
+    box-shadow: 0 32px 64px rgba(0,0,0,.15);
+    text-align: center;
+    animation: fadeUp .4s var(--ease);
+  }
+  .modal h3 {
+    font-family: var(--serif); font-size: 1.5rem; margin-bottom: .5rem;
+    letter-spacing: -.02em;
+  }
+  .modal p {
+    font-size: .85rem; color: var(--secondary); margin-bottom: 2rem; line-height: 1.6;
+  }
+  .modal-btns { display: flex; flex-direction: column; gap: .75rem; }
+  .modal-btn {
+    display: flex; align-items: center; justify-content: center; gap: .7rem;
+    padding: 1rem; border-radius: 1rem; border: 1px solid var(--border);
+    background: var(--canvas); text-decoration: none; color: var(--ink);
+    font-family: var(--sans); font-size: .9rem; font-weight: 500;
+    transition: all .3s var(--ease);
+  }
+  .modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .modal-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .modal-btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
+  .modal-btn.zalo:hover { border-color: #0068FF; color: #0068FF; }
+  .modal-close {
+    margin-top: 1.5rem; background: none; border: none;
+    font-family: var(--sans); font-size: .78rem; color: var(--muted);
+    cursor: pointer; transition: color .2s;
+  }
+  .modal-close:hover { color: var(--ink); }
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -440,77 +481,79 @@
 <script>
 const T = {
   en: {
-    navAbout: "About", navTestimonials: "Testimonials", navContact: "Contact", navListings: "Listings",
-    navCta: "Get in Touch",
-    heroTag: "Đà Nẵng Real Estate",
-    heroH1: 'Your <em>beachside</em> home in <span class="coral">Đà Nẵng</span>',
-    heroSub: "Discover coastal living at its finest. From Mỹ Khê beachfront villas to Sơn Trà hillside retreats — Alice guides you to the perfect property in Vietnam's most livable city.",
-    btnListings: "Browse Listings", btnCall: "Schedule a Call",
-    stat1: "250+", stat1L: "Homes Sold",
-    stat2: "12", stat2L: "Years Experience",
-    stat3: "98%", stat3L: "Client Satisfaction",
-    areasLabel: "Neighborhoods we serve",
+    navAbout: "About", navTestimonials: "Stories", navContact: "Contact", navListings: "Rentals",
+    navCta: "Send Alice a Message",
+    heroTag: "Premium Rentals in Đà Nẵng",
+    heroH1: 'Find your <em>perfect</em> home in <span class="coral">Đà Nẵng</span>',
+    heroSub: "Skip the stress of searching alone. Alice matches expats and families with vetted, move-in ready rentals across Đà Nẵng\u2019s best neighborhoods \u2014 so you can settle in faster and enjoy life by the sea.",
+    btnListings: "See Available Rentals", btnCall: "Chat with Alice",
+    stat1: "250+", stat1L: "Families Housed",
+    stat2: "12", stat2L: "Years in Đà Nẵng",
+    stat3: "98%", stat3L: "Happy Tenants",
+    areasLabel: "Neighborhoods we know inside out",
     areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
-    aboutTag: "About Alice", aboutTitle: "Real estate,<br>made personal",
-    aboutP1: "With over a decade of experience in the Đà Nẵng market, I bring a thoughtful, client-first approach to every transaction. Whether you're looking for a beachfront villa, a modern apartment, or a smart investment property — I'm here to guide you.",
-    aboutP2: "I work with local and international buyers alike, offering full support in English, Vietnamese, and Russian. Let's find the home that fits your life by the sea.",
-    h1Title: "Licensed Agent", h1Sub: "Đà Nẵng certified",
-    h2Title: "Local Expert", h2Sub: "Every beach & neighborhood",
-    h3Title: "Bilingual", h3Sub: "EN · VI support",
-    h4Title: "Full Service", h4Sub: "Buy, sell & invest",
-    testiTag: "Client Stories", testiTitle: "What people are saying",
-    testiSub: "Trusted by homeowners and investors in Đà Nẵng.",
-    t1Text: "\u201CAlice made buying our beachfront apartment in Mỹ Khê seamless. She understood exactly what we needed and handled every detail with care. Couldn\u2019t recommend her more.\u201D",
-    t1Name: "Maria & James K.", t1Role: "Beachfront Buyers",
-    t2Text: "\u201CWe sold our villa in Sơn Trà in just two weeks, above asking price. Alice\u2019s market knowledge and negotiation skills are exceptional.\u201D",
-    t2Name: "David R.", t2Role: "Villa Seller",
-    t3Text: "\u201CAs an investor, Alice helped me acquire three properties in Đà Nẵng this year. She understands the numbers, the neighborhoods, and the long game.\u201D",
-    t3Name: "Svetlana P.", t3Role: "Property Investor",
-    listTag: "Featured Listings", listTitle: "Properties in Đà Nẵng",
-    listSub: "Hand-picked homes, villas, and apartments available now.",
-    filterAll: "All", filterSale: "For Sale", filterRent: "For Rent",
-    listMore: "View All Listings",
+    aboutTag: "Why Alice", aboutTitle: "Your rental search,<br>handled",
+    aboutP1: "Moving to a new city is hard enough. Finding the right home shouldn\u2019t be. With 12 years in the Đà Nẵng rental market, Alice knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.",
+    aboutP2: "She works with expats, remote workers, and Vietnamese families \u2014 in English and Vietnamese. Tell her what you need, and she\u2019ll send you a shortlist of places worth seeing. No pressure, no fees until you sign.",
+    h1Title: "Licensed Agent", h1Sub: "Đà Nẵng certified since 2014",
+    h2Title: "Local Expert", h2Sub: "Lived here 12+ years",
+    h3Title: "Bilingual", h3Sub: "English & Vietnamese",
+    h4Title: "Zero Upfront Fees", h4Sub: "You only pay when you sign",
+    testiTag: "What Tenants Say", testiTitle: "People who found home through Alice",
+    testiSub: "250+ families settled in Đà Nẵng. Here are a few of their stories.",
+    t1Text: "\u201CWe landed in Đà Nẵng with two kids and no idea where to start. Alice had three apartments lined up before we even cleared customs. We signed within a week.\u201D",
+    t1Name: "Maria & James K.", t1Role: "Relocated from London",
+    t2Text: "\u201CAlice found us a villa in Sơn Trà in two weeks \u2014 right budget, right neighborhood, pool for the kids. She even negotiated the lease down 15%.\u201D",
+    t2Name: "David R.", t2Role: "Family of four, Sơn Trà",
+    t3Text: "\u201CI\u2019m a remote worker who needed fast WiFi and a quiet street. Alice knew exactly which buildings to avoid and which ones had fiber. Moved in three days after my first message.\u201D",
+    t3Name: "Svetlana P.", t3Role: "Digital nomad from Moscow",
+    listTag: "Available Now", listTitle: "Rentals in Đà Nẵng",
+    listSub: "Vetted properties, fair prices, ready to move in.",
+    filterRent: "For Rent",
+    listMore: "See All Rentals",
     bedLabel: "Beds", bathLabel: "Baths", areaLabel: "m\u00B2",
-    badgeSale: "For Sale", badgeRent: "For Rent",
-    footerDesc: "Helping families find their perfect beachside home in Đà Nẵng since 2014.",
-    footNav: "Navigate", footContact: "Contact",
+    badgeRent: "For Rent",
+    footerDesc: "250+ families housed in Đà Nẵng since 2014. Send Alice a message \u2014 she usually replies within an hour.",
+    modalTitle: "Chat with Alice", modalSub: "Choose how you'd like to reach her. She usually replies within an hour.", modalClose: "Maybe later",
+    footNav: "Navigate", footContact: "Reach Alice",
     copy: "\u00A9 2026 Alice Real Estate. All rights reserved."
   },
   vi: {
-    navAbout: "Giới thiệu", navTestimonials: "Đánh giá", navContact: "Liên hệ", navListings: "Bất động sản",
-    navCta: "Liên Hệ Ngay",
-    heroTag: "Bất Động Sản Đà Nẵng",
-    heroH1: 'Ngôi nhà <em>bên biển</em> của bạn tại <span class="coral">Đà Nẵng</span>',
-    heroSub: "Khám phá cuộc sống ven biển tuyệt vời nhất. Từ biệt thự Mỹ Khê đến khu nghỉ dưỡng Sơn Trà — Alice đồng hành cùng bạn tìm bất động sản hoàn hảo tại thành phố đáng sống nhất Việt Nam.",
-    btnListings: "Xem Bất Động Sản", btnCall: "Đặt Lịch Tư Vấn",
-    stat1: "250+", stat1L: "Căn Đã Bán",
-    stat2: "12", stat2L: "Năm Kinh Nghiệm",
-    stat3: "98%", stat3L: "Khách Hài Lòng",
-    areasLabel: "Khu vực phục vụ",
+    navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
+    navCta: "Nhắn tin cho Alice",
+    heroTag: "Cho Thuê Cao Cấp tại Đà Nẵng",
+    heroH1: 'Tìm ngôi nhà <em>hoàn hảo</em> tại <span class="coral">Đà Nẵng</span>',
+    heroSub: "Không cần tự mình tìm kiếm mệt mỏi. Alice giúp bạn tìm nhà cho thuê đã kiểm tra, sẵn sàng dọn vào tại những khu vực tốt nhất Đà Nẵng \u2014 để bạn an cư nhanh hơn và tận hưởng cuộc sống bên biển.",
+    btnListings: "Xem Nhà Trống", btnCall: "Nhắn Tin Cho Alice",
+    stat1: "250+", stat1L: "Gia Đình Đã An Cư",
+    stat2: "12", stat2L: "Năm tại Đà Nẵng",
+    stat3: "98%", stat3L: "Khách Thuê Hài Lòng",
+    areasLabel: "Khu vực chúng tôi am hiểu",
     areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
-    aboutTag: "Về Alice", aboutTitle: "Bất động sản,<br>theo cách riêng",
-    aboutP1: "Với hơn 10 năm kinh nghiệm tại thị trường Đà Nẵng, tôi mang đến cách tiếp cận tận tâm, lấy khách hàng làm trung tâm. Dù bạn tìm biệt thự ven biển, căn hộ hiện đại hay cơ hội đầu tư — tôi sẵn sàng đồng hành.",
-    aboutP2: "Tôi hỗ trợ khách hàng trong nước và quốc tế, tư vấn bằng tiếng Anh, tiếng Việt và tiếng Nga. Hãy cùng tìm ngôi nhà bên biển phù hợp với bạn.",
-    h1Title: "Chứng Chỉ Hành Nghề", h1Sub: "Đà Nẵng",
-    h2Title: "Chuyên Gia Địa Phương", h2Sub: "Am hiểu mọi khu vực",
-    h3Title: "Song Ngữ", h3Sub: "EN · VI",
-    h4Title: "Dịch Vụ Trọn Gói", h4Sub: "Mua, bán & đầu tư",
-    testiTag: "Khách Hàng Nói Gì", testiTitle: "Đánh giá từ khách hàng",
-    testiSub: "Được tin tưởng bởi hàng trăm chủ nhà và nhà đầu tư tại Đà Nẵng.",
-    t1Text: "\u201CAlice giúp chúng tôi mua căn hộ ven biển Mỹ Khê thật dễ dàng. Chị hiểu chính xác nhu cầu và xử lý mọi chi tiết rất chu đáo.\u201D",
-    t1Name: "Maria & James K.", t1Role: "Người mua nhà ven biển",
-    t2Text: "\u201CBiệt thự Sơn Trà của chúng tôi bán trong 2 tuần, vượt giá kỳ vọng. Kiến thức thị trường và kỹ năng đàm phán của Alice thật tuyệt vời.\u201D",
-    t2Name: "David R.", t2Role: "Người bán biệt thự",
-    t3Text: "\u201CLà nhà đầu tư, Alice đã giúp tôi mua 3 bất động sản tại Đà Nẵng năm nay. Chị hiểu rõ con số, khu vực và tầm nhìn dài hạn.\u201D",
-    t3Name: "Svetlana P.", t3Role: "Nhà đầu tư bất động sản",
-    listTag: "Bất Động Sản Nổi Bật", listTitle: "Bất động sản tại Đà Nẵng",
-    listSub: "Nhà, biệt thự và căn hộ được chọn lọc, sẵn sàng cho bạn.",
-    filterAll: "Tất cả", filterSale: "Bán", filterRent: "Cho thuê",
-    listMore: "Xem Tất Cả",
+    aboutTag: "Vì sao chọn Alice", aboutTitle: "Việc tìm nhà,<br>để Alice lo",
+    aboutP1: "Chuyển đến thành phố mới đã đủ vất vả. Tìm nhà không nên khó thêm. Với 12 năm kinh nghiệm tại thị trường cho thuê Đà Nẵng, Alice biết chủ nhà nào uy tín, con đường nào hay ngập mùa mưa, và quán cà phê sáng nào ngon nhất.",
+    aboutP2: "Alice hỗ trợ người nước ngoài, người làm việc từ xa và gia đình Việt Nam \u2014 bằng tiếng Anh và tiếng Việt. Hãy cho Alice biết bạn cần gì, chị ấy sẽ gửi danh sách ngắn những nơi đáng xem. Không áp lực, không phí cho đến khi bạn ký hợp đồng.",
+    h1Title: "Chứng Chỉ Hành Nghề", h1Sub: "Đà Nẵng từ 2014",
+    h2Title: "Chuyên Gia Địa Phương", h2Sub: "Sống tại đây hơn 12 năm",
+    h3Title: "Song Ngữ", h3Sub: "Tiếng Anh & Tiếng Việt",
+    h4Title: "Không Phí Trước", h4Sub: "Chỉ trả khi bạn ký hợp đồng",
+    testiTag: "Khách Thuê Nói Gì", testiTitle: "Những người đã tìm được nhà qua Alice",
+    testiSub: "Hơn 250 gia đình đã an cư tại Đà Nẵng. Đây là một vài câu chuyện.",
+    t1Text: "\u201CChúng tôi đến Đà Nẵng với hai con nhỏ và không biết bắt đầu từ đâu. Alice đã chuẩn bị sẵn ba căn hộ trước khi chúng tôi qua cửa hải quan. Ký hợp đồng trong một tuần.\u201D",
+    t1Name: "Maria & James K.", t1Role: "Chuyển từ London",
+    t2Text: "\u201CAlice tìm cho gia đình tôi biệt thự ở Sơn Trà trong hai tuần \u2014 đúng ngân sách, đúng khu vực, có hồ bơi cho bọn trẻ. Chị còn thương lượng giảm 15% tiền thuê.\u201D",
+    t2Name: "David R.", t2Role: "Gia đình 4 người, Sơn Trà",
+    t3Text: "\u201CTôi làm việc từ xa, cần WiFi nhanh và đường phố yên tĩnh. Alice biết chính xác tòa nhà nào nên tránh và tòa nào có cáp quang. Dọn vào sau ba ngày kể từ tin nhắn đầu tiên.\u201D",
+    t3Name: "Svetlana P.", t3Role: "Nomad kỹ thuật số từ Moscow",
+    listTag: "Đang Trống", listTitle: "Nhà cho thuê tại Đà Nẵng",
+    listSub: "Đã kiểm tra, giá hợp lý, sẵn sàng dọn vào.",
+    filterRent: "Cho thuê",
+    listMore: "Xem Tất Cả Nhà Trống",
     bedLabel: "PN", bathLabel: "WC", areaLabel: "m\u00B2",
-    badgeSale: "Bán", badgeRent: "Cho thuê",
-    footerDesc: "Đồng hành cùng gia đình tìm ngôi nhà ven biển hoàn hảo tại Đà Nẵng từ 2014.",
-    footNav: "Điều Hướng", footContact: "Liên Hệ",
+    badgeRent: "Cho thuê",
+    footerDesc: "Hơn 250 gia đình đã an cư tại Đà Nẵng từ 2014. Nhắn tin cho Alice \u2014 thường trả lời trong vòng một giờ.",
+    modalTitle: "Nhắn tin cho Alice", modalSub: "Chọn cách bạn muốn liên hệ. Alice thường trả lời trong vòng một giờ.", modalClose: "Để sau",
+    footNav: "Điều Hướng", footContact: "Liên Hệ Alice",
     copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền."
   },
 };
@@ -532,7 +575,7 @@ const T = {
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
       <button class="lang-btn" onclick="setLang('vi')">VI</button>
     </div>
-    <button class="nav-cta" data-t="navCta">Get in Touch</button>
+    <button class="nav-cta" data-t="navCta" onclick="openModal()">Get in Touch</button>
   </div>
   <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">
     <svg width="22" height="16" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="#18181B" stroke-width="1.5"/><line x1="4" y1="8" x2="22" y2="8" stroke="#18181B" stroke-width="1.5"/><line x1="8" y1="15" x2="22" y2="15" stroke="#18181B" stroke-width="1.5"/></svg>
@@ -547,7 +590,7 @@ const T = {
     <p class="hero-sub" data-t="heroSub">Discover coastal living at its finest.</p>
     <div class="hero-btns">
       <button class="btn-primary" data-t="btnListings">Browse Listings</button>
-      <button class="btn-outline" data-t="btnCall">Schedule a Call</button>
+      <button class="btn-outline" data-t="btnCall" onclick="openModal()">Schedule a Call</button>
     </div>
     <div class="hero-stats">
       <div><div class="stat-num" data-t="stat1">250+</div><div class="stat-label" data-t="stat1L">Homes Sold</div></div>
@@ -570,11 +613,6 @@ const T = {
       <div class="section-tag" data-t="listTag">Featured Listings</div>
       <h2 class="section-title reveal" data-t="listTitle">Properties in Đà Nẵng</h2>
       <p class="section-sub reveal" data-t="listSub">Hand-picked homes, villas, and apartments available now.</p>
-    </div>
-    <div class="listings-filters reveal">
-      <button class="filter-btn active" data-filter="all" data-t="filterAll">All</button>
-      <button class="filter-btn" data-filter="sale" data-t="filterSale">For Sale</button>
-      <button class="filter-btn" data-filter="rent" data-t="filterRent">For Rent</button>
     </div>
   </div>
 
@@ -653,6 +691,30 @@ const T = {
   <div class="footer-copy" data-t="copy"></div>
 </footer>
 
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3 data-t-html="modalTitle">Chat with Alice</h3>
+    <p data-t="modalSub">Choose how you'd like to reach her. She usually replies within an hour.</p>
+    <div class="modal-btns">
+      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20a%20rental%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" class="modal-btn whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://zalo.me/84787664959" target="_blank" class="modal-btn zalo">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16c-.169-.077-.348-.14-.539-.186a5.372 5.372 0 00-.607-.108c-.206-.026-.416-.04-.63-.04-2.68 0-4.853 2.17-4.853 4.848 0 .542.09 1.064.254 1.551l.013.036c-.702-.04-1.375-.2-1.996-.468a8.192 8.192 0 01-1.768-1.078 8.267 8.267 0 01-1.416-1.513 8.124 8.124 0 01-.98-1.805c-.073-.19-.135-.383-.19-.579A4.807 4.807 0 015.6 7.492c0-1.137.395-2.182 1.054-3.004a4.81 4.81 0 013.738-1.82h3.216a4.81 4.81 0 013.738 1.82 4.785 4.785 0 011.054 3.004c0 .234-.017.465-.05.691a.324.324 0 01-.087.166c-.15.15-.395.15-.545 0a.322.322 0 01-.087-.166 3.166 3.166 0 00-.063-.023zM8.4 14.4h1.2v-4.8H8.4v4.8zm3.6 0h1.2V9.6H12v4.8zm3.6-3.6h1.2V9.6h-1.2v1.2zm0 3.6h1.2v-2.4h-1.2v2.4z"/></svg>
+        Zalo
+      </a>
+    </div>
+    <button class="modal-close" onclick="closeModal()" data-t="modalClose">Maybe later</button>
+  </div>
+</div>
+
+<script>
+  function openModal() { document.getElementById('contactModal').classList.add('open'); }
+  function closeModal() { document.getElementById('contactModal').classList.remove('open'); }
+</script>
+
 <script>
   // ── CONFIG: Google Sheet ID ──
   const SHEET_ID = 'YOUR_SHEET_ID_HERE';
@@ -677,8 +739,8 @@ const T = {
 
   function buildCard(listing) {
     const s = T[currentLang];
-    const typeClass = listing.type === 'sale' ? 'badge-sale' : 'badge-rent';
-    const badgeText = listing.type === 'sale' ? s.badgeSale : s.badgeRent;
+    const typeClass = 'badge-rent';
+    const badgeText = s.badgeRent;
     const pinSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>';
     const bedSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11a2 2 0 002 2h14a2 2 0 002-2V7"/><path d="M2 7h20M7 7V4a1 1 0 011-1h8a1 1 0 011 1v3"/></svg>';
     const bathSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M4 12V6a4 4 0 018 0"/><circle cx="8" cy="8" r="1"/></svg>';
