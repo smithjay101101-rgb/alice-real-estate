@@ -12,15 +12,15 @@
     --ink: #1A3C40;
     --secondary: #4A6E73;
     --muted: #8BAAAD;
-    --border: rgba(0,188,180,0.12);
-    --border-solid: rgba(0,188,180,0.18);
-    --accent: #00BCB4;
-    --accent-deep: #009E97;
-    --accent-soft: rgba(0,188,180,.06);
+    --border: rgba(29,165,156,0.12);
+    --border-solid: rgba(29,165,156,0.18);
+    --accent: #1DA59C;
+    --accent-deep: #18918A;
+    --accent-soft: rgba(29,165,156,.06);
     --gold: #C9A84C;
     --gold-soft: rgba(201,168,76,.1);
-    --shadow-card: 0 20px 40px -15px rgba(0,188,180,0.08);
-    --shadow-hover: 0 24px 48px -12px rgba(0,188,180,0.14);
+    --shadow-card: 0 20px 40px -15px rgba(29,165,156,0.08);
+    --shadow-hover: 0 24px 48px -12px rgba(29,165,156,0.14);
     --sans: 'Satoshi', system-ui, sans-serif;
     --serif: 'Instrument Serif', Georgia, serif;
     --mono: 'JetBrains Mono', monospace;
@@ -36,7 +36,7 @@
   body::before {
     content: ''; position: fixed; top: -50%; right: -30%;
     width: 80vw; height: 80vw; border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,188,180,.04) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(29,165,156,.04) 0%, transparent 70%);
     pointer-events: none; z-index: -1;
   }
 
@@ -106,7 +106,7 @@
     font-family: var(--sans); font-size: .78rem; font-weight: 500;
     cursor: pointer; transition: all .3s var(--ease);
   }
-  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,188,180,.25); }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(29,165,156,.2); }
   .nav-cta:active { transform: scale(0.98); }
 
   .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
@@ -165,7 +165,7 @@
     font-family: var(--sans); font-size: .88rem; font-weight: 500;
     cursor: pointer; transition: all .3s var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,188,180,.25); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(29,165,156,.2); }
   .btn-primary:active { transform: scale(0.98); }
   .btn-outline {
     background: transparent; color: var(--ink);
@@ -287,21 +287,22 @@
 
   /* ── AREAS STRIP ── */
   .areas {
-    background: var(--accent); color: #fff;
+    background: var(--accent-soft); color: var(--ink);
     padding: 2.5rem 4vw;
     display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
   .areas-label {
     font-family: var(--mono); font-size: .6rem; text-transform: uppercase;
-    letter-spacing: .12em; opacity: .5; flex-shrink: 0;
+    letter-spacing: .12em; color: var(--muted); flex-shrink: 0;
   }
   .area-tags { display: flex; gap: .5rem; flex-wrap: wrap; }
   .area-tag {
-    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    background: var(--canvas); border: 1px solid var(--border-solid);
     padding: .45rem 1.1rem; border-radius: var(--radius-pill);
-    font-size: .78rem; font-weight: 400; transition: background .3s var(--ease);
+    font-size: .78rem; font-weight: 400; color: var(--secondary); transition: all .3s var(--ease);
   }
-  .area-tag:hover { background: rgba(255,255,255,.18); }
+  .area-tag:hover { border-color: var(--accent); color: var(--accent); }
 
   /* ── ABOUT ── */
   .about {
@@ -317,7 +318,7 @@
     background: url('dragon-bridge.jpg') center/cover no-repeat;
     opacity: .12;
     position: relative;
-    filter: sepia(.2) hue-rotate(130deg);
+    filter: sepia(.1) hue-rotate(130deg) saturate(.8);
   }
 
   .about-body { max-width: 460px; }
@@ -336,7 +337,7 @@
     transition: all .3s var(--ease);
   }
   .highlight:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
-  .highlight-icon { font-size: 1rem; margin-bottom: .5rem; font-family: var(--serif); color: var(--gold); font-weight: 600; }
+  .highlight-icon { font-size: 1rem; margin-bottom: .5rem; font-family: var(--serif); color: var(--accent); font-weight: 600; }
   .highlight strong {
     font-size: .82rem; display: block; margin-bottom: .2rem; color: var(--ink);
   }
@@ -364,10 +365,10 @@
   .testi-card::before {
     content: '\201C'; position: absolute; top: 16px; right: 20px;
     font-family: var(--serif); font-size: 3.5rem;
-    color: var(--gold-soft); line-height: 1;
+    color: var(--border); line-height: 1;
   }
   .testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
-  .testi-stars svg { width: 13px; height: 13px; fill: var(--gold); }
+  .testi-stars svg { width: 13px; height: 13px; fill: var(--accent); }
   .testi-text {
     font-size: .88rem; line-height: 1.8; color: var(--secondary);
     font-weight: 300; font-style: italic;
