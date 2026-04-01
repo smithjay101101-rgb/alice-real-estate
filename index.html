@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alice Real Estate — Đà Nẵng</title>
+<link rel="preload" as="image" href="underlay.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -362,7 +365,6 @@
     font-family: var(--font-mono); font-size: .65rem; font-weight: 500;
     letter-spacing: .12em; text-transform: uppercase; color: var(--color-primary-dark);
     margin-bottom: 2.5rem;
-    opacity: 0; animation: fadeUp .8s .2s forwards;
   }
   .hero-tag::before {
     content: ''; width: 20px; height: 1px; background: var(--gold);
@@ -373,7 +375,6 @@
     line-height: 1.1; letter-spacing: -.02em; font-weight: 400;
     color: var(--color-text-heading);
     text-shadow: 0 0 30px rgba(255,255,255,.6);
-    opacity: 0; animation: fadeUp .8s .35s forwards;
   }
   .hero h1 em { font-style: italic; color: var(--color-text-heading); }
 
@@ -381,41 +382,110 @@
     margin-top: 2rem; font-size: 1.05rem; line-height: 1.8;
     color: var(--color-text-body); font-weight: 300; max-width: 440px;
     text-shadow: 0 0 20px rgba(255,255,255,.8);
-    opacity: 0; animation: fadeUp .8s .5s forwards;
   }
 
   .hero-btns {
     margin-top: 2.8rem; display: flex; gap: 1rem; flex-wrap: wrap;
     align-items: center;
-    opacity: 0; animation: fadeUp .8s .65s forwards;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-tag    { opacity: 0; animation: fadeUp .6s ease-out .15s both; }
+    .hero h1     { opacity: 0; animation: fadeUp .6s ease-out .3s both; }
+    .hero-sub    { opacity: 0; animation: fadeUp .6s ease-out .45s both; }
+    .hero-btns   { opacity: 0; animation: fadeUp .6s ease-out .6s both; }
+    .search-bar  { opacity: 0; animation: fadeUp .6s ease-out .75s both; }
+    .hero-stats  { opacity: 0; animation: fadeUp .6s ease-out .9s both; }
   }
   .btn-primary {
-    background: var(--accent-deep); color: #fff; border: none;
-    padding: .9rem 2.2rem; min-height: 48px; border-radius: var(--radius-pill);
-    font-family: var(--sans); font-size: .86rem; font-weight: 500;
-    cursor: pointer; transition: all .3s var(--ease);
-    letter-spacing: .01em;
+    background: var(--color-primary); color: #fff; border: none;
+    padding: 14px 32px; min-height: 48px; border-radius: var(--radius-md);
+    font-family: var(--font-body); font-size: 1rem; font-weight: 500;
+    cursor: pointer; transition: all var(--transition-fast);
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
   }
-  .btn-primary:hover { background: var(--ink); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(26,60,64,.15); }
-  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29,158,117,.3);
+  }
+  .btn-primary:active { transform: translateY(0); box-shadow: none; transition-duration: 50ms; }
   .btn-outline {
-    background: transparent; color: var(--secondary);
-    border: 1px solid rgba(26,60,64,.18); padding: .9rem 2.2rem; min-height: 48px;
-    border-radius: var(--radius-pill); font-family: var(--sans); font-size: .86rem;
-    font-weight: 400; cursor: pointer; transition: all .3s var(--ease);
-    letter-spacing: .01em;
+    background: transparent; color: var(--color-primary);
+    border: 1.5px solid var(--color-primary); padding: 14px 32px; min-height: 48px;
+    border-radius: var(--radius-md); font-family: var(--font-body); font-size: 1rem;
+    font-weight: 500; cursor: pointer; transition: all var(--transition-fast);
+    display: inline-flex; align-items: center; gap: var(--space-sm);
   }
-  .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+  .btn-outline:hover { background: var(--color-primary-light); }
+  .btn-outline svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── SEARCH BAR ── */
+  .search-bar {
+    display: flex; align-items: flex-end; gap: var(--space-md);
+    background: var(--color-bg-white);
+    padding: var(--space-lg); border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    max-width: 700px;
+    margin-top: var(--space-xl);
+    transition: box-shadow var(--transition-fast);
+  }
+  .search-field { flex: 1; min-width: 0; }
+  .search-label {
+    display: block; font-size: .75rem; font-weight: 500;
+    color: var(--color-text-muted); text-transform: uppercase;
+    letter-spacing: .05em; margin-bottom: var(--space-xs);
+    font-family: var(--font-body);
+  }
+  .search-select {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body); font-size: .9rem;
+    color: var(--color-text-body);
+    background: var(--color-bg-white);
+    cursor: pointer;
+    transition: border-color var(--transition-fast);
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+  .search-select:hover { border-color: var(--color-primary); }
+  .search-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(29,158,117,.15);
+  }
+  .search-bar:focus-within {
+    box-shadow: var(--shadow-lg), 0 0 0 3px rgba(29,158,117,.12);
+  }
+  .search-btn { white-space: nowrap; padding: 12px 28px; flex-shrink: 0; }
+  .search-btn.is-loading {
+    pointer-events: none; opacity: .7; position: relative;
+    color: transparent;
+  }
+  .search-btn.is-loading::after {
+    content: ''; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .6s linear infinite;
+  }
+  @keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
 
   .hero-stats {
     display: flex; gap: 4rem; margin-top: 3.5rem;
     padding-top: 2.5rem; border-top: 1px solid rgba(26,60,64,.08);
-    opacity: 0; animation: fadeUp .8s .8s forwards;
   }
   .stat-num {
     font-family: var(--font-heading); font-size: 2.2rem; color: var(--color-primary);
     line-height: 1; letter-spacing: -.02em;
     text-shadow: 0 0 16px rgba(255,255,255,.6);
+    font-variant-numeric: tabular-nums;
   }
   .stat-label {
     font-family: var(--font-mono); font-size: .6rem; color: var(--color-text-muted);
@@ -648,7 +718,7 @@
     max-width: 280px; line-height: 1.7;
   }
   .footer-links { display: flex; gap: 4rem; }
-  .footer-col h4 {
+  .footer-col h3 {
     font-family: var(--mono); font-size: .6rem; text-transform: uppercase;
     letter-spacing: .1em; color: var(--muted); margin-bottom: .8rem;
   }
@@ -750,9 +820,15 @@
     }
     .hero-btns .btn-primary,
     .hero-btns .btn-outline {
-      width: 100%; text-align: center;
+      width: 100%; text-align: center; justify-content: center;
       padding: 1rem; min-height: 48px;
     }
+    .search-bar {
+      flex-direction: column; max-width: 100%;
+      padding: var(--space-md);
+    }
+    .search-field { width: 100%; }
+    .search-btn { width: 100%; }
     .hero-stats {
       gap: 0; flex-direction: column;
       text-align: center; margin-top: 2.5rem;
@@ -942,7 +1018,7 @@ const T = {
 <main id="main">
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-underlay-wrap">
-    <img src="underlay.png" alt="" role="presentation" loading="eager" decoding="async">
+    <img src="underlay.png" alt="Aerial view of Đà Nẵng coastline showing Mỹ Khê beach and city skyline" width="1400" height="800" loading="eager" decoding="async">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -950,13 +1026,50 @@ const T = {
     <h1 id="hero-heading" data-t-html="heroH1">Find your <em>perfect</em> home<br>in Đà Nẵng</h1>
     <p class="hero-sub" data-t="heroSub">Discover coastal living at its finest.</p>
     <div class="hero-btns">
-      <button class="btn-primary" data-t="btnListings">Browse Listings</button>
-      <button class="btn-outline" data-t="btnCall" onclick="openModal()">Schedule a Call</button>
+      <a href="#listings" class="btn-primary" data-t="btnListings">See Available Rentals</a>
+      <button class="btn-outline" data-t="btnCall" onclick="openModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span data-t="btnCall">Chat with Alice</span>
+      </button>
     </div>
-    <div class="hero-stats">
-      <div><div class="stat-num" data-t="stat1">250+</div><div class="stat-label" data-t="stat1L">Homes Sold</div></div>
-      <div><div class="stat-num" data-t="stat2">12</div><div class="stat-label" data-t="stat2L">Years Experience</div></div>
-      <div><div class="stat-num" data-t="stat3">98%</div><div class="stat-label" data-t="stat3L">Client Satisfaction</div></div>
+    <form class="search-bar" action="#listings" method="get">
+      <div class="search-field">
+        <label for="location" class="search-label">Location</label>
+        <select id="location" name="location" class="search-select">
+          <option value="">All neighborhoods</option>
+          <option value="my-an">Mỹ An</option>
+          <option value="son-tra">Sơn Trà</option>
+          <option value="hai-chau">Hải Châu</option>
+          <option value="ngu-hanh-son">Ngũ Hành Sơn</option>
+          <option value="cam-le">Cẩm Lệ</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="budget" class="search-label">Budget</label>
+        <select id="budget" name="budget" class="search-select">
+          <option value="">Any price</option>
+          <option value="0-500">Under $500/mo</option>
+          <option value="500-1000">$500 – $1,000/mo</option>
+          <option value="1000-2000">$1,000 – $2,000/mo</option>
+          <option value="2000+">$2,000+/mo</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="bedrooms" class="search-label">Bedrooms</label>
+        <select id="bedrooms" name="bedrooms" class="search-select">
+          <option value="">Any</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4+ beds</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary search-btn">Search</button>
+    </form>
+    <div class="hero-stats" id="heroStats">
+      <div><div class="stat-num" data-t="stat1" data-count-target="250" data-count-suffix="+">0+</div><div class="stat-label" data-t="stat1L">Homes Sold</div></div>
+      <div><div class="stat-num" data-t="stat2" data-count-target="12" data-count-suffix="">0</div><div class="stat-label" data-t="stat2L">Years Experience</div></div>
+      <div><div class="stat-num" data-t="stat3" data-count-target="98" data-count-suffix="%">0%</div><div class="stat-label" data-t="stat3L">Client Satisfaction</div></div>
     </div>
   </div>
 </section>
@@ -1037,14 +1150,14 @@ const T = {
   </div>
   <div class="footer-links">
     <div class="footer-col">
-      <h4 data-t="footNav">Navigate</h4>
+      <h3 data-t="footNav">Navigate</h4>
       <a href="#listings" data-t="navListings">Listings</a>
       <a href="#about" data-t="navAbout">About</a>
       <a href="#testimonials" data-t="navTestimonials">Testimonials</a>
       <a href="#contact" data-t="navContact">Contact</a>
     </div>
     <div class="footer-col">
-      <h4 data-t="footContact">Contact</h4>
+      <h3 data-t="footContact">Contact</h4>
       <a href="mailto:alicepham89@gmail.com">alicepham89@gmail.com</a>
       <a href="tel:+84787664959">+84 787 664 959</a>
       <a href="https://zalo.me/84787664959">Zalo</a>
@@ -1198,6 +1311,7 @@ const T = {
     currentLang = lang;
     const s = T[lang];
     document.querySelectorAll('[data-t]').forEach(el => {
+      if (el.hasAttribute('data-count-target')) return;
       const k = el.getAttribute('data-t');
       if (s[k]) el.textContent = s[k];
     });
@@ -1247,6 +1361,48 @@ const T = {
       renderListings(btn.getAttribute('data-filter'));
     });
   });
+
+  // ── STATS COUNT-UP ANIMATION ──
+  function createCountUp(element, target, suffix, duration) {
+    suffix = suffix || '';
+    duration = duration || 2000;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      element.textContent = target + suffix;
+      return;
+    }
+    var startTime = null;
+    function animate(currentTime) {
+      if (!startTime) startTime = currentTime;
+      var elapsed = currentTime - startTime;
+      var progress = Math.min(elapsed / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        element.textContent = target + suffix;
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  var statsSection = document.getElementById('heroStats');
+  if (statsSection) {
+    var statsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var statEls = entry.target.querySelectorAll('[data-count-target]');
+          statEls.forEach(function(el, index) {
+            var target = parseInt(el.dataset.countTarget, 10);
+            var suffix = el.dataset.countSuffix || '';
+            setTimeout(function() { createCountUp(el, target, suffix); }, index * 200);
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    statsObserver.observe(statsSection);
+  }
 </script>
 </body>
 </html>
