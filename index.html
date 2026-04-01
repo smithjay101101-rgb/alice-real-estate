@@ -7,17 +7,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Satoshi:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --canvas: #F7F6F3;
+    --canvas: #FFFFFF;
     --surface: #FFFFFF;
-    --ink: #18181B;
-    --secondary: #71717A;
-    --muted: #94A3B8;
-    --border: rgba(226,232,240,0.5);
-    --border-solid: #EAEAEA;
-    --accent: #10B981;
-    --accent-soft: rgba(16,185,129,.08);
-    --shadow-card: 0 20px 40px -15px rgba(0,0,0,0.05);
-    --shadow-hover: 0 24px 48px -12px rgba(0,0,0,0.1);
+    --ink: #1A3C40;
+    --secondary: #4A6E73;
+    --muted: #8BAAAD;
+    --border: rgba(0,188,180,0.12);
+    --border-solid: rgba(0,188,180,0.18);
+    --accent: #00BCB4;
+    --accent-deep: #009E97;
+    --accent-soft: rgba(0,188,180,.06);
+    --gold: #C9A84C;
+    --gold-soft: rgba(201,168,76,.1);
+    --shadow-card: 0 20px 40px -15px rgba(0,188,180,0.08);
+    --shadow-hover: 0 24px 48px -12px rgba(0,188,180,0.14);
     --sans: 'Satoshi', system-ui, sans-serif;
     --serif: 'Instrument Serif', Georgia, serif;
     --mono: 'JetBrains Mono', monospace;
@@ -30,6 +33,12 @@
   html { scroll-behavior: auto; }
 
   ::selection { background: var(--accent); color: #fff; }
+  body::before {
+    content: ''; position: fixed; top: -50%; right: -30%;
+    width: 80vw; height: 80vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,188,180,.04) 0%, transparent 70%);
+    pointer-events: none; z-index: -1;
+  }
 
   body {
     font-family: var(--sans);
@@ -45,7 +54,7 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 4vw;
-    background: rgba(247,246,243,0.8);
+    background: rgba(255,255,255,0.85);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     transition: all .5s var(--ease);
@@ -59,7 +68,7 @@
     font-family: var(--serif); font-size: 1.5rem;
     color: var(--ink); letter-spacing: -.02em;
   }
-  .logo span { color: var(--accent); }
+  .logo span { color: var(--gold); }
 
   .nav-mid { display: flex; align-items: center; gap: 2.5rem; }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
@@ -72,7 +81,7 @@
   .nav-links.show {
     display: flex !important; flex-direction: column;
     position: absolute; top: 100%; left: 0; right: 0;
-    background: rgba(247,246,243,0.96); backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.96); backdrop-filter: blur(20px);
     padding: 1.5rem 4vw; gap: 1rem;
     border-bottom: 1px solid var(--border);
   }
@@ -88,16 +97,16 @@
     font-family: var(--mono); font-size: .65rem; font-weight: 500;
     cursor: pointer; color: var(--muted); transition: all .3s var(--ease);
   }
-  .lang-btn.active { background: var(--ink); color: #fff; }
+  .lang-btn.active { background: var(--accent); color: #fff; }
   .lang-btn:not(:last-child) { border-right: 1px solid var(--border-solid); }
 
   .nav-cta {
-    background: var(--ink); color: #fff; border: none;
+    background: var(--accent); color: #fff; border: none;
     padding: .55rem 1.4rem; border-radius: var(--radius-pill);
     font-family: var(--sans); font-size: .78rem; font-weight: 500;
     cursor: pointer; transition: all .3s var(--ease);
   }
-  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,188,180,.25); }
   .nav-cta:active { transform: scale(0.98); }
 
   .mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
@@ -151,12 +160,12 @@
     opacity: 0; animation: fadeUp .8s .65s forwards;
   }
   .btn-primary {
-    background: var(--ink); color: #fff; border: none;
+    background: var(--accent); color: #fff; border: none;
     padding: .9rem 2.4rem; border-radius: var(--radius-pill);
     font-family: var(--sans); font-size: .88rem; font-weight: 500;
     cursor: pointer; transition: all .3s var(--ease);
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.15); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,188,180,.25); }
   .btn-primary:active { transform: scale(0.98); }
   .btn-outline {
     background: transparent; color: var(--ink);
@@ -172,7 +181,7 @@
     opacity: 0; animation: fadeUp .8s .8s forwards;
   }
   .stat-num {
-    font-family: var(--serif); font-size: 2.5rem; color: var(--ink);
+    font-family: var(--serif); font-size: 2.5rem; color: var(--gold);
     line-height: 1; letter-spacing: -.02em;
   }
   .stat-label {
@@ -211,7 +220,7 @@
     color: var(--secondary); cursor: pointer; transition: all .3s var(--ease);
   }
   .filter-btn:hover { border-color: var(--ink); color: var(--ink); }
-  .filter-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
   .listings-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
@@ -278,7 +287,7 @@
 
   /* ── AREAS STRIP ── */
   .areas {
-    background: var(--ink); color: #fff;
+    background: var(--accent); color: #fff;
     padding: 2.5rem 4vw;
     display: flex; align-items: center; gap: 3rem; flex-wrap: wrap;
   }
@@ -306,8 +315,9 @@
   .about-portrait {
     aspect-ratio: 4/5; border-radius: var(--radius-card); overflow: hidden;
     background: url('dragon-bridge.jpg') center/cover no-repeat;
-    opacity: .15;
+    opacity: .12;
     position: relative;
+    filter: sepia(.2) hue-rotate(130deg);
   }
 
   .about-body { max-width: 460px; }
@@ -326,7 +336,7 @@
     transition: all .3s var(--ease);
   }
   .highlight:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
-  .highlight-icon { font-size: 1rem; margin-bottom: .5rem; }
+  .highlight-icon { font-size: 1rem; margin-bottom: .5rem; font-family: var(--serif); color: var(--gold); font-weight: 600; }
   .highlight strong {
     font-size: .82rem; display: block; margin-bottom: .2rem; color: var(--ink);
   }
@@ -354,10 +364,10 @@
   .testi-card::before {
     content: '\201C'; position: absolute; top: 16px; right: 20px;
     font-family: var(--serif); font-size: 3.5rem;
-    color: var(--border-solid); line-height: 1;
+    color: var(--gold-soft); line-height: 1;
   }
   .testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
-  .testi-stars svg { width: 13px; height: 13px; fill: var(--accent); }
+  .testi-stars svg { width: 13px; height: 13px; fill: var(--gold); }
   .testi-text {
     font-size: .88rem; line-height: 1.8; color: var(--secondary);
     font-weight: 300; font-style: italic;
