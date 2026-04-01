@@ -114,20 +114,29 @@
   /* ── HERO ── */
   .hero {
     min-height: 100dvh;
-    display: flex; align-items: center;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 4rem;
     padding: 8rem 4vw 6rem;
     position: relative; overflow: hidden;
     max-width: 1400px; margin: 0 auto;
   }
-  .hero::after {
-    content: ''; position: absolute; bottom: -2%; left: -5%; right: -5%;
-    height: 50%;
-    background: url('dragon-bridge.jpg') center bottom / contain no-repeat;
-    opacity: .1;
-    pointer-events: none;
-  }
 
   .hero-content { max-width: 680px; position: relative; z-index: 1; }
+
+  .hero-image {
+    position: relative; border-radius: var(--radius-card); overflow: hidden;
+    aspect-ratio: 3/4; box-shadow: var(--shadow-card);
+  }
+  .hero-image img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform .6s var(--ease);
+  }
+  .hero-image:hover img { transform: scale(1.03); }
+  .hero-image::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(29,165,156,.08) 0%, transparent 40%);
+    pointer-events: none;
+  }
 
   .hero-tag {
     display: inline-flex; align-items: center; gap: .5rem;
@@ -315,10 +324,14 @@
 
   .about-portrait {
     aspect-ratio: 4/5; border-radius: var(--radius-card); overflow: hidden;
-    background: url('dragon-bridge.jpg') center/cover no-repeat;
-    opacity: .12;
+    background: var(--accent-soft);
+    display: flex; align-items: center; justify-content: center;
     position: relative;
-    filter: sepia(.1) hue-rotate(130deg) saturate(.8);
+    border: 1px solid var(--border);
+  }
+  .about-portrait .portrait-placeholder {
+    font-family: var(--serif); font-size: 4rem; color: var(--accent);
+    opacity: .3; letter-spacing: -.03em;
   }
 
   .about-body { max-width: 460px; }
@@ -478,6 +491,8 @@
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .mobile-toggle { display: block; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-image { max-height: 360px; aspect-ratio: 16/9; }
     .hero-stats { gap: 2rem; flex-wrap: wrap; }
     .hero h1 { font-size: 2.4rem; }
     section { padding: 5rem 5vw; }
@@ -609,6 +624,9 @@ const T = {
       <div><div class="stat-num" data-t="stat3">98%</div><div class="stat-label" data-t="stat3L">Client Satisfaction</div></div>
     </div>
   </div>
+  <div class="hero-image reveal visible">
+    <img src="golden-bridge.jpg" alt="Golden Bridge, Đà Nẵng">
+  </div>
 </section>
 
 <!-- AREAS -->
@@ -638,7 +656,7 @@ const T = {
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <div class="about-portrait reveal"></div>
+  <div class="about-portrait reveal"><span class="portrait-placeholder">Alice.</span></div>
   <div class="about-body reveal">
     <div class="section-tag" data-t="aboutTag">About Alice</div>
     <h2 class="section-title" data-t-html="aboutTitle">Real estate,<br>made personal</h2>
