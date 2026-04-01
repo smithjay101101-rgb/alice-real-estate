@@ -595,36 +595,47 @@
 
   /* ── AREAS STRIP ── */
   .areas {
-    background: var(--accent-soft); color: var(--ink);
-    padding: 2.5rem 4vw;
-    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    background: rgba(29, 158, 117, 0.04);
+    padding: 3.5rem 4vw;
     border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   }
   .areas-label {
-    font-family: var(--mono); font-size: .6rem; text-transform: uppercase;
-    letter-spacing: .12em; color: var(--muted); flex-shrink: 0;
+    font-family: var(--font-mono); font-size: .75rem; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--color-text-muted);
+    text-align: center; margin-bottom: var(--space-xl);
   }
-  .area-tags { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
-  .area-tag {
-    background: var(--canvas); border: 1px solid var(--border-solid);
-    padding: .55rem 1.4rem; border-radius: var(--radius-pill);
-    font-size: .82rem; font-weight: 500; color: var(--secondary);
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,.04), 0 6px 16px rgba(0,0,0,.03);
-    transition: all .3s var(--ease);
-    opacity: 0; animation: fadeUp .5s var(--ease) forwards;
+  .neighborhoods-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg); max-width: 800px; margin: 0 auto;
   }
-  .area-tag:nth-child(1) { animation-delay: .1s; }
-  .area-tag:nth-child(2) { animation-delay: .2s; }
-  .area-tag:nth-child(3) { animation-delay: .3s; }
-  .area-tag:nth-child(4) { animation-delay: .35s; }
-  .area-tag:nth-child(5) { animation-delay: .4s; }
-  .area-tag:hover {
-    border-color: var(--accent); color: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(29,165,156,.1), 0 8px 24px rgba(29,165,156,.06);
+  .neighborhood-card {
+    display: flex; flex-direction: column;
+    padding: var(--space-lg) var(--space-xl);
+    border: 1.5px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-white);
+    cursor: pointer; transition: all var(--transition-fast);
+    text-align: center; text-decoration: none;
   }
-  .area-tag:active { transform: scale(.96) translateY(0); }
+  .neighborhood-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md); transform: translateY(-2px);
+  }
+  .neighborhood-card:active { transform: translateY(0); }
+  .neighborhood-card:focus-visible {
+    outline: 2px solid var(--color-primary); outline-offset: 4px;
+  }
+  .neighborhood-card--featured {
+    border-color: var(--color-border-light);
+    background: var(--color-bg-white);
+  }
+  .neighborhood-card-title {
+    font-family: var(--font-heading); font-size: 1.25rem;
+    color: var(--color-text-heading); margin-bottom: var(--space-xs);
+  }
+  .neighborhood-card-subtitle {
+    font-size: .875rem; color: var(--color-text-muted);
+  }
 
   /* ── ABOUT ── */
   .about {
@@ -867,7 +878,11 @@
     }
 
     section { padding: 4rem 5vw; }
-    .areas { gap: 1.2rem; padding: 2rem 5vw; }
+    .areas { padding: 2.5rem 5vw; }
+    .neighborhoods-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-md); padding: 0 var(--space-md);
+    }
     .about { grid-template-columns: 1fr; gap: 3rem; }
     .about-highlights { grid-template-columns: 1fr; }
     .testi-grid { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; }
@@ -904,7 +919,6 @@ const T = {
     stat2: "12", stat2L: "Years in Đà Nẵng",
     stat3: "98%", stat3L: "Happy Tenants",
     areasLabel: "Neighborhoods we know inside out",
-    areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
     aboutTag: "Why Alice", aboutTitle: "Your rental search,<br>handled",
     aboutP1: "Moving to a new city is hard enough. Finding the right home shouldn\u2019t be. With 12 years in the Đà Nẵng rental market, Alice knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.",
     aboutP2: "She works with expats, remote workers, and Vietnamese families \u2014 in English and Vietnamese. Tell her what you need, and she\u2019ll send you a shortlist of places worth seeing. No pressure, no fees until you sign.",
@@ -942,7 +956,6 @@ const T = {
     stat2: "12", stat2L: "Năm tại Đà Nẵng",
     stat3: "98%", stat3L: "Khách Thuê Hài Lòng",
     areasLabel: "Khu vực chúng tôi am hiểu",
-    areas: ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Mỹ An", "Khê Mỹ", "Thanh Khê", "Liên Chiểu", "Hội An"],
     aboutTag: "Vì sao chọn Alice", aboutTitle: "Việc tìm nhà,<br>để Alice lo",
     aboutP1: "Chuyển đến thành phố mới đã đủ vất vả. Tìm nhà không nên khó thêm. Với 12 năm kinh nghiệm tại thị trường cho thuê Đà Nẵng, Alice biết chủ nhà nào uy tín, con đường nào hay ngập mùa mưa, và quán cà phê sáng nào ngon nhất.",
     aboutP2: "Alice hỗ trợ người nước ngoài, người làm việc từ xa và gia đình Việt Nam \u2014 bằng tiếng Anh và tiếng Việt. Hãy cho Alice biết bạn cần gì, chị ấy sẽ gửi danh sách ngắn những nơi đáng xem. Không áp lực, không phí cho đến khi bạn ký hợp đồng.",
@@ -1036,11 +1049,12 @@ const T = {
         <span data-t="btnCall">Chat with Alice</span>
       </button>
     </div>
-    <form class="search-bar" action="#listings" method="get">
+    <form class="search-bar" action="/rentals" method="get" id="searchForm">
       <div class="search-field">
         <label for="location" class="search-label">Location</label>
         <select id="location" name="location" class="search-select">
           <option value="">All neighborhoods</option>
+          <option value="my-khe">Mỹ Khê</option>
           <option value="my-an">Mỹ An</option>
           <option value="son-tra">Sơn Trà</option>
           <option value="hai-chau">Hải Châu</option>
@@ -1080,8 +1094,21 @@ const T = {
 
 <!-- AREAS -->
 <div class="areas">
-  <div class="areas-label" data-t="areasLabel">Neighborhoods we serve</div>
-  <div class="area-tags" id="areaTags"></div>
+  <div class="areas-label" data-t="areasLabel">Neighborhoods we know inside out</div>
+  <div class="neighborhoods-grid">
+    <a href="/rentals?location=my-khe" class="neighborhood-card neighborhood-card--featured">
+      <span class="neighborhood-card-title">Mỹ Khê</span>
+      <span class="neighborhood-card-subtitle">Beach lifestyle</span>
+    </a>
+    <a href="/rentals?location=son-tra" class="neighborhood-card">
+      <span class="neighborhood-card-title">Sơn Trà</span>
+      <span class="neighborhood-card-subtitle">Beach &amp; luxury villas</span>
+    </a>
+    <a href="/rentals?location=hai-chau" class="neighborhood-card">
+      <span class="neighborhood-card-title">Hải Châu</span>
+      <span class="neighborhood-card-subtitle">City center &amp; expats</span>
+    </a>
+  </div>
 </div>
 
 <!-- LISTINGS -->
@@ -1323,7 +1350,6 @@ const T = {
       const k = el.getAttribute('data-t-html');
       if (s[k]) el.innerHTML = s[k];
     });
-    document.getElementById('areaTags').innerHTML = s.areas.map(a => '<span class="area-tag">' + a + '</span>').join('');
     document.querySelectorAll('.lang-btn').forEach(b => {
       const isActive = b.textContent.trim().toLowerCase() === lang;
       b.classList.toggle('active', isActive);
@@ -1407,6 +1433,20 @@ const T = {
     }, { threshold: 0.3 });
     statsObserver.observe(statsSection);
   }
+
+  // Search form: build /rentals URL with only non-default params
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var params = new URLSearchParams();
+    var loc = document.getElementById('location').value;
+    var budget = document.getElementById('budget').value;
+    var beds = document.getElementById('bedrooms').value;
+    if (loc) params.set('location', loc);
+    if (budget) params.set('budget', budget);
+    if (beds) params.set('bedrooms', beds);
+    var query = params.toString();
+    window.location.href = '/rentals' + (query ? '?' + query : '');
+  });
 </script>
 </body>
 </html>
