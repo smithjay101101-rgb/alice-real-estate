@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alice Real Estate — Đà Nẵng</title>
+<title>Alice Real Estate | Rentals in Đà Nẵng for Expats</title>
+<meta name="description" content="Alice matches expats and families with vetted, move-in ready rentals across Đà Nẵng's best neighborhoods. No pressure, no fees until you sign.">
 <link rel="preload" as="image" href="underlay.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -383,8 +384,8 @@
   .hero h1 em { font-style: italic; color: var(--color-text-heading); }
 
   .hero-sub {
-    margin-top: 2rem; font-size: 1.05rem; line-height: 1.8;
-    color: var(--color-text-body); font-weight: 300; max-width: 440px;
+    margin-top: 2rem; font-family: var(--font-body); font-size: 1rem; line-height: 1.7;
+    color: var(--color-text-body); font-weight: 300; max-width: 520px;
     text-shadow: 0 0 20px rgba(255,255,255,.8);
   }
 
@@ -657,11 +658,27 @@
     transform: translateY(20px); transition: transform .3s ease;
   }
   .lightbox-overlay.is-open .lightbox-panel { transform: translateY(0); }
+  .lightbox-gallery-wrap {
+    position: relative;
+  }
   .lightbox-gallery {
     display: flex; gap: var(--space-sm);
     overflow-x: auto; scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch; padding: var(--space-md);
+    scroll-behavior: smooth;
   }
+  .lightbox-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(0,0,0,.5); border: none; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 5;
+    transition: background var(--transition-fast), opacity var(--transition-fast);
+    opacity: .8;
+  }
+  .lightbox-arrow:hover { background: rgba(0,0,0,.75); opacity: 1; }
+  .lightbox-arrow.prev { left: 12px; }
+  .lightbox-arrow.next { right: 12px; }
   .lightbox-gallery::-webkit-scrollbar { height: 4px; }
   .lightbox-gallery::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 2px; }
   .lightbox-gallery img {
@@ -1089,38 +1106,38 @@
 const T = {
   en: {
     navAbout: "About", navTestimonials: "Stories", navContact: "Contact", navListings: "Rentals",
-    navCta: "Send Alice a Message",
-    heroTag: "Premium Rentals in Đà Nẵng",
-    heroH1: 'Find your <em>perfect</em> home in <span class="coral">Đà Nẵng</span>',
-    heroSub: "Skip the stress of searching alone. Alice matches expats and families with vetted, move-in ready rentals across Đà Nẵng\u2019s best neighborhoods \u2014 so you can settle in faster and enjoy life by the sea.",
-    btnListings: "See Available Rentals", btnCall: "Chat with Alice",
+    navCta: "Message Alice",
+    heroTag: "Đà Nẵng Rentals for Expats",
+    heroH1: 'Your next home in<br><span class="coral">Đà Nẵng</span> is sorted',
+    heroSub: "Alice helps expats, remote workers, and families find apartments in Đà Nẵng. She knows the landlords, the buildings, and the neighborhoods. Tell her what you need and she will send you a shortlist of places worth seeing.",
+    btnListings: "Browse Rentals", btnCall: "Message Alice",
     stat1: "250+", stat1L: "Families Housed",
-    stat2: "12", stat2L: "Years in Đà Nẵng",
-    stat3: "98%", stat3L: "Happy Tenants",
-    areasLabel: "Neighborhoods we know inside out",
-    aboutTag: "Why Alice", aboutTitle: "Your rental search,<br>handled",
-    aboutP1: "Moving to a new city is hard enough. Finding the right home shouldn\u2019t be. With 6 years in the Đà Nẵng rental market, Alice knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.",
-    aboutP2: "She works with expats, remote workers, and Vietnamese families \u2014 in English and Vietnamese. Tell her what you need, and she\u2019ll send you a shortlist of places worth seeing. No pressure, no fees until you sign.",
-    h1Title: "Licensed Agent", h1Sub: "Đà Nẵng certified since 2019",
-    h2Title: "Local Expert", h2Sub: "Lived here 6+ years",
-    h3Title: "Bilingual", h3Sub: "English & Vietnamese",
+    stat2: "6", stat2L: "Years in Đà Nẵng",
+    stat3: "98%", stat3L: "Would Refer a Friend",
+    areasLabel: "Where most expats rent",
+    aboutTag: "Why Alice", aboutTitle: "She does the hard part<br>so you don't have to",
+    aboutP1: "Relocating is stressful enough without spending weeks on apartment hunting. Alice has been matching renters with homes in Đà Nẵng since 2019. She knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.",
+    aboutP2: "She speaks English and Vietnamese, so nothing gets lost in translation. Tell her your budget and your must-haves. She will send you a short list of places that actually fit. No pressure, no fees until you sign a lease.",
+    h1Title: "Licensed Since 2019", h1Sub: "Your lease is legit and your deposit is protected",
+    h2Title: "6 Years on the Ground", h2Sub: "She knows which streets flood and which landlords to avoid",
+    h3Title: "English and Vietnamese", h3Sub: "She handles the landlord conversations so you don't have to",
     h4Title: "Zero Upfront Fees", h4Sub: "You only pay when you sign",
-    testiTag: "What Tenants Say", testiTitle: "People who found home through Alice",
-    testiSub: "250+ families settled in Đà Nẵng. Here are a few of their stories.",
+    testiTag: "From Renters", testiTitle: "Real people, real moves",
+    testiSub: "A few stories from the 250+ families Alice has helped settle in Đà Nẵng.",
     t1Text: "\u201CWe landed in Đà Nẵng with two kids and no idea where to start. Alice had three apartments lined up before we even cleared customs. We signed within a week.\u201D",
     t1Name: "Maria & James K.", t1Role: "Relocated from London",
-    t2Text: "\u201CAlice found us a villa in Sơn Trà in two weeks \u2014 right budget, right neighborhood, pool for the kids. She even negotiated the lease down 15%.\u201D",
+    t2Text: "\u201CAlice found us a villa in Sơn Trà in two weeks. Right budget, right neighborhood, pool for the kids. She even negotiated the lease down 15%.\u201D",
     t2Name: "David R.", t2Role: "Family of four, Sơn Trà",
-    t3Text: "\u201CI\u2019m a remote worker who needed fast WiFi and a quiet street. Alice knew exactly which buildings to avoid and which ones had fiber. Moved in three days after my first message.\u201D",
-    t3Name: "Svetlana P.", t3Role: "Digital nomad from Moscow",
+    t3Text: "\u201CI needed fast WiFi and a quiet street. Alice knew exactly which buildings to avoid and which ones had fiber. Moved in three days after my first message.\u201D",
+    t3Name: "Svetlana P.", t3Role: "Remote worker from Moscow",
     listTag: "Available Now", listTitle: "Rentals in Đà Nẵng",
-    listSub: "Vetted properties, fair prices, ready to move in.",
+    listSub: "Every listing here has been checked by Alice. Fair prices, honest landlords, ready to move in.",
     filterRent: "For Rent",
     listMore: "See All Rentals",
     bedLabel: "Beds", bathLabel: "Baths", areaLabel: "m\u00B2",
     badgeRent: "For Rent",
-    footerDesc: "250+ families housed in Đà Nẵng since 2019. Send Alice a message \u2014 she usually replies within an hour.",
-    modalTitle: "Chat with Alice", modalSub: "Choose how you'd like to reach her. She usually replies within an hour.", modalClose: "Maybe later",
+    footerDesc: "250+ families housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour.",
+    modalTitle: "Get in touch", modalSub: "Pick whichever is easiest for you. Alice usually replies within an hour.", modalClose: "Maybe later",
     footNav: "Navigate", footContact: "Reach Alice",
     copy: "\u00A9 2026 Alice Real Estate. All rights reserved."
   },
@@ -1129,15 +1146,15 @@ const T = {
     navCta: "Nhắn tin cho Alice",
     heroTag: "Cho Thuê Cao Cấp tại Đà Nẵng",
     heroH1: 'Tìm ngôi nhà <em>hoàn hảo</em> tại <span class="coral">Đà Nẵng</span>',
-    heroSub: "Không cần tự mình tìm kiếm mệt mỏi. Alice giúp bạn tìm nhà cho thuê đã kiểm tra, sẵn sàng dọn vào tại những khu vực tốt nhất Đà Nẵng \u2014 để bạn an cư nhanh hơn và tận hưởng cuộc sống bên biển.",
+    heroSub: "Không cần tự mình tìm kiếm mệt mỏi. Alice giúp bạn tìm nhà cho thuê đã kiểm tra, sẵn sàng dọn vào tại những khu vực tốt nhất Đà Nẵng, để bạn an cư nhanh hơn và tận hưởng cuộc sống bên biển.",
     btnListings: "Xem Nhà Trống", btnCall: "Nhắn Tin Cho Alice",
     stat1: "250+", stat1L: "Gia Đình Đã An Cư",
-    stat2: "12", stat2L: "Năm tại Đà Nẵng",
+    stat2: "6", stat2L: "Năm tại Đà Nẵng",
     stat3: "98%", stat3L: "Khách Thuê Hài Lòng",
     areasLabel: "Khu vực chúng tôi am hiểu",
     aboutTag: "Vì sao chọn Alice", aboutTitle: "Việc tìm nhà,<br>để Alice lo",
     aboutP1: "Chuyển đến thành phố mới đã đủ vất vả. Tìm nhà không nên khó thêm. Với 6 năm kinh nghiệm tại thị trường cho thuê Đà Nẵng, Alice biết chủ nhà nào uy tín, con đường nào hay ngập mùa mưa, và quán cà phê sáng nào ngon nhất.",
-    aboutP2: "Alice hỗ trợ người nước ngoài, người làm việc từ xa và gia đình Việt Nam \u2014 bằng tiếng Anh và tiếng Việt. Hãy cho Alice biết bạn cần gì, chị ấy sẽ gửi danh sách ngắn những nơi đáng xem. Không áp lực, không phí cho đến khi bạn ký hợp đồng.",
+    aboutP2: "Alice hỗ trợ người nước ngoài, người làm việc từ xa và gia đình Việt Nam, bằng tiếng Anh và tiếng Việt. Hãy cho Alice biết bạn cần gì, chị ấy sẽ gửi danh sách ngắn những nơi đáng xem. Không áp lực, không phí cho đến khi bạn ký hợp đồng.",
     h1Title: "Chứng Chỉ Hành Nghề", h1Sub: "Đà Nẵng từ 2019",
     h2Title: "Chuyên Gia Địa Phương", h2Sub: "Sống tại đây hơn 6 năm",
     h3Title: "Song Ngữ", h3Sub: "Tiếng Anh & Tiếng Việt",
@@ -1146,7 +1163,7 @@ const T = {
     testiSub: "Hơn 250 gia đình đã an cư tại Đà Nẵng. Đây là một vài câu chuyện.",
     t1Text: "\u201CChúng tôi đến Đà Nẵng với hai con nhỏ và không biết bắt đầu từ đâu. Alice đã chuẩn bị sẵn ba căn hộ trước khi chúng tôi qua cửa hải quan. Ký hợp đồng trong một tuần.\u201D",
     t1Name: "Maria & James K.", t1Role: "Chuyển từ London",
-    t2Text: "\u201CAlice tìm cho gia đình tôi biệt thự ở Sơn Trà trong hai tuần \u2014 đúng ngân sách, đúng khu vực, có hồ bơi cho bọn trẻ. Chị còn thương lượng giảm 15% tiền thuê.\u201D",
+    t2Text: "\u201CAlice tìm cho gia đình tôi biệt thự ở Sơn Trà trong hai tuần. Đúng ngân sách, đúng khu vực, có hồ bơi cho bọn trẻ. Chị còn thương lượng giảm 15% tiền thuê.\u201D",
     t2Name: "David R.", t2Role: "Gia đình 4 người, Sơn Trà",
     t3Text: "\u201CTôi làm việc từ xa, cần WiFi nhanh và đường phố yên tĩnh. Alice biết chính xác tòa nhà nào nên tránh và tòa nào có cáp quang. Dọn vào sau ba ngày kể từ tin nhắn đầu tiên.\u201D",
     t3Name: "Svetlana P.", t3Role: "Nomad kỹ thuật số từ Moscow",
@@ -1156,7 +1173,7 @@ const T = {
     listMore: "Xem Tất Cả Nhà Trống",
     bedLabel: "PN", bathLabel: "WC", areaLabel: "m\u00B2",
     badgeRent: "Cho thuê",
-    footerDesc: "Hơn 250 gia đình đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice \u2014 thường trả lời trong vòng một giờ.",
+    footerDesc: "Hơn 250 gia đình đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice. Thường trả lời trong vòng một giờ.",
     modalTitle: "Nhắn tin cho Alice", modalSub: "Chọn cách bạn muốn liên hệ. Alice thường trả lời trong vòng một giờ.", modalClose: "Để sau",
     footNav: "Điều Hướng", footContact: "Liên Hệ Alice",
     copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền."
@@ -1170,9 +1187,9 @@ const T = {
   <div class="logo">Alice<span>.</span></div>
   <div class="nav-mid">
     <ul class="nav-links">
-      <li><a href="#listings" data-t="navListings" aria-current="page">Listings</a></li>
+      <li><a href="#listings" data-t="navListings" aria-current="page">Rentals</a></li>
       <li><a href="#about" data-t="navAbout">About</a></li>
-      <li><a href="#testimonials" data-t="navTestimonials">Testimonials</a></li>
+      <li><a href="#testimonials" data-t="navTestimonials">Stories</a></li>
       <li><a href="#contact" data-t="navContact">Contact</a></li>
     </ul>
   </div>
@@ -1214,18 +1231,18 @@ const T = {
 <main id="main">
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-underlay-wrap">
-    <img src="underlay.png" alt="Đà Nẵng coastline from above — turquoise ocean and white sand beach with the city skyline in the distance" width="1400" height="800" loading="eager" decoding="async">
+    <img src="underlay.png" alt="Aerial view of Đà Nẵng coastline with turquoise ocean, white sand beach, and city skyline" width="1400" height="800" loading="eager" decoding="async">
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag"><span data-t="heroTag">Đà Nẵng Real Estate</span></div>
-    <h1 id="hero-heading" data-t-html="heroH1">Find your <em>perfect</em> home<br>in Đà Nẵng</h1>
-    <p class="hero-sub" data-t="heroSub">Discover coastal living at its finest.</p>
+    <div class="hero-tag"><span data-t="heroTag">Đà Nẵng Rentals for Expats</span></div>
+    <h1 id="hero-heading" data-t-html="heroH1">Your next home in<br><span class="coral">Đà Nẵng</span> is sorted</h1>
+    <p class="hero-sub" data-t="heroSub">Alice helps expats, remote workers, and families find apartments in Đà Nẵng. She knows the landlords, the buildings, and the neighborhoods. Tell her what you need and she will send you a shortlist of places worth seeing.</p>
     <div class="hero-btns">
-      <a href="#listings" class="btn-primary" data-t="btnListings">See Available Rentals</a>
+      <a href="#listings" class="btn-primary" data-t="btnListings">Browse Rentals</a>
       <button class="btn-outline" data-t="btnCall" onclick="openModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <span data-t="btnCall">Chat with Alice</span>
+        <span data-t="btnCall">Message Alice</span>
       </button>
     </div>
     <form class="search-bar" action="/rentals" method="get" id="searchForm">
@@ -1264,28 +1281,28 @@ const T = {
       <button type="submit" class="btn-primary search-btn">Search</button>
     </form>
     <div class="hero-stats" id="heroStats">
-      <div><div class="stat-num" data-t="stat1" data-count-target="250" data-count-suffix="+">0+</div><div class="stat-label" data-t="stat1L">Homes Sold</div></div>
-      <div><div class="stat-num" data-t="stat2" data-count-target="6" data-count-suffix="">0</div><div class="stat-label" data-t="stat2L">Years Experience</div></div>
-      <div><div class="stat-num" data-t="stat3" data-count-target="98" data-count-suffix="%">0%</div><div class="stat-label" data-t="stat3L">Client Satisfaction</div></div>
+      <div><div class="stat-num" data-t="stat1" data-count-target="250" data-count-suffix="+">250+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
+      <div><div class="stat-num" data-t="stat2" data-count-target="6" data-count-suffix="">6</div><div class="stat-label" data-t="stat2L">Years in Đà Nẵng</div></div>
+      <div><div class="stat-num" data-t="stat3" data-count-target="98" data-count-suffix="%">98%</div><div class="stat-label" data-t="stat3L">Would Refer a Friend</div></div>
     </div>
   </div>
 </section>
 
 <!-- AREAS -->
 <div class="areas">
-  <div class="areas-label" data-t="areasLabel">Neighborhoods we know inside out</div>
+  <div class="areas-label" data-t="areasLabel">Where most expats rent</div>
   <div class="neighborhoods-grid">
     <a href="/rentals?location=my-khe" class="neighborhood-card neighborhood-card--featured">
       <span class="neighborhood-card-title">Mỹ Khê</span>
-      <span class="neighborhood-card-subtitle">Beach lifestyle</span>
+      <span class="neighborhood-card-subtitle">Walk to the beach. Cafes and gyms everywhere.</span>
     </a>
     <a href="/rentals?location=son-tra" class="neighborhood-card">
       <span class="neighborhood-card-title">Sơn Trà</span>
-      <span class="neighborhood-card-subtitle">Beach &amp; luxury villas</span>
+      <span class="neighborhood-card-subtitle">Quiet streets, big villas, close to the peninsula.</span>
     </a>
     <a href="/rentals?location=hai-chau" class="neighborhood-card">
       <span class="neighborhood-card-title">Hải Châu</span>
-      <span class="neighborhood-card-subtitle">City center &amp; expats</span>
+      <span class="neighborhood-card-subtitle">City center. Best for nightlife and restaurants.</span>
     </a>
   </div>
 </div>
@@ -1293,9 +1310,9 @@ const T = {
 <!-- LISTINGS -->
 <section id="listings" class="listings-section">
   <div class="listings-container">
-    <p class="section-label">—— AVAILABLE NOW</p>
+    <p class="section-label">AVAILABLE NOW</p>
     <h2 class="listings-heading">Rentals in Đà Nẵng</h2>
-    <p class="listings-subtitle">Vetted properties, fair prices, ready to move in.</p>
+    <p class="listings-subtitle">Every listing here has been checked by Alice. Fair prices, honest landlords, ready to move in.</p>
     <div class="listings-grid" id="listingsGrid">
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
@@ -1313,13 +1330,13 @@ const T = {
     </div>
     <div class="about-content">
       <p class="section-label" data-t="aboutTag">Why Alice</p>
-      <h2 class="about-heading" data-t-html="aboutTitle">Your rental search,<br>handled</h2>
-      <p class="about-body" data-t="aboutP1"></p>
-      <p class="about-body" data-t="aboutP2"></p>
+      <h2 class="about-heading" data-t-html="aboutTitle">She does the hard part<br>so you don't have to</h2>
+      <p class="about-body" data-t="aboutP1">Relocating is stressful enough without spending weeks on apartment hunting. Alice has been matching renters with homes in Đà Nẵng since 2019. She knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.</p>
+      <p class="about-body" data-t="aboutP2">She speaks English and Vietnamese, so nothing gets lost in translation. Tell her your budget and your must-haves. She will send you a short list of places that actually fit. No pressure, no fees until you sign a lease.</p>
       <div class="credentials-grid">
-        <div class="credential-card"><span class="credential-number">01</span><h3 class="credential-title" data-t="h1Title">Licensed Agent</h3><p class="credential-desc" data-t="h1Sub">Đà Nẵng certified since 2019</p></div>
-        <div class="credential-card"><span class="credential-number">02</span><h3 class="credential-title" data-t="h2Title">Local Expert</h3><p class="credential-desc" data-t="h2Sub">Lived here 6+ years</p></div>
-        <div class="credential-card"><span class="credential-number">03</span><h3 class="credential-title" data-t="h3Title">Bilingual</h3><p class="credential-desc" data-t="h3Sub">English & Vietnamese</p></div>
+        <div class="credential-card"><span class="credential-number">01</span><h3 class="credential-title" data-t="h1Title">Licensed Since 2019</h3><p class="credential-desc" data-t="h1Sub">Your lease is legit and your deposit is protected</p></div>
+        <div class="credential-card"><span class="credential-number">02</span><h3 class="credential-title" data-t="h2Title">6 Years on the Ground</h3><p class="credential-desc" data-t="h2Sub">She knows which streets flood and which landlords to avoid</p></div>
+        <div class="credential-card"><span class="credential-number">03</span><h3 class="credential-title" data-t="h3Title">English and Vietnamese</h3><p class="credential-desc" data-t="h3Sub">She handles the landlord conversations so you don't have to</p></div>
 
       </div>
     </div>
@@ -1328,8 +1345,8 @@ const T = {
 
 <!-- TESTIMONIALS -->
 <section class="testimonials" id="testimonials">
-  <div class="section-tag" data-t="testiTag">Client Stories</div>
-  <h2 class="section-title reveal" data-t="testiTitle">What people are saying</h2>
+  <div class="section-tag" data-t="testiTag">From Renters</div>
+  <h2 class="section-title reveal" data-t="testiTitle">Real people, real moves</h2>
   <p class="section-sub reveal" data-t="testiSub"></p>
   <div class="testi-grid">
     <div class="testi-card reveal">
@@ -1361,9 +1378,9 @@ const T = {
   <div class="footer-links">
     <div class="footer-col">
       <h3 data-t="footNav">Navigate</h4>
-      <a href="#listings" data-t="navListings">Listings</a>
+      <a href="#listings" data-t="navListings">Rentals</a>
       <a href="#about" data-t="navAbout">About</a>
-      <a href="#testimonials" data-t="navTestimonials">Testimonials</a>
+      <a href="#testimonials" data-t="navTestimonials">Stories</a>
       <a href="#contact" data-t="navContact">Contact</a>
     </div>
     <div class="footer-col">
@@ -1380,8 +1397,8 @@ const T = {
 <!-- CONTACT MODAL -->
 <div class="modal-overlay" id="contactModal" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <h3 data-t-html="modalTitle">Chat with Alice</h3>
-    <p data-t="modalSub">Choose how you'd like to reach her. She usually replies within an hour.</p>
+    <h3 data-t-html="modalTitle">Get in touch</h3>
+    <p data-t="modalSub">Pick whichever is easiest for you. Alice usually replies within an hour.</p>
     <div class="modal-btns">
       <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20a%20rental%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" class="modal-btn whatsapp">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -1677,46 +1694,47 @@ const T = {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // ── STATS COUNT-UP ANIMATION ──
-  function createCountUp(element, target, suffix, duration) {
-    suffix = suffix || '';
-    duration = duration || 2000;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      element.textContent = target + suffix;
-      return;
-    }
+  function animateCountUp(element, target, suffix, duration) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    element.textContent = '0' + suffix;
     var startTime = null;
-    function animate(currentTime) {
-      if (!startTime) startTime = currentTime;
-      var elapsed = currentTime - startTime;
-      var progress = Math.min(elapsed / duration, 1);
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
       element.textContent = Math.floor(eased * target) + suffix;
       if (progress < 1) {
-        requestAnimationFrame(animate);
+        requestAnimationFrame(step);
       } else {
         element.textContent = target + suffix;
       }
     }
-    requestAnimationFrame(animate);
+    requestAnimationFrame(step);
   }
 
-  var statsSection = document.getElementById('heroStats');
-  if (statsSection) {
+  (function initStatsAnimation() {
+    var statNumbers = document.querySelectorAll('[data-count-target]');
+    if (!statNumbers.length) return;
+    var hasAnimated = false;
     var statsObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var statEls = entry.target.querySelectorAll('[data-count-target]');
-          statEls.forEach(function(el, index) {
+        if (entry.isIntersecting && !hasAnimated) {
+          hasAnimated = true;
+          statNumbers.forEach(function(el, index) {
             var target = parseInt(el.dataset.countTarget, 10);
             var suffix = el.dataset.countSuffix || '';
-            setTimeout(function() { createCountUp(el, target, suffix); }, index * 200);
+            if (isNaN(target)) return;
+            setTimeout(function() {
+              animateCountUp(el, target, suffix, 2000);
+            }, index * 200);
           });
-          statsObserver.unobserve(entry.target);
+          statsObserver.disconnect();
         }
       });
-    }, { threshold: 0.3 });
-    statsObserver.observe(statsSection);
-  }
+    }, { threshold: 0.2 });
+    var container = statNumbers[0].closest('.hero-stats') || statNumbers[0].parentElement.parentElement;
+    statsObserver.observe(container);
+  })();
 
   // About section scroll-triggered animation
   var aboutSection = document.querySelector('.about');
@@ -1761,7 +1779,15 @@ const T = {
     <button class="lightbox-close" aria-label="Close gallery">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
     </button>
-    <div class="lightbox-gallery" id="lightbox-gallery"></div>
+    <div class="lightbox-gallery-wrap">
+      <button class="lightbox-arrow prev" id="lightbox-prev" aria-label="Previous photo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="lightbox-gallery" id="lightbox-gallery"></div>
+      <button class="lightbox-arrow next" id="lightbox-next" aria-label="Next photo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
     <div class="lightbox-dots" id="lightbox-dots"></div>
     <div class="lightbox-info" id="lightbox-info"></div>
   </div>
@@ -1867,8 +1893,22 @@ const T = {
     if (e.target === document.getElementById('lightbox')) closeLightbox();
   });
   document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  function scrollLightbox(direction) {
+    var gallery = document.getElementById('lightbox-gallery');
+    var img = gallery.querySelector('img');
+    if (!img) return;
+    var itemWidth = img.offsetWidth + 8;
+    gallery.scrollBy({ left: direction * itemWidth, behavior: 'smooth' });
+  }
+
+  document.getElementById('lightbox-prev').addEventListener('click', function() { scrollLightbox(-1); });
+  document.getElementById('lightbox-next').addEventListener('click', function() { scrollLightbox(1); });
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && !document.getElementById('lightbox').hidden) closeLightbox();
+    if (document.getElementById('lightbox').hidden) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') scrollLightbox(-1);
+    if (e.key === 'ArrowRight') scrollLightbox(1);
   });
 </script>
 </body>
