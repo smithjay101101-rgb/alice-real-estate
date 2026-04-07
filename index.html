@@ -388,7 +388,7 @@
 
   .hero-sub {
     margin-top: 2rem; font-family: var(--font-body); font-size: 1rem; line-height: 1.7;
-    color: var(--color-text-body); font-weight: 300; max-width: 520px;
+    color: var(--color-text-body); font-weight: 300; max-width: 540px;
     text-shadow: 0 0 20px rgba(255,255,255,.8);
   }
 
@@ -982,6 +982,7 @@
     box-shadow: var(--shadow-hover);
   }
   .modal-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .modal-btn.whatsapp svg { color: #25D366; }
   .modal-btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
   .modal-btn.zalo:hover { border-color: #0068FF; color: #0068FF; }
   .modal-btn.phone:hover { border-color: var(--color-primary); color: var(--color-primary); }
@@ -1113,7 +1114,7 @@ const T = {
     navCta: "Message Alice",
     heroTag: "Đà Nẵng Rentals for Expats",
     heroH1: 'Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span>',
-    heroSub: "Alice helps expats, remote workers, and families find apartments in Đà Nẵng.<br>She knows the landlords, the buildings, and the neighborhoods.<br>Tell her what you need and she will send you a shortlist of places worth seeing.",
+    heroSub: "Most expats spend weeks scrolling through listings, messaging strangers, and visiting apartments that look nothing like the photos. Alice skips all of that. She\u2019s spent six years building relationships with the best landlords in town, so you get honest prices, vetted apartments, and someone who picks up the phone when you need her. Tell her your budget and what matters most. Within days, you\u2019ll have a shortlist of places worth seeing.",
     btnListings: "Browse Rentals", btnCall: "Message Alice",
     stat1: "250+", stat1L: "Families Housed",
     stat2: "6", stat2L: "Years in Đà Nẵng",
@@ -1124,8 +1125,8 @@ const T = {
     aboutP2: "She speaks English and Vietnamese, so nothing gets lost in translation. Tell her your budget and your must-haves. She will send you a short list of places that actually fit. No pressure, no fees until you sign a lease.",
     h1Title: "Licensed & Insured", h1Sub: "Every contract reviewed. Every deposit protected. Alice holds a Đà Nẵng real estate license, so your lease is legally airtight.",
     h2Title: "6 Years in Đà Nẵng", h2Sub: "Not a newcomer. Alice has placed 250+ families and knows every building, landlord, and neighborhood personally.",
-    h3Title: "Fluent in Both Languages", h3Sub: "Native Vietnamese, fluent English. She negotiates your lease terms directly so nothing gets lost in translation.",
-    h4Title: "Transparent Pricing", h4Sub: "No guessing, no hidden charges. Alice's fees are clearly outlined before you commit, so you always know exactly what you're paying for.",
+    h3Title: "She Negotiates For You", h3Sub: "Alice speaks the language and knows the market rates. Her clients consistently pay less rent than they would on their own.",
+    h4Title: "Your Lease, Fully Protected", h4Sub: "Alice reviews every clause before you sign. She makes sure your deposit is safe, your terms are fair, and there are no surprises buried in the fine print.",
     testiTag: "From Renters", testiTitle: "Real people, real moves",
     testiSub: "A few stories from the 250+ families Alice has helped settle in Đà Nẵng.",
     t1Text: "\u201CWe landed in Đà Nẵng with two kids and no idea where to start. Alice had three apartments lined up before we even cleared customs. We signed within a week.\u201D",
@@ -1161,8 +1162,8 @@ const T = {
     aboutP2: "Alice hỗ trợ người nước ngoài, người làm việc từ xa và gia đình Việt Nam, bằng tiếng Anh và tiếng Việt. Hãy cho Alice biết bạn cần gì, chị ấy sẽ gửi danh sách ngắn những nơi đáng xem. Không áp lực, không phí cho đến khi bạn ký hợp đồng.",
     h1Title: "Được Cấp Phép & Bảo Hiểm", h1Sub: "Mọi hợp đồng đều được kiểm tra. Mọi khoản đặt cọc đều được bảo vệ. Alice có giấy phép bất động sản Đà Nẵng, đảm bảo hợp đồng thuê hợp pháp.",
     h2Title: "6 Năm tại Đà Nẵng", h2Sub: "Không phải người mới. Alice đã hỗ trợ hơn 250 gia đình và hiểu rõ từng tòa nhà, chủ nhà và khu vực.",
-    h3Title: "Thông Thạo Song Ngữ", h3Sub: "Tiếng Việt bản ngữ, thông thạo tiếng Anh. Alice đàm phán trực tiếp các điều khoản thuê để không bỏ sót điều gì.",
-    h4Title: "Giá Cả Minh Bạch", h4Sub: "Không phỏng đoán, không phí ẩn. Phí dịch vụ của Alice được nêu rõ trước khi bạn cam kết.",
+    h3Title: "Alice Đàm Phán Cho Bạn", h3Sub: "Alice nói tiếng Việt và hiểu rõ giá thị trường. Khách hàng của cô luôn trả tiền thuê thấp hơn so với tự tìm kiếm.",
+    h4Title: "Hợp Đồng Được Bảo Vệ", h4Sub: "Alice xem xét từng điều khoản trước khi bạn ký. Cô đảm bảo tiền cọc an toàn, điều khoản công bằng, và không có bất ngờ nào ẩn trong hợp đồng.",
     testiTag: "Khách Thuê Nói Gì", testiTitle: "Những người đã tìm được nhà qua Alice",
     testiSub: "Hơn 250 gia đình đã an cư tại Đà Nẵng. Đây là một vài câu chuyện.",
     t1Text: "\u201CChúng tôi đến Đà Nẵng với hai con nhỏ và không biết bắt đầu từ đâu. Alice đã chuẩn bị sẵn ba căn hộ trước khi chúng tôi qua cửa hải quan. Ký hợp đồng trong một tuần.\u201D",
@@ -1244,7 +1245,7 @@ const T = {
   <div class="hero-content">
     <div class="hero-tag"><span data-t="heroTag">Đà Nẵng Rentals for Expats</span></div>
     <h1 id="hero-heading" data-t-html="heroH1">Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span></h1>
-    <p class="hero-sub" data-t-html="heroSub">Alice helps expats, remote workers, and families find apartments in Đà Nẵng.<br>She knows the landlords, the buildings, and the neighborhoods.<br>Tell her what you need and she will send you a shortlist of places worth seeing.</p>
+    <p class="hero-sub" data-t-html="heroSub">Most expats spend weeks scrolling through listings, messaging strangers, and visiting apartments that look nothing like the photos. Alice skips all of that. She's spent six years building relationships with the best landlords in town, so you get honest prices, vetted apartments, and someone who picks up the phone when you need her. Tell her your budget and what matters most. Within days, you'll have a shortlist of places worth seeing.</p>
     <div class="hero-btns">
       <a href="#listings" class="btn-primary" data-t="btnListings">Browse Rentals</a>
       <button class="btn-outline" data-t="btnCall" onclick="openModal()">
@@ -1256,7 +1257,7 @@ const T = {
       <div class="search-field">
         <label for="location" class="search-label">Location</label>
         <select id="location" name="location" class="search-select">
-          <option value="">All neighborhoods</option>
+          <option value="">All</option>
           <option value="my-khe">Mỹ Khê</option>
           <option value="my-an">Mỹ An</option>
           <option value="son-tra">Sơn Trà</option>
@@ -1269,10 +1270,12 @@ const T = {
         <label for="budget" class="search-label">Budget</label>
         <select id="budget" name="budget" class="search-select">
           <option value="">Any price</option>
-          <option value="0-500">Under $500/mo</option>
           <option value="500-1000">$500 – $1,000/mo</option>
-          <option value="1000-2000">$1,000 – $2,000/mo</option>
-          <option value="2000+">$2,000+/mo</option>
+          <option value="1000-1500">$1,000 – $1,500/mo</option>
+          <option value="1500-2000">$1,500 – $2,000/mo</option>
+          <option value="2000-3000">$2,000 – $3,000/mo</option>
+          <option value="3000-5000">$3,000 – $5,000/mo</option>
+          <option value="5000+">$5,000+/mo</option>
         </select>
       </div>
       <div class="search-field">
@@ -1343,8 +1346,8 @@ const T = {
       <div class="credentials-grid">
         <div class="credential-card"><span class="credential-number">01</span><h3 class="credential-title" data-t="h1Title">Licensed & Insured</h3><p class="credential-desc" data-t="h1Sub">Every contract reviewed. Every deposit protected. Alice holds a Đà Nẵng real estate license, so your lease is legally airtight.</p></div>
         <div class="credential-card"><span class="credential-number">02</span><h3 class="credential-title" data-t="h2Title">6 Years in Đà Nẵng</h3><p class="credential-desc" data-t="h2Sub">Not a newcomer. Alice has placed 250+ families and knows every building, landlord, and neighborhood personally.</p></div>
-        <div class="credential-card"><span class="credential-number">03</span><h3 class="credential-title" data-t="h3Title">Fluent in Both Languages</h3><p class="credential-desc" data-t="h3Sub">Native Vietnamese, fluent English. She negotiates your lease terms directly so nothing gets lost in translation.</p></div>
-        <div class="credential-card"><span class="credential-number">04</span><h3 class="credential-title" data-t="h4Title">Transparent Pricing</h3><p class="credential-desc" data-t="h4Sub">No guessing, no hidden charges. Alice's fees are clearly outlined before you commit, so you always know exactly what you're paying for.</p></div>
+        <div class="credential-card"><span class="credential-number">03</span><h3 class="credential-title" data-t="h3Title">She Negotiates For You</h3><p class="credential-desc" data-t="h3Sub">Alice speaks the language and knows the market rates. Her clients consistently pay less rent than they would on their own.</p></div>
+        <div class="credential-card"><span class="credential-number">04</span><h3 class="credential-title" data-t="h4Title">Your Lease, Fully Protected</h3><p class="credential-desc" data-t="h4Sub">Alice reviews every clause before you sign. She makes sure your deposit is safe, your terms are fair, and there are no surprises buried in the fine print.</p></div>
 
       </div>
     </div>
@@ -1630,10 +1633,12 @@ const T = {
       }
       if (budget && budget !== '') {
         var price = parseInt(card.dataset.price);
-        if (budget === '0-500') show = show && price < 500;
-        else if (budget === '500-1000') show = show && price >= 500 && price <= 1000;
-        else if (budget === '1000-2000') show = show && price >= 1000 && price <= 2000;
-        else if (budget === '2000+') show = show && price >= 2000;
+        if (budget === '500-1000') show = show && price >= 500 && price <= 1000;
+        else if (budget === '1000-1500') show = show && price >= 1000 && price <= 1500;
+        else if (budget === '1500-2000') show = show && price >= 1500 && price <= 2000;
+        else if (budget === '2000-3000') show = show && price >= 2000 && price <= 3000;
+        else if (budget === '3000-5000') show = show && price >= 3000 && price <= 5000;
+        else if (budget === '5000+') show = show && price >= 5000;
       }
       if (bedrooms && bedrooms !== '') {
         show = show && card.dataset.bedrooms === bedrooms;
