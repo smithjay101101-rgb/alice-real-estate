@@ -538,6 +538,29 @@
     display: grid; grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
   }
+  .listings-see-more-wrapper {
+    display: flex; justify-content: center; margin-top: var(--space-xl);
+  }
+  .listings-see-more {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 32px; min-height: 48px;
+    background: var(--color-primary); color: #fff; border: none;
+    border-radius: var(--radius-md); font-family: var(--font-body);
+    font-size: 1rem; font-weight: 500; cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  .listings-see-more:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29,158,117,.3);
+  }
+  .listings-see-more svg { stroke: #fff; transition: transform 0.2s ease; }
+  .listings-see-more:hover svg { transform: translateY(2px); }
+  .listings-see-more:active { transform: translateY(0); box-shadow: none; transition-duration: 50ms; }
+  .listings-see-more:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    .listing-card { transition: none !important; }
+  }
   .listing-card {
     background: var(--color-bg-white);
     border: 1px solid var(--color-border-light);
@@ -1114,7 +1137,7 @@ const T = {
     navCta: "Message Alice",
     heroTag: "Đà Nẵng Rentals for Expats",
     heroH1: 'Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span>',
-    heroSub: "Most expats spend weeks scrolling through listings, messaging strangers, and visiting apartments that look nothing like the photos. Alice skips all of that. She\u2019s spent six years building relationships with the best landlords in town, so you get honest prices, vetted apartments, and someone who picks up the phone when you need her. Tell her your budget and what matters most. Within days, you\u2019ll have a shortlist of places worth seeing.",
+    heroSub: "Most expats waste weeks on bad listings and unreliable landlords. Alice knows the best buildings, the fair prices, and the landlords you can trust. Tell her what you need and she\u2019ll send you a shortlist worth seeing.",
     btnListings: "Browse Rentals", btnCall: "Message Alice",
     stat1: "250+", stat1L: "Families Housed",
     stat2: "6", stat2L: "Years in Đà Nẵng",
@@ -1129,9 +1152,9 @@ const T = {
     h4Title: "Your Lease, Fully Protected", h4Sub: "Alice reviews every clause before you sign. She makes sure your deposit is safe, your terms are fair, and there are no surprises buried in the fine print.",
     testiTag: "From Renters", testiTitle: "Real people, real moves",
     testiSub: "A few stories from the 250+ families Alice has helped settle in Đà Nẵng.",
-    t1Text: "\u201CWe landed in Đà Nẵng with two kids and no idea where to start. Alice had three apartments lined up before we even cleared customs. We signed within a week.\u201D",
+    t1Text: "\u201CWe landed in Da Nang with two kids and no idea where to start. Alice had three apartments lined up before we even cleared customs. We signed within a week.\u201D",
     t1Name: "Maria & James K.", t1Role: "Relocated from London",
-    t2Text: "\u201CAlice found us a villa in Sơn Trà in two weeks. Right budget, right neighborhood, pool for the kids. She even negotiated the lease down 15%.\u201D",
+    t2Text: "\u201CAlice found us a villa in Son Tra in two weeks. Right budget, right neighborhood, pool for the kids. She even negotiated the lease down 15%.\u201D",
     t2Name: "David R.", t2Role: "Family of four, Sơn Trà",
     t3Text: "\u201CI needed fast WiFi and a quiet street. Alice knew exactly which buildings to avoid and which ones had fiber. Moved in three days after my first message.\u201D",
     t3Name: "Svetlana P.", t3Role: "Remote worker from Moscow",
@@ -1245,7 +1268,7 @@ const T = {
   <div class="hero-content">
     <div class="hero-tag"><span data-t="heroTag">Đà Nẵng Rentals for Expats</span></div>
     <h1 id="hero-heading" data-t-html="heroH1">Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span></h1>
-    <p class="hero-sub" data-t-html="heroSub">Most expats spend weeks scrolling through listings, messaging strangers, and visiting apartments that look nothing like the photos. Alice skips all of that. She's spent six years building relationships with the best landlords in town, so you get honest prices, vetted apartments, and someone who picks up the phone when you need her. Tell her your budget and what matters most. Within days, you'll have a shortlist of places worth seeing.</p>
+    <p class="hero-sub" data-t-html="heroSub">Most expats waste weeks on bad listings and unreliable landlords. Alice knows the best buildings, the fair prices, and the landlords you can trust. Tell her what you need and she'll send you a shortlist worth seeing.</p>
     <div class="hero-btns">
       <a href="#listings" class="btn-primary" data-t="btnListings">Browse Rentals</a>
       <button class="btn-outline" data-t="btnCall" onclick="openModal()">
@@ -1328,6 +1351,14 @@ const T = {
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
+    </div>
+    <div class="listings-see-more-wrapper">
+      <button class="listings-see-more" type="button">
+        <span class="see-more-text">See More</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -1561,6 +1592,34 @@ const T = {
     '</article>';
   }
 
+  var INITIAL_COUNT = 3;
+
+  function showInitialListings() {
+    var cards = document.querySelectorAll('.listing-card');
+    var seeMoreBtn = document.querySelector('.listings-see-more');
+    var seeMoreWrapper = document.querySelector('.listings-see-more-wrapper');
+    cards.forEach(function(card, index) {
+      card.classList.remove('listing-hidden');
+      card.style.display = '';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+      card.style.transition = '';
+      if (index >= INITIAL_COUNT) {
+        card.style.display = 'none';
+        card.classList.add('listing-hidden');
+      }
+    });
+    if (seeMoreWrapper) {
+      if (cards.length <= INITIAL_COUNT) {
+        seeMoreWrapper.style.display = 'none';
+      } else {
+        seeMoreWrapper.style.display = '';
+        var remaining = cards.length - INITIAL_COUNT;
+        seeMoreBtn.querySelector('.see-more-text').textContent = 'See More';
+      }
+    }
+  }
+
   function renderListings(data) {
     var grid = document.getElementById('listingsGrid');
     if (!data || data.length === 0) {
@@ -1579,6 +1638,7 @@ const T = {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(data[i]); }
       });
     });
+    showInitialListings();
   }
 
   function loadListings() {
@@ -1625,8 +1685,16 @@ const T = {
   // Filtering
   function filterListings(location, budget, bedrooms) {
     var cards = document.querySelectorAll('.listing-card');
+    var seeMoreWrapper = document.querySelector('.listings-see-more-wrapper');
+    var isFiltering = location || budget || bedrooms;
     var visibleCount = 0;
+
     cards.forEach(function(card) {
+      card.classList.remove('listing-hidden');
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+      card.style.transition = '';
+
       var show = true;
       if (location && location !== '') {
         show = show && card.dataset.location === location;
@@ -1646,6 +1714,15 @@ const T = {
       card.style.display = show ? '' : 'none';
       if (show) visibleCount++;
     });
+
+    if (seeMoreWrapper) {
+      if (isFiltering) {
+        seeMoreWrapper.style.display = 'none';
+      } else {
+        showInitialListings();
+      }
+    }
+
     var existing = document.querySelector('.listings-no-results');
     if (visibleCount === 0) {
       if (!existing) {
@@ -1691,6 +1768,25 @@ const T = {
   }
   setLang('en');
   loadListings();
+
+  document.querySelector('.listings-see-more').addEventListener('click', function() {
+    var hiddenCards = document.querySelectorAll('.listing-card.listing-hidden');
+    var btn = this;
+    hiddenCards.forEach(function(card, index) {
+      setTimeout(function() {
+        card.style.display = '';
+        card.classList.remove('listing-hidden');
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        requestAnimationFrame(function() {
+          card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        });
+      }, index * 100);
+    });
+    btn.closest('.listings-see-more-wrapper').style.display = 'none';
+  });
 
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
