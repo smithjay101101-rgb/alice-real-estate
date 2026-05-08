@@ -467,6 +467,22 @@
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(29,158,117,.15);
   }
+  .search-input {
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body); font-size: .9rem;
+    color: var(--color-text-body);
+    background: var(--color-bg-white);
+    transition: border-color var(--transition-fast);
+    -webkit-appearance: none; appearance: none;
+  }
+  .search-input:hover { border-color: var(--color-primary); }
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(29,158,117,.15);
+  }
   .search-bar:focus-within {
     box-shadow: var(--shadow-lg), 0 0 0 3px rgba(29,158,117,.12);
   }
@@ -1353,6 +1369,10 @@ const T = {
           <option value="4">4+ beds</option>
         </select>
       </div>
+      <div class="search-field">
+        <label for="code" class="search-label">Code</label>
+        <input type="text" id="code" name="code" class="search-input" placeholder="#038" maxlength="6" autocomplete="off">
+      </div>
       <button type="submit" class="btn-primary search-btn">Search</button>
     </form>
     <div class="hero-stats" id="heroStats">
@@ -1640,7 +1660,7 @@ const T = {
     var areaSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/></svg>';
     var camSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
 
-    return '<article class="listing-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-bedrooms="' + l.bedrooms + '">' +
+    return '<article class="listing-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-bedrooms="' + l.bedrooms + '" data-code="' + l.code + '">' +
       '<div class="listing-card-image">' +
         '<img src="' + l.imageMain + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
         (l.featured ? '<span class="listing-badge-featured">Featured</span>' : '') +
@@ -1765,10 +1785,11 @@ const T = {
   }
 
   // Filtering
-  function filterListings(location, budget, bedrooms) {
+  function filterListings(location, budget, bedrooms, code) {
     var cards = document.querySelectorAll('.listing-card');
     var seeMoreWrapper = document.querySelector('.listings-see-more-wrapper');
-    var isFiltering = location || budget || bedrooms;
+    var codeNorm = (code || '').replace(/[^0-9]/g, '');
+    var isFiltering = location || budget || bedrooms || codeNorm;
     var visibleCount = 0;
 
     cards.forEach(function(card) {
@@ -1792,6 +1813,10 @@ const T = {
       }
       if (bedrooms && bedrooms !== '') {
         show = show && card.dataset.bedrooms === bedrooms;
+      }
+      if (codeNorm) {
+        var cardCodeNorm = (card.dataset.code || '').replace(/[^0-9]/g, '');
+        show = show && cardCodeNorm.indexOf(codeNorm) !== -1;
       }
       card.style.display = show ? '' : 'none';
       if (show) visibleCount++;
@@ -1947,7 +1972,8 @@ const T = {
     var loc = document.getElementById('location').value;
     var budget = document.getElementById('budget').value;
     var beds = document.getElementById('bedrooms').value;
-    filterListings(loc, budget, beds);
+    var code = document.getElementById('code').value;
+    filterListings(loc, budget, beds, code);
     document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
@@ -1958,7 +1984,7 @@ const T = {
       var href = card.getAttribute('href');
       var url = new URL(href, window.location.origin);
       var location = url.searchParams.get('location');
-      filterListings(location, '', '');
+      filterListings(location, '', '', '');
       document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
