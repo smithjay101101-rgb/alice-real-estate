@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Spaces in Đà Nẵng | Alice Rentals</title>
+<meta name="description" content="Find office, retail, and F&B commercial spaces in Đà Nẵng. Alice knows the buildings, the landlords, and the fair rates. Vetted listings, no hidden fees.">
+
+<!-- Open Graph for social sharing -->
+<meta property="og:title" content="Commercial Spaces in Đà Nẵng | Alice Rentals">
+<meta property="og:description" content="Office, retail, and F&B spaces across Đà Nẵng. Honest prices, vetted landlords, fair rates.">
+<meta property="og:image" content="https://alice-rentals.com/commercial.jpeg">
+<meta property="og:url" content="https://alice-rentals.com/commercial.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Commercial Spaces in Đà Nẵng | Alice Rentals">
+<meta name="twitter:description" content="Office, retail, and F&B spaces across Đà Nẵng.">
+<meta name="twitter:image" content="https://alice-rentals.com/commercial.jpeg">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://alice-rentals.com/commercial.html">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preload" as="image" href="commercial.jpeg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://res.cloudinary.com">
+<link rel="dns-prefetch" href="https://docs.google.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
+<script src="commercial.js" defer></script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- NAV -->
+<header>
+<nav id="nav" aria-label="Main navigation">
+  <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Alice<span>.</span></a></div>
+  <div class="nav-mid">
+    <ul class="nav-links">
+      <li><a href="index.html#listings">Rentals</a></li>
+      <li><a href="commercial.html" aria-current="page">Commercial</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#testimonials">Stories</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')" aria-label="English" aria-current="true">EN</button>
+      <button class="lang-btn" onclick="setLang('vi')" aria-label="Switch to Vietnamese">VI</button>
+    </div>
+    <button class="nav-cta" onclick="openModal()">Message Alice</button>
+  </div>
+  <button class="mobile-toggle" onclick="openDrawer()" aria-label="Open menu" aria-expanded="false">
+    <svg width="22" height="16" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="#18181B" stroke-width="1.5"/><line x1="4" y1="8" x2="22" y2="8" stroke="#18181B" stroke-width="1.5"/><line x1="8" y1="15" x2="22" y2="15" stroke="#18181B" stroke-width="1.5"/></svg>
+  </button>
+</nav>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()">
+  <div class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="logo">Alice<span>.</span></div>
+      <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="1.5"/><line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+    <ul class="drawer-links">
+      <li><a href="index.html#listings" onclick="closeDrawer()">Rentals</a></li>
+      <li><a href="commercial.html" onclick="closeDrawer()">Commercial</a></li>
+      <li><a href="index.html#about" onclick="closeDrawer()">About</a></li>
+      <li><a href="index.html#testimonials" onclick="closeDrawer()">Stories</a></li>
+      <li><a href="#contact" onclick="closeDrawer()">Contact</a></li>
+    </ul>
+    <div class="drawer-footer">
+      <button class="drawer-cta" onclick="closeDrawer();openModal()">Send Alice a Message</button>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<main id="main">
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-underlay-wrap">
+    <picture>
+      <img src="commercial.jpeg" alt="Commercial space in Đà Nẵng" width="1672" height="941" loading="eager" decoding="async" fetchpriority="high">
+    </picture>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span>Commercial Spaces · Đà Nẵng</span></div>
+    <h1 id="hero-heading">Find the right space <em>for your business.</em></h1>
+    <p class="hero-sub">Offices, retail, and F&amp;B spaces across Đà Nẵng. Alice knows which buildings have reliable landlords, fair rates, and the foot traffic you actually need.</p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-primary">Browse Commercial</a>
+      <button class="btn-outline" onclick="openModal()">Message Alice</button>
+    </div>
+    <form class="search-bar" id="commercialSearchForm">
+      <div class="search-field">
+        <label for="commercial-location" class="search-label">Location</label>
+        <select id="commercial-location" name="location" class="search-select">
+          <option value="">All</option>
+          <option value="my-khe">Mỹ Khê</option>
+          <option value="my-an">Mỹ An</option>
+          <option value="son-tra">Sơn Trà</option>
+          <option value="hai-chau">Hải Châu</option>
+          <option value="ngu-hanh-son">Ngũ Hành Sơn</option>
+          <option value="cam-le">Cẩm Lệ</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="commercial-budget" class="search-label">Budget</label>
+        <select id="commercial-budget" name="budget" class="search-select">
+          <option value="">Any price</option>
+          <option value="500-1000">$500 – $1,000/mo</option>
+          <option value="1000-2000">$1,000 – $2,000/mo</option>
+          <option value="2000-3000">$2,000 – $3,000/mo</option>
+          <option value="3000-5000">$3,000 – $5,000/mo</option>
+          <option value="5000-10000">$5,000 – $10,000/mo</option>
+          <option value="10000+">$10,000+/mo</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="commercial-code" class="search-label">Code</label>
+        <input type="text" id="commercial-code" name="code" class="search-input" placeholder="C038" maxlength="6" autocomplete="off">
+      </div>
+      <button type="submit" class="btn-primary search-btn">Search</button>
+    </form>
+  </div>
+</section>
+
+<!-- LISTINGS -->
+<section id="listings" class="listings-section">
+  <div class="listings-container">
+    <p class="section-label">AVAILABLE SPACES</p>
+    <h2 class="listings-heading">Commercial properties</h2>
+    <p class="listings-subtitle">Updated weekly. Tap any listing to see photos, floor plans, and details.</p>
+    <div class="listings-grid" id="commercialListingsGrid">
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
+      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
+    </div>
+    <div class="listings-see-more-wrapper">
+      <button class="listings-see-more" type="button" id="commercial-see-more">
+        <span class="see-more-text">See More Spaces</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-container">
+    <div class="about-image-wrapper">
+      <img src="new picture.png" alt="Alice Real Estate Đà Nẵng" class="about-image" loading="lazy" width="800" height="1000">
+    </div>
+    <div class="about-content">
+      <p class="section-label">Why Alice</p>
+      <h2 class="about-heading">She does the hard part<br>so you don't have to</h2>
+      <p class="about-body">Relocating a business is stressful enough without spending weeks on viewings. Alice has been matching tenants with spaces in Đà Nẵng since 2019. She knows which buildings have reliable landlords, which streets get the right foot traffic, and where the best deals are this quarter.</p>
+      <p class="about-body">She speaks English and Vietnamese, so nothing gets lost in translation. Tell her your budget and your must-haves. She will send you a short list of places that actually fit.</p>
+      <div class="credentials-grid">
+        <div class="credential-card"><span class="credential-number">01</span><h3 class="credential-title">Licensed &amp; Insured</h3><p class="credential-desc">Every contract reviewed. Every deposit protected. Alice holds a Đà Nẵng real estate license, so your lease is legally airtight.</p></div>
+        <div class="credential-card"><span class="credential-number">02</span><h3 class="credential-title">6 Years in Đà Nẵng</h3><p class="credential-desc">Not a newcomer. Alice has placed 250+ families and businesses and knows every building, landlord, and neighborhood personally.</p></div>
+        <div class="credential-card"><span class="credential-number">03</span><h3 class="credential-title">She Negotiates For You</h3><p class="credential-desc">Alice speaks the language and knows the market rates. Her clients consistently pay less rent than they would on their own.</p></div>
+        <div class="credential-card"><span class="credential-number">04</span><h3 class="credential-title">Your Lease, Fully Protected</h3><p class="credential-desc">Alice reviews every clause before you sign. She makes sure your deposit is safe, your terms are fair, and there are no surprises buried in the fine print.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CROSS-PROMO -->
+<section class="cross-promo">
+  <div class="cross-promo-content">
+    <p class="eyebrow">Need a home instead?</p>
+    <h3>Residential rentals available</h3>
+    <p>Apartments, villas, and houses across Đà Nẵng for expats, remote workers, and families.</p>
+    <a href="index.html" class="btn-primary">Browse Residential →</a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-brand">
+    <div class="logo">Alice<span>.</span></div>
+    <p>250+ families and businesses housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour.</p>
+  </div>
+  <div class="footer-links">
+    <div class="footer-col">
+      <h3>Navigate</h3>
+      <a href="index.html#listings">Rentals</a>
+      <a href="commercial.html">Commercial</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#testimonials">Stories</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <a href="mailto:alicepham89@gmail.com">alicepham89@gmail.com</a>
+      <a href="tel:+84787664959">+84 787 664 959</a>
+      <a href="https://zalo.me/84787664959">Zalo</a>
+      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20commercial%20space%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-address">08 Khuê Mỹ Đông 14, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng</div>
+  <div class="footer-copy">© 2026 Alice Real Estate. All rights reserved.</div>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <h3>Get in touch</h3>
+    <p>Pick whichever is easiest for you. Alice usually replies within an hour.</p>
+    <div class="modal-btns">
+      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20commercial%20space%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" class="modal-btn whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://zalo.me/84787664959" target="_blank" class="modal-btn zalo">
+        <img src="zalo.png" alt="Zalo" width="24" height="24" loading="lazy" style="width:24px;height:24px;object-fit:contain;">
+        Zalo
+      </a>
+      <a href="tel:+84787664959" class="modal-btn phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        +84 787 664 959
+      </a>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Maybe later</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Listing details" hidden>
+  <div class="lightbox-panel">
+    <button class="lightbox-close" aria-label="Close gallery">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+    </button>
+    <div class="lightbox-gallery-wrap">
+      <button class="lightbox-arrow prev" id="lightbox-prev" aria-label="Previous photo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="lightbox-gallery" id="lightbox-gallery"></div>
+      <button class="lightbox-arrow next" id="lightbox-next" aria-label="Next photo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-dots" id="lightbox-dots"></div>
+    <div class="lightbox-info" id="lightbox-info"></div>
+  </div>
+</div>
+
+</body>
+</html>
