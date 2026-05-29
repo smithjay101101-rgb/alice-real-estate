@@ -1205,3 +1205,39 @@
   @media (max-width: 767px) {
     .cross-promo { padding: 48px 24px; }
   }
+
+  /* Commercial hero — soft right-to-left fade into white */
+  .hero--commercial .hero-underlay-wrap img {
+    -webkit-mask-image: linear-gradient(to right,
+                          transparent 0%, transparent 25%,
+                          rgba(0,0,0,0.6) 55%, black 85%);
+            mask-image: linear-gradient(to right,
+                          transparent 0%, transparent 25%,
+                          rgba(0,0,0,0.6) 55%, black 85%);
+  }
+  .hero--commercial .hero-overlay {
+    background: linear-gradient(to right,
+                  rgba(255,255,255,0.6) 0%,
+                  rgba(255,255,255,0.2) 35%,
+                  rgba(255,255,255,0) 65%);
+  }
+  @media (max-width: 767px) {
+    .hero--commercial .hero-underlay-wrap img {
+      -webkit-mask-image: none;
+              mask-image: none;
+    }
+    .hero--commercial .hero-overlay {
+      background: rgba(255,255,255,0.6);
+    }
+  }
+
+  /* Commercial listing — business type category tag */
+  .listing-card-type {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    margin-bottom: var(--space-xs);
+  }

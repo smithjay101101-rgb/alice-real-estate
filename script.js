@@ -622,6 +622,7 @@ const T = {
         '<span>' + listing.sqm + ' sqm</span>';
 
     info.innerHTML =
+      (isCommercial && listing.businessType ? '<p class="listing-card-type">' + listing.businessType + '</p>' : '') +
       '<p class="listing-card-location">' + (locNames[listing.location] || listing.location) + ' <span class="listing-card-ref">' + listing.code + '</span></p>' +
       '<h2 class="lightbox-title">' + listing.title + '</h2>' +
       '<p class="lightbox-price">$' + listing.price.toLocaleString() + '/mo</p>' +

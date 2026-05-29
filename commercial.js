@@ -21,25 +21,41 @@
       title: 'Bright corner café space on Mỹ Khê',
       location: 'my-khe', price: 1850, floor: 'Ground floor', sqm: 85,
       description: 'Corner unit with two street-facing windows, 30m from the beach promenade. High foot traffic from morning runners and evening tourists. Previously a coffee shop — kitchen plumbing and ventilation already in place. Long lease available, owner is flexible on fit-out modifications.',
-      imageMain: 'commercial.jpeg', imageGallery: ['commercial.jpeg'],
-      status: 'active', featured: false, dateAdded: '2026-05-26',
+      imageMain: 'commercial.jpg', imageGallery: ['commercial.jpg'],
+      status: 'active', featured: false, dateAdded: '2026-05-26', businessType: 'Cafe',
       code: generateCommercialCode('Bright corner café space on Mỹ Khê')
+    },
+    {
+      title: 'Riverside restaurant space on Bạch Đằng',
+      location: 'hai-chau', price: 2600, floor: 'Ground floor', sqm: 160,
+      description: 'Large dining space facing the Hàn River, seats roughly 80 covers. Full commercial kitchen with grease trap and exhaust hood already installed. Outdoor terrace for evening service. Prime spot for sunset dining, steady tourist and local traffic year-round.',
+      imageMain: 'commercial.jpg', imageGallery: ['commercial.jpg'],
+      status: 'active', featured: false, dateAdded: '2026-05-24', businessType: 'Restaurant',
+      code: generateCommercialCode('Riverside restaurant space on Bạch Đằng')
     },
     {
       title: 'Modern office floor in Hải Châu CBD',
       location: 'hai-chau', price: 3200, floor: '4th floor', sqm: 140,
       description: 'Full floor in a serviced building two blocks from Bạch Đằng. Floor-to-ceiling windows on three sides, river views from the east side. Includes reception, two meeting rooms, and a small kitchenette. Fibre internet, backup generator, 24/7 security.',
-      imageMain: 'commercial.jpeg', imageGallery: ['commercial.jpeg'],
-      status: 'active', featured: false, dateAdded: '2026-05-20',
+      imageMain: 'commercial.jpg', imageGallery: ['commercial.jpg'],
+      status: 'active', featured: false, dateAdded: '2026-05-20', businessType: 'Office',
       code: generateCommercialCode('Modern office floor in Hải Châu CBD')
     },
     {
       title: 'Boutique retail unit on Trần Phú',
       location: 'hai-chau', price: 980, floor: 'Ground floor', sqm: 42,
       description: 'Narrow shopfront on one of Đà Nẵng’s busiest retail streets. Suits fashion, accessories, or small-footprint F&B. Tall ceiling, original tile floor, fresh repaint last month. Landlord prefers tenants with established brand or business plan.',
-      imageMain: 'commercial.jpeg', imageGallery: ['commercial.jpeg'],
-      status: 'active', featured: false, dateAdded: '2026-05-15',
+      imageMain: 'commercial.jpg', imageGallery: ['commercial.jpg'],
+      status: 'active', featured: false, dateAdded: '2026-05-15', businessType: 'Retail',
       code: generateCommercialCode('Boutique retail unit on Trần Phú')
+    },
+    {
+      title: 'Warehouse & light workshop in Cẩm Lệ',
+      location: 'cam-le', price: 1400, floor: 'Ground floor', sqm: 320,
+      description: 'Clear-span industrial unit with 5m ceiling height and roller-shutter truck access. Three-phase power, concrete floor rated for heavy loads. Suits light manufacturing, storage, or distribution. 15 minutes from the port and ring road.',
+      imageMain: 'commercial.jpg', imageGallery: ['commercial.jpg'],
+      status: 'active', featured: false, dateAdded: '2026-05-12', businessType: 'Industrial',
+      code: generateCommercialCode('Warehouse & light workshop in Cẩm Lệ')
     }
   ];
 
@@ -81,6 +97,7 @@
       status: (r[8] || '').toLowerCase().trim(),
       featured: (r[9] || '').toLowerCase().trim() === 'yes',
       dateAdded: r[10] || '',
+      businessType: (r[11] || '').trim(),
       code: generateCommercialCode(title)
     };
   }
@@ -93,12 +110,13 @@
     var areaSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/></svg>';
     var camSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
 
-    return '<article class="listing-card commercial-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-code="' + l.code + '">' +
+    return '<article class="listing-card commercial-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-sqm="' + l.sqm + '" data-type="' + (l.businessType || '').toLowerCase() + '" data-code="' + l.code + '">' +
       '<div class="listing-card-image">' +
         '<img src="' + l.imageMain + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
         '<span class="listing-badge-photos">' + camSvg + ' ' + photoCount + ' photo' + (photoCount !== 1 ? 's' : '') + '</span>' +
       '</div>' +
       '<div class="listing-card-body">' +
+        (l.businessType ? '<p class="listing-card-type">' + l.businessType + '</p>' : '') +
         '<p class="listing-card-location">' + locName + ' <span class="listing-card-ref">' + l.code + '</span></p>' +
         '<p class="listing-card-price">$' + l.price.toLocaleString() + '/mo</p>' +
         '<h3 class="listing-card-title">' + l.title + '</h3>' +
@@ -204,11 +222,11 @@
     }
   }
 
-  function filterCommercialListings(location, budget, code) {
+  function filterCommercialListings(location, type, budget, sqm, code) {
     var cards = grid.querySelectorAll('.listing-card');
     var seeMoreWrapper = document.querySelector('.listings-section .listings-see-more-wrapper');
     var codeNorm = (code || '').replace(/[^0-9]/gi, '').toUpperCase();
-    var isFiltering = location || budget || codeNorm;
+    var isFiltering = location || type || budget || sqm || codeNorm;
     var visibleCount = 0;
 
     cards.forEach(function(card) {
@@ -221,6 +239,9 @@
       if (location) {
         show = show && card.dataset.location === location;
       }
+      if (type) {
+        show = show && card.dataset.type === type;
+      }
       if (budget) {
         var price = parseInt(card.dataset.price);
         if (budget === '500-1000') show = show && price >= 500 && price <= 1000;
@@ -229,6 +250,14 @@
         else if (budget === '3000-5000') show = show && price >= 3000 && price <= 5000;
         else if (budget === '5000-10000') show = show && price >= 5000 && price <= 10000;
         else if (budget === '10000+') show = show && price >= 10000;
+      }
+      if (sqm) {
+        var area = parseInt(card.dataset.sqm);
+        if (sqm === '0-50') show = show && area > 0 && area < 50;
+        else if (sqm === '50-100') show = show && area >= 50 && area <= 100;
+        else if (sqm === '100-200') show = show && area >= 100 && area <= 200;
+        else if (sqm === '200-500') show = show && area >= 200 && area <= 500;
+        else if (sqm === '500+') show = show && area >= 500;
       }
       if (codeNorm) {
         var cardCodeNorm = (card.dataset.code || '').replace(/[^0-9]/g, '');
@@ -266,9 +295,11 @@
     searchForm.addEventListener('submit', function(e) {
       e.preventDefault();
       var loc = document.getElementById('commercial-location').value;
+      var type = document.getElementById('commercial-type').value;
       var budget = document.getElementById('commercial-budget').value;
+      var sqm = document.getElementById('commercial-sqm').value;
       var code = document.getElementById('commercial-code').value;
-      filterCommercialListings(loc, budget, code);
+      filterCommercialListings(loc, type, budget, sqm, code);
       document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }

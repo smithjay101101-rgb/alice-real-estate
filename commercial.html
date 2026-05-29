@@ -9,7 +9,7 @@
 <!-- Open Graph for social sharing -->
 <meta property="og:title" content="Commercial Spaces in Đà Nẵng | Alice Rentals">
 <meta property="og:description" content="Office, retail, and F&B spaces across Đà Nẵng. Honest prices, vetted landlords, fair rates.">
-<meta property="og:image" content="https://alice-rentals.com/commercial.jpeg">
+<meta property="og:image" content="https://alice-rentals.com/commercial.jpg">
 <meta property="og:url" content="https://alice-rentals.com/commercial.html">
 <meta property="og:type" content="website">
 
@@ -17,13 +17,13 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Commercial Spaces in Đà Nẵng | Alice Rentals">
 <meta name="twitter:description" content="Office, retail, and F&B spaces across Đà Nẵng.">
-<meta name="twitter:image" content="https://alice-rentals.com/commercial.jpeg">
+<meta name="twitter:image" content="https://alice-rentals.com/commercial.jpg">
 
 <!-- Canonical -->
 <link rel="canonical" href="https://alice-rentals.com/commercial.html">
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="preload" as="image" href="commercial.jpeg" type="image/jpeg">
+<link rel="preload" as="image" href="commercial.jpg" type="image/jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
@@ -87,15 +87,14 @@
 
 <!-- HERO -->
 <main id="main">
-<section class="hero" aria-labelledby="hero-heading">
+<section class="hero hero--commercial" aria-labelledby="hero-heading">
   <div class="hero-underlay-wrap">
     <picture>
-      <img src="commercial.jpeg" alt="Commercial space in Đà Nẵng" width="1672" height="941" loading="eager" decoding="async" fetchpriority="high">
+      <img src="commercial.jpg" alt="Commercial space in Đà Nẵng" width="1774" height="887" loading="eager" decoding="async" fetchpriority="high">
     </picture>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag"><span>Commercial Spaces · Đà Nẵng</span></div>
     <h1 id="hero-heading">Find the right space <em>for your business.</em></h1>
     <p class="hero-sub">Offices, retail, and F&amp;B spaces across Đà Nẵng. Alice knows which buildings have reliable landlords, fair rates, and the foot traffic you actually need.</p>
     <div class="hero-btns">
@@ -116,6 +115,17 @@
         </select>
       </div>
       <div class="search-field">
+        <label for="commercial-type" class="search-label">Type</label>
+        <select id="commercial-type" name="type" class="search-select">
+          <option value="">All types</option>
+          <option value="office">Office</option>
+          <option value="retail">Retail</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="cafe">Cafe</option>
+          <option value="industrial">Industrial</option>
+        </select>
+      </div>
+      <div class="search-field">
         <label for="commercial-budget" class="search-label">Budget</label>
         <select id="commercial-budget" name="budget" class="search-select">
           <option value="">Any price</option>
@@ -125,6 +135,17 @@
           <option value="3000-5000">$3,000 – $5,000/mo</option>
           <option value="5000-10000">$5,000 – $10,000/mo</option>
           <option value="10000+">$10,000+/mo</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="commercial-sqm" class="search-label">Size</label>
+        <select id="commercial-sqm" name="sqm" class="search-select">
+          <option value="">Any size</option>
+          <option value="0-50">Under 50 sqm</option>
+          <option value="50-100">50 – 100 sqm</option>
+          <option value="100-200">100 – 200 sqm</option>
+          <option value="200-500">200 – 500 sqm</option>
+          <option value="500+">500+ sqm</option>
         </select>
       </div>
       <div class="search-field">
