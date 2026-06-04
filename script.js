@@ -35,7 +35,22 @@ const T = {
     footerDesc: "250+ families housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour.",
     modalTitle: "Get in touch", modalSub: "Pick whichever is easiest for you. Alice usually replies within an hour.", modalClose: "Maybe later",
     footNav: "Navigate", footContact: "Reach Alice",
-    copy: "\u00A9 2026 Alice Real Estate. All rights reserved."
+    copy: "\u00A9 2026 Alice Real Estate. All rights reserved.",
+    navCommercial: "Commercial",
+    commHeroH1: "Find the right space <em>for your business.</em>",
+    commHeroSub: "Offices, retail, and F&amp;B spaces across Đà Nẵng. Alice knows which buildings have reliable landlords, fair rates, and the foot traffic you actually need.",
+    commBtnBrowse: "Browse Commercial",
+    commListTag: "AVAILABLE SPACES",
+    commListTitle: "Commercial properties",
+    commListSub: "Updated weekly. Tap any listing to see photos, floor plans, and details.",
+    commH2Sub: "Not a newcomer. Alice has placed 250+ families and businesses and knows every building, landlord, and neighborhood personally.",
+    commAboutP1: "Relocating a business is stressful enough without spending weeks on viewings. Alice has been matching tenants with spaces in Đà Nẵng since 2019. She knows which buildings have reliable landlords, which streets get the right foot traffic, and where the best deals are this quarter.",
+    commAboutP2: "She speaks English and Vietnamese, so nothing gets lost in translation. Tell her your budget and your must-haves. She will send you a short list of places that actually fit.",
+    commCrossEyebrow: "Need a home instead?",
+    commCrossTitle: "Residential rentals available",
+    commCrossDesc: "Apartments, villas, and houses across Đà Nẵng for expats, remote workers, and families.",
+    commCrossCta: "Browse Residential →",
+    commFooterDesc: "250+ families and businesses housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour."
   },
   vi: {
     navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
@@ -72,7 +87,22 @@ const T = {
     footerDesc: "Hơn 250 gia đình đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice. Thường trả lời trong vòng một giờ.",
     modalTitle: "Nhắn tin cho Alice", modalSub: "Chọn cách bạn muốn liên hệ. Alice thường trả lời trong vòng một giờ.", modalClose: "Để sau",
     footNav: "Điều Hướng", footContact: "Liên Hệ Alice",
-    copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền."
+    copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền.",
+    navCommercial: "Mặt bằng",
+    commHeroH1: "Tìm không gian phù hợp <em>cho doanh nghiệp.</em>",
+    commHeroSub: "Văn phòng, mặt bằng bán lẻ và nhà hàng/quán cà phê khắp Đà Nẵng. Alice biết tòa nhà nào có chủ tốt, giá hợp lý, và lượng khách phù hợp cho hoạt động kinh doanh của bạn.",
+    commBtnBrowse: "Xem Mặt Bằng",
+    commListTag: "MẶT BẰNG TRỐNG",
+    commListTitle: "Mặt bằng thương mại tại Đà Nẵng",
+    commListSub: "Cập nhật hàng tuần. Bấm vào bất kỳ tin đăng để xem ảnh và chi tiết.",
+    commH2Sub: "Không phải người mới. Alice đã hỗ trợ hơn 250 gia đình và doanh nghiệp, hiểu rõ từng tòa nhà, chủ nhà và khu vực.",
+    commAboutP1: "Chuyển địa điểm kinh doanh đã đủ vất vả. Alice đã kết nối khách thuê với mặt bằng phù hợp tại Đà Nẵng từ năm 2019. Cô biết tòa nhà nào có chủ uy tín, đường nào có lượng khách tốt, và đâu là cơ hội tốt nhất quý này.",
+    commAboutP2: "Cô nói tiếng Anh và tiếng Việt nên không có rào cản ngôn ngữ. Hãy cho Alice biết ngân sách và nhu cầu của bạn — cô sẽ gửi danh sách rút gọn các nơi thực sự phù hợp.",
+    commCrossEyebrow: "Đang tìm nhà ở?",
+    commCrossTitle: "Nhà cho thuê có sẵn",
+    commCrossDesc: "Căn hộ, biệt thự và nhà phố tại Đà Nẵng cho người nước ngoài, người làm việc từ xa và gia đình Việt Nam.",
+    commCrossCta: "Xem Nhà Cho Thuê →",
+    commFooterDesc: "Hơn 250 gia đình và doanh nghiệp đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice. Thường trả lời trong vòng một giờ."
   },
 };
 
