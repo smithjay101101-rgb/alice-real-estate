@@ -2,6 +2,7 @@
 const T = {
   en: {
     navAbout: "About", navTestimonials: "Stories", navContact: "Contact", navListings: "Rentals",
+    navApartments: "Apartments", navHousesVillas: "Houses & Villas",
     navCta: "Message Alice",
     heroTag: "Đà Nẵng Rentals for Expats",
     heroH1: 'Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span>',
@@ -54,6 +55,7 @@ const T = {
   },
   vi: {
     navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
+    navApartments: "Căn hộ", navHousesVillas: "Nhà & Biệt thự",
     navCta: "Nhắn tin cho Alice",
     heroTag: "Cho Thuê Cao Cấp tại Đà Nẵng",
     heroH1: 'Tìm ngôi nhà <em>hoàn hảo</em> tại <span class="coral">Đà Nẵng</span>',
@@ -203,6 +205,12 @@ const T = {
     return '#' + ('00' + num).slice(-3);
   }
 
+  function normalizeCategory(raw) {
+    var val = (raw || '').toString().trim().toLowerCase();
+    if (val === 'house-villa' || val === 'house' || val === 'villa') return 'house-villa';
+    return 'apartment'; // default fallback
+  }
+
   function mapRow(r) {
     var title = r[0] || '';
     return {
@@ -218,6 +226,7 @@ const T = {
       status: (r[9] || '').toLowerCase().trim(),
       featured: (r[10] || '').toLowerCase().trim() === 'yes',
       dateAdded: r[11] || '',
+      category: normalizeCategory(r[12]),
       code: generateCode(title)
     };
   }
@@ -243,7 +252,7 @@ const T = {
     var areaSvg = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/></svg>';
     var camSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>';
 
-    return '<article class="listing-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-bedrooms="' + l.bedrooms + '" data-code="' + l.code + '">' +
+    return '<article class="listing-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-bedrooms="' + l.bedrooms + '" data-category="' + l.category + '" data-code="' + l.code + '">' +
       '<div class="listing-card-image">' +
         '<img src="' + l.imageMain + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
         '<span class="listing-badge-photos">' + camSvg + ' ' + photoCount + ' photo' + (photoCount !== 1 ? 's' : '') + '</span>' +
@@ -264,71 +273,154 @@ const T = {
   var INITIAL_COUNT = 9;
   var BATCH_SIZE = 5;
 
+  // ── Listings state (source of truth) ──
+  var allListings = [];        // current filtered subset being shown (sorted newest-first)
+  var shownCount = 0;          // how many cards are currently rendered into the grid
+  var activeCategory = 'all';  // 'all' | 'apartment' | 'house-villa'
+  var currentSearch = { location: '', budget: '', bedrooms: '', code: '' };
+
+  function priceInBudget(price, budget) {
+    if (!budget) return true;
+    if (budget === '500-1000') return price >= 500 && price <= 1000;
+    if (budget === '1000-1500') return price >= 1000 && price <= 1500;
+    if (budget === '1500-2000') return price >= 1500 && price <= 2000;
+    if (budget === '2000-3000') return price >= 2000 && price <= 3000;
+    if (budget === '3000-5000') return price >= 3000 && price <= 5000;
+    if (budget === '5000+') return price >= 5000;
+    return true;
+  }
+
+  function matchesSearch(l) {
+    var s = currentSearch;
+    if (s.location && l.location !== s.location) return false;
+    if (s.budget && !priceInBudget(l.price, s.budget)) return false;
+    if (s.bedrooms && String(l.bedrooms) !== String(s.bedrooms)) return false;
+    if (s.code) {
+      var codeNorm = s.code.replace(/[^0-9]/g, '');
+      var cardCodeNorm = (l.code || '').replace(/[^0-9]/g, '');
+      if (codeNorm && cardCodeNorm.indexOf(codeNorm) === -1) return false;
+    }
+    return true;
+  }
+
+  function appendCard(l) {
+    var grid = document.getElementById('listingsGrid');
+    grid.insertAdjacentHTML('beforeend', buildListingCard(l));
+    var card = grid.lastElementChild;
+    card.addEventListener('click', function() { openLightbox(l); });
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(l); }
+    });
+  }
+
   function updateSeeMoreButton() {
-    var seeMoreWrapper = document.querySelector('.listings-section .listings-see-more-wrapper');
-    var seeMoreBtn = document.querySelector('.listings-section .listings-see-more');
-    if (!seeMoreWrapper || !seeMoreBtn) return;
-    var hiddenCount = document.querySelectorAll('#listingsGrid .listing-card.listing-hidden').length;
-    if (hiddenCount === 0) {
-      seeMoreWrapper.style.display = 'none';
+    var wrapper = document.querySelector('.listings-section .listings-see-more-wrapper');
+    var btn = document.querySelector('.listings-section .listings-see-more');
+    if (!wrapper || !btn) return;
+    var remaining = allListings.length - shownCount;
+    if (remaining <= 0) {
+      wrapper.style.display = 'none';
       return;
     }
-    seeMoreWrapper.style.display = '';
-    var next = Math.min(BATCH_SIZE, hiddenCount);
-    seeMoreBtn.querySelector('.see-more-text').textContent =
-      'See ' + next + ' More Rental' + (next !== 1 ? 's' : '');
+    wrapper.style.display = '';
+    var n = Math.min(remaining, BATCH_SIZE);
+    var label = btn.querySelector('.see-more-text');
+    if (label) label.textContent = 'See ' + n + ' More Rental' + (n === 1 ? '' : 's');
   }
 
-  function showInitialListings() {
-    var cards = document.querySelectorAll('#listingsGrid .listing-card');
-    cards.forEach(function(card, index) {
-      card.classList.remove('listing-hidden');
-      card.style.display = '';
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-      card.style.transition = '';
-      if (index >= INITIAL_COUNT) {
-        card.style.display = 'none';
-        card.classList.add('listing-hidden');
-      }
-    });
-    updateSeeMoreButton();
-  }
-
-  function renderListings(data) {
+  function showNoResults(show) {
     var grid = document.getElementById('listingsGrid');
-    if (!data || data.length === 0) {
+    if (!grid) return;
+    var existing = document.querySelector('.listings-no-results');
+    if (show) {
+      if (!existing) {
+        var msg = document.createElement('div');
+        msg.className = 'listings-no-results';
+        msg.innerHTML = '<p>No listings match your filters. Try adjusting your search.</p>';
+        grid.after(msg);
+        existing = msg;
+      }
+      existing.style.display = '';
+    } else if (existing) {
+      existing.style.display = 'none';
+    }
+  }
+
+  function renderListings(reset) {
+    if (reset === undefined) reset = true;
+    var grid = document.getElementById('listingsGrid');
+    if (!grid) return;
+
+    if (reset) {
+      shownCount = 0;
+      grid.innerHTML = '';
+    }
+
+    // Nothing active on the whole site
+    if (listingsData.length === 0) {
       grid.innerHTML = '<div class="listings-empty">' +
         '<p>No rentals available right now. New listings are added weekly.</p>' +
         '<a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20a%20rental%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" class="btn-primary">Message Alice on WhatsApp</a>' +
         '</div>';
+      showNoResults(false);
+      updateSeeMoreButton();
       return;
     }
-    grid.innerHTML = data.map(buildListingCard).join('');
-    // Attach lightbox click handlers
-    var cards = grid.querySelectorAll('.listing-card');
-    cards.forEach(function(card, i) {
-      card.addEventListener('click', function() { openLightbox(data[i]); });
-      card.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(data[i]); }
+
+    // No matches for the current category/search combination
+    if (allListings.length === 0) {
+      showNoResults(true);
+      updateSeeMoreButton();
+      return;
+    }
+    showNoResults(false);
+
+    var take = reset ? INITIAL_COUNT : BATCH_SIZE;
+    var startIndex = shownCount;
+    var next = allListings.slice(shownCount, shownCount + take);
+    next.forEach(function(l) { appendCard(l); });
+    shownCount += next.length;
+
+    // Stagger-in animation for appended batches only (initial paint stays instant)
+    if (!reset) {
+      var cards = grid.querySelectorAll('.listing-card');
+      next.forEach(function(_, i) {
+        var card = cards[startIndex + i];
+        if (!card) return;
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(16px)';
+        setTimeout(function() {
+          requestAnimationFrame(function() {
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          });
+        }, i * 80);
       });
-    });
-    showInitialListings();
-    checkUrlHashAndOpenListing();
+    }
+
+    updateSeeMoreButton();
+  }
+
+  function applyFilters() {
+    var filtered = listingsData;
+    if (activeCategory !== 'all') {
+      filtered = filtered.filter(function(l) { return l.category === activeCategory; });
+    }
+    filtered = filtered.filter(matchesSearch);
+    allListings = filtered;
+    renderListings(true);
   }
 
   function checkUrlHashAndOpenListing() {
     var hash = window.location.hash;
     if (!hash || hash.indexOf('#listing-') !== 0) return;
     var slug = hash.replace('#listing-', '');
-    var card = document.querySelector('[data-slug="' + slug + '"]');
-    if (card) {
-      if (card.style.display === 'none' || card.classList.contains('listing-hidden')) {
-        card.style.display = '';
-        card.classList.remove('listing-hidden');
-      }
-      setTimeout(function() { card.click(); }, 300);
+    var match = null;
+    for (var i = 0; i < listingsData.length; i++) {
+      if (slugify(listingsData[i].title) === slug) { match = listingsData[i]; break; }
     }
+    if (match) setTimeout(function() { openLightbox(match); }, 300);
   }
 
   function loadListings() {
@@ -339,7 +431,8 @@ const T = {
         var parsed = JSON.parse(cached);
         if (Date.now() - parsed.ts < CACHE_TTL) {
           listingsData = parsed.data;
-          renderListings(listingsData);
+          applyFilters();
+          checkUrlHashAndOpenListing();
           return;
         }
       }
@@ -360,7 +453,8 @@ const T = {
         try {
           sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: listingsData }));
         } catch (e) {}
-        renderListings(listingsData);
+        applyFilters();
+        checkUrlHashAndOpenListing();
       })
       .catch(function() {
         document.getElementById('listingsGrid').innerHTML =
@@ -371,65 +465,15 @@ const T = {
       });
   }
 
-  // Filtering
+  // Search filtering — stacks with the active category pill, paginates the result
   function filterListings(location, budget, bedrooms, code) {
-    var cards = document.querySelectorAll('.listing-card');
-    var seeMoreWrapper = document.querySelector('.listings-see-more-wrapper');
-    var codeNorm = (code || '').replace(/[^0-9]/g, '');
-    var isFiltering = location || budget || bedrooms || codeNorm;
-    var visibleCount = 0;
-
-    cards.forEach(function(card) {
-      card.classList.remove('listing-hidden');
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-      card.style.transition = '';
-
-      var show = true;
-      if (location && location !== '') {
-        show = show && card.dataset.location === location;
-      }
-      if (budget && budget !== '') {
-        var price = parseInt(card.dataset.price);
-        if (budget === '500-1000') show = show && price >= 500 && price <= 1000;
-        else if (budget === '1000-1500') show = show && price >= 1000 && price <= 1500;
-        else if (budget === '1500-2000') show = show && price >= 1500 && price <= 2000;
-        else if (budget === '2000-3000') show = show && price >= 2000 && price <= 3000;
-        else if (budget === '3000-5000') show = show && price >= 3000 && price <= 5000;
-        else if (budget === '5000+') show = show && price >= 5000;
-      }
-      if (bedrooms && bedrooms !== '') {
-        show = show && card.dataset.bedrooms === bedrooms;
-      }
-      if (codeNorm) {
-        var cardCodeNorm = (card.dataset.code || '').replace(/[^0-9]/g, '');
-        show = show && cardCodeNorm.indexOf(codeNorm) !== -1;
-      }
-      card.style.display = show ? '' : 'none';
-      if (show) visibleCount++;
-    });
-
-    if (seeMoreWrapper) {
-      if (isFiltering) {
-        seeMoreWrapper.style.display = 'none';
-      } else {
-        showInitialListings();
-      }
-    }
-
-    var existing = document.querySelector('.listings-no-results');
-    if (visibleCount === 0) {
-      if (!existing) {
-        var msg = document.createElement('div');
-        msg.className = 'listings-no-results';
-        msg.innerHTML = '<p>No listings match your filters. Try adjusting your search.</p>';
-        document.querySelector('.listings-grid').after(msg);
-        existing = msg;
-      }
-      existing.style.display = '';
-    } else if (existing) {
-      existing.style.display = 'none';
-    }
+    currentSearch = {
+      location: location || '',
+      budget: budget || '',
+      bedrooms: bedrooms || '',
+      code: code || ''
+    };
+    applyFilters();
   }
 
   function setLang(lang) {
@@ -457,34 +501,58 @@ const T = {
     });
     document.documentElement.lang = lang;
     if (listingsData.length) {
-      renderListings(listingsData);
+      applyFilters();
     }
   }
   setLang('en');
   if (document.getElementById('listingsGrid')) loadListings();
 
+  // See More: reveal the next batch (preserves the current category + search filter)
   var residentialGrid = document.getElementById('listingsGrid');
   var residentialSeeMore = residentialGrid ? residentialGrid.closest('.listings-section').querySelector('.listings-see-more') : null;
   if (residentialSeeMore) {
     residentialSeeMore.addEventListener('click', function() {
-      var hiddenCards = document.querySelectorAll('#listingsGrid .listing-card.listing-hidden');
-      var batch = Array.prototype.slice.call(hiddenCards, 0, BATCH_SIZE);
-      batch.forEach(function(card, index) {
-        setTimeout(function() {
-          card.style.display = '';
-          card.classList.remove('listing-hidden');
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(16px)';
-          requestAnimationFrame(function() {
-            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-          });
-        }, index * 80);
-      });
-      setTimeout(updateSeeMoreButton, batch.length * 80 + 50);
+      renderListings(false);
     });
   }
+
+  // Category filter pills
+  document.querySelectorAll('.cat-pill').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      document.querySelectorAll('.cat-pill').forEach(function(p) {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
+      });
+      pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
+
+      activeCategory = pill.dataset.category;
+      applyFilters();
+
+      var listingsSection = document.getElementById('listings');
+      if (listingsSection) {
+        listingsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Nav category links → reuse the matching pill's click logic (filter + reset + scroll)
+  document.querySelectorAll('[data-nav-category]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var cat = link.dataset.navCategory;
+      var pill = document.querySelector('.cat-pill[data-category="' + cat + '"]');
+      if (pill) {
+        pill.click(); // runs existing filter + pagination reset + smooth scroll
+      } else {
+        var listingsSection = document.getElementById('listings');
+        if (listingsSection) listingsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // Close the mobile drawer if it's open
+      var drawer = document.getElementById('drawerBackdrop');
+      if (drawer && drawer.classList.contains('open')) closeDrawer();
+    });
+  });
 
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);

@@ -26,7 +26,8 @@
   <div class="logo">Alice<span>.</span></div>
   <div class="nav-mid">
     <ul class="nav-links">
-      <li><a href="#listings" data-t="navListings" aria-current="page">Rentals</a></li>
+      <li><a href="#listings" class="nav-link" data-nav-category="apartment" data-t="navApartments">Apartments</a></li>
+      <li><a href="#listings" class="nav-link" data-nav-category="house-villa" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="commercial.html" data-t="navCommercial">Commercial</a></li>
       <li><a href="#about" data-t="navAbout">About</a></li>
       <li><a href="#testimonials" data-t="navTestimonials">Stories</a></li>
@@ -56,7 +57,8 @@
       </button>
     </div>
     <ul class="drawer-links">
-      <li><a href="#listings" onclick="closeDrawer()" data-t="navListings">Rentals</a></li>
+      <li><a href="#listings" class="nav-link" data-nav-category="apartment" data-t="navApartments">Apartments</a></li>
+      <li><a href="#listings" class="nav-link" data-nav-category="house-villa" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="commercial.html" data-t="navCommercial">Commercial</a></li>
       <li><a href="#about" onclick="closeDrawer()" data-t="navAbout">About</a></li>
       <li><a href="#testimonials" onclick="closeDrawer()" data-t="navTestimonials">Stories</a></li>
@@ -163,6 +165,11 @@
     <p class="section-label">AVAILABLE NOW</p>
     <h2 class="listings-heading">Rentals in Đà Nẵng</h2>
     <p class="listings-subtitle">Every listing here has been checked by Alice. Fair prices, honest landlords, ready to move in.</p>
+    <div class="category-filters" role="tablist" aria-label="Filter by property type">
+      <button class="cat-pill active" data-category="all" role="tab" aria-selected="true">All</button>
+      <button class="cat-pill" data-category="apartment" role="tab" aria-selected="false">Apartments</button>
+      <button class="cat-pill" data-category="house-villa" role="tab" aria-selected="false">Houses &amp; Villas</button>
+    </div>
     <div class="listings-grid" id="listingsGrid">
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
