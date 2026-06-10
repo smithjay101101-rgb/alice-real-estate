@@ -93,6 +93,14 @@
     </div>
     <form class="search-bar" action="/rentals" method="get" id="searchForm">
       <div class="search-field">
+        <label for="ptype" class="search-label">Type</label>
+        <select id="ptype" name="type" class="search-select">
+          <option value="">All</option>
+          <option value="apartment">Apartments</option>
+          <option value="house-villa">Houses &amp; Villas</option>
+        </select>
+      </div>
+      <div class="search-field">
         <label for="location" class="search-label">Location</label>
         <select id="location" name="location" class="search-select">
           <option value="">All</option>
@@ -130,7 +138,10 @@
         <label for="code" class="search-label">Code</label>
         <input type="text" id="code" name="code" class="search-input" placeholder="#038" maxlength="6" autocomplete="off">
       </div>
-      <button type="submit" class="btn-primary search-btn">Search</button>
+      <div class="search-actions">
+        <button type="submit" class="btn-primary search-btn">Search</button>
+        <button type="button" class="search-reset" id="searchReset" data-t="searchReset">Reset</button>
+      </div>
     </form>
     <div class="hero-stats" id="heroStats">
       <div><div class="stat-num" data-t="stat1" data-count-target="250" data-count-suffix="+">250+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
@@ -165,11 +176,13 @@
     <p class="section-label">AVAILABLE NOW</p>
     <h2 class="listings-heading">Rentals in Đà Nẵng</h2>
     <p class="listings-subtitle">Every listing here has been checked by Alice. Fair prices, honest landlords, ready to move in.</p>
-    <div class="category-filters" role="tablist" aria-label="Filter by property type">
-      <button class="cat-pill active" data-category="all" role="tab" aria-selected="true">All</button>
-      <button class="cat-pill" data-category="apartment" role="tab" aria-selected="false">Apartments</button>
-      <button class="cat-pill" data-category="house-villa" role="tab" aria-selected="false">Houses &amp; Villas</button>
+    <div class="category-filters" role="group" aria-label="Filter by property type">
+      <button class="cat-pill active" data-category="all" aria-pressed="true">All</button>
+      <button class="cat-pill" data-category="apartment" aria-pressed="false">Apartments</button>
+      <button class="cat-pill" data-category="house-villa" aria-pressed="false">Houses &amp; Villas</button>
     </div>
+    <p class="results-count" id="resultsCount" aria-live="polite" hidden></p>
+    <div class="active-filters" id="activeFilters" hidden aria-live="polite"></div>
     <div class="listings-grid" id="listingsGrid">
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
       <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>
@@ -191,7 +204,7 @@
 <section class="about" id="about">
   <div class="about-container">
     <div class="about-image-wrapper">
-      <img src="new picture.png" alt="Alice Real Estate Đà Nẵng" class="about-image" loading="lazy" width="800" height="1000">
+      <img src="about-home.jpg" alt="Bright living room of a Đà Nẵng apartment with a view of the coastline" class="about-image" loading="lazy" width="928" height="1152">
     </div>
     <div class="about-content">
       <p class="section-label" data-t="aboutTag">Why Alice</p>
@@ -306,6 +319,7 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
       <div class="lightbox-gallery" id="lightbox-gallery"></div>
+      <div class="lightbox-counter" id="lightbox-counter" aria-live="polite"></div>
       <button class="lightbox-arrow next" id="lightbox-next" aria-label="Next photo">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>

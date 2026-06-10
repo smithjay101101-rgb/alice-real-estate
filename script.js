@@ -4,6 +4,10 @@ const T = {
     navAbout: "About", navTestimonials: "Stories", navContact: "Contact", navListings: "Rentals",
     navApartments: "Apartments", navHousesVillas: "Houses & Villas",
     navCta: "Message Alice",
+    searchReset: "Reset", filterLabel: "Search:", filterClearAll: "Clear search",
+    countOne: "rental", countMany: "rentals", countOf: "of",
+    noResultsText: "No listings match your filters. Try adjusting your search.",
+    noResultsClear: "Clear search filters",
     heroTag: "Đà Nẵng Rentals for Expats",
     heroH1: 'Find your place in&nbsp;<span class="coral" style="white-space:nowrap">Đà Nẵng</span>',
     heroSub: "Most expats waste weeks on bad listings and unreliable landlords. Alice knows the best buildings, the fair prices, and the landlords you can trust. Tell her what you need and she\u2019ll send you a shortlist worth seeing.",
@@ -57,6 +61,10 @@ const T = {
     navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
     navApartments: "Căn hộ", navHousesVillas: "Nhà & Biệt thự",
     navCta: "Nhắn tin cho Alice",
+    searchReset: "Đặt lại", filterLabel: "Tìm kiếm:", filterClearAll: "Xóa tìm kiếm",
+    countOne: "nhà", countMany: "nhà", countOf: "trong",
+    noResultsText: "Không có nhà nào khớp với bộ lọc. Hãy thử điều chỉnh tìm kiếm.",
+    noResultsClear: "Xóa bộ lọc tìm kiếm",
     heroTag: "Cho Thuê Cao Cấp tại Đà Nẵng",
     heroH1: 'Tìm ngôi nhà <em>hoàn hảo</em> tại <span class="coral">Đà Nẵng</span>',
     heroSub: "Không cần tự mình tìm kiếm mệt mỏi. Alice giúp bạn tìm nhà cho thuê đã kiểm tra, sẵn sàng dọn vào tại những khu vực tốt nhất Đà Nẵng, để bạn an cư nhanh hơn và tận hưởng cuộc sống bên biển.",
@@ -303,6 +311,99 @@ const T = {
     return true;
   }
 
+  // Single source of truth for category changes: updates pills + the Type select in the search bar
+  function setActiveCategory(cat) {
+    activeCategory = cat;
+    document.querySelectorAll('.cat-pill').forEach(function(p) {
+      var on = p.dataset.category === cat;
+      p.classList.toggle('active', on);
+      p.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    var typeSel = document.getElementById('ptype');
+    if (typeSel) typeSel.value = (cat === 'all' ? '' : cat);
+  }
+
+  function hasActiveSearch() {
+    return !!(currentSearch.location || currentSearch.budget || currentSearch.bedrooms || currentSearch.code);
+  }
+
+  function searchFormHasValues() {
+    var ids = ['ptype', 'location', 'budget', 'bedrooms', 'code'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && el.value) return true;
+    }
+    return false;
+  }
+
+  function optionText(selectId, value) {
+    var select = document.getElementById(selectId);
+    if (!select) return value;
+    for (var i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === value) return select.options[i].text;
+    }
+    return value;
+  }
+
+  // Chips above the grid showing the APPLIED search, each removable; reset button in the form
+  function updateSearchUI() {
+    var s = T[currentLang] || T.en;
+    var chipsEl = document.getElementById('activeFilters');
+    if (chipsEl) {
+      if (!hasActiveSearch()) {
+        chipsEl.hidden = true;
+        chipsEl.innerHTML = '';
+      } else {
+        var chips = [];
+        if (currentSearch.location) chips.push({ key: 'location', label: optionText('location', currentSearch.location) });
+        if (currentSearch.budget) chips.push({ key: 'budget', label: optionText('budget', currentSearch.budget) });
+        if (currentSearch.bedrooms) chips.push({ key: 'bedrooms', label: optionText('bedrooms', currentSearch.bedrooms) });
+        if (currentSearch.code) chips.push({ key: 'code', label: '#' + currentSearch.code.replace(/^#/, '') });
+        chipsEl.innerHTML =
+          '<span class="active-filters-label">' + s.filterLabel + '</span>' +
+          chips.map(function(c) {
+            return '<button type="button" class="filter-chip" data-filter-key="' + c.key + '" aria-label="Remove filter: ' + c.label.replace(/"/g, '&quot;') + '">' +
+              c.label + ' <span class="chip-x" aria-hidden="true">&times;</span></button>';
+          }).join('') +
+          '<button type="button" class="filter-clear-all" onclick="clearSearch()">' + s.filterClearAll + '</button>';
+        chipsEl.hidden = false;
+      }
+    }
+    var resetBtn = document.getElementById('searchReset');
+    if (resetBtn) {
+      resetBtn.classList.toggle('is-visible', hasActiveSearch() || searchFormHasValues());
+    }
+  }
+
+  // "5 of 14 rentals" feedback line under the category pills
+  function updateResultsCount() {
+    var el = document.getElementById('resultsCount');
+    if (!el) return;
+    if (!listingsData.length) { el.hidden = true; return; }
+    var s = T[currentLang] || T.en;
+    var n = allListings.length;
+    var total = listingsData.length;
+    var word = n === 1 ? s.countOne : s.countMany;
+    el.textContent = (n < total) ? (n + ' ' + s.countOf + ' ' + total + ' ' + word) : (n + ' ' + word);
+    el.hidden = false;
+  }
+
+  function clearSearchField(key) {
+    var el = document.getElementById(key);
+    if (el) el.value = '';
+    currentSearch[key] = '';
+    applyFilters();
+  }
+
+  function clearSearch() {
+    ['location', 'budget', 'bedrooms', 'code'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    currentSearch = { location: '', budget: '', bedrooms: '', code: '' };
+    applyFilters();
+  }
+
   function appendCard(l) {
     var grid = document.getElementById('listingsGrid');
     grid.insertAdjacentHTML('beforeend', buildListingCard(l));
@@ -336,10 +437,14 @@ const T = {
       if (!existing) {
         var msg = document.createElement('div');
         msg.className = 'listings-no-results';
-        msg.innerHTML = '<p>No listings match your filters. Try adjusting your search.</p>';
         grid.after(msg);
         existing = msg;
       }
+      var s = T[currentLang] || T.en;
+      existing.innerHTML = '<p>' + s.noResultsText + '</p>' +
+        (hasActiveSearch()
+          ? '<button type="button" class="btn-primary" style="margin-top:16px" onclick="clearSearch()">' + s.noResultsClear + '</button>'
+          : '');
       existing.style.display = '';
     } else if (existing) {
       existing.style.display = 'none';
@@ -384,6 +489,8 @@ const T = {
     // Stagger-in animation for appended batches only (initial paint stays instant)
     if (!reset) {
       var cards = grid.querySelectorAll('.listing-card');
+      // Move focus to the first revealed card so keyboard/AT users follow the new content
+      if (cards[startIndex]) cards[startIndex].focus({ preventScroll: true });
       next.forEach(function(_, i) {
         var card = cards[startIndex + i];
         if (!card) return;
@@ -410,6 +517,8 @@ const T = {
     filtered = filtered.filter(matchesSearch);
     allListings = filtered;
     renderListings(true);
+    updateSearchUI();
+    updateResultsCount();
   }
 
   function checkUrlHashAndOpenListing() {
@@ -519,14 +628,7 @@ const T = {
   // Category filter pills
   document.querySelectorAll('.cat-pill').forEach(function(pill) {
     pill.addEventListener('click', function() {
-      document.querySelectorAll('.cat-pill').forEach(function(p) {
-        p.classList.remove('active');
-        p.setAttribute('aria-selected', 'false');
-      });
-      pill.classList.add('active');
-      pill.setAttribute('aria-selected', 'true');
-
-      activeCategory = pill.dataset.category;
+      setActiveCategory(pill.dataset.category);
       applyFilters();
 
       var listingsSection = document.getElementById('listings');
@@ -630,12 +732,48 @@ const T = {
   if (searchForm) {
     searchForm.addEventListener('submit', function(e) {
       e.preventDefault();
+      var type = document.getElementById('ptype');
+      setActiveCategory((type && type.value) || 'all');
       var loc = document.getElementById('location').value;
       var budget = document.getElementById('budget').value;
       var beds = document.getElementById('bedrooms').value;
       var code = document.getElementById('code').value;
       filterListings(loc, budget, beds, code);
       document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Selects apply instantly on change; the code field applies on Search/Enter
+    ['ptype', 'location', 'budget', 'bedrooms'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('change', function() {
+        if (id === 'ptype') {
+          setActiveCategory(el.value || 'all');
+        } else {
+          currentSearch[id] = el.value;
+        }
+        applyFilters();
+      });
+    });
+    var codeField = document.getElementById('code');
+    if (codeField) codeField.addEventListener('input', updateSearchUI);
+
+    // Reset clears the whole form, including Type → All
+    var searchResetBtn = document.getElementById('searchReset');
+    if (searchResetBtn) {
+      searchResetBtn.addEventListener('click', function() {
+        setActiveCategory('all');
+        clearSearch();
+      });
+    }
+  }
+
+  // Removable filter chips above the grid (event delegation)
+  var activeFiltersEl = document.getElementById('activeFilters');
+  if (activeFiltersEl) {
+    activeFiltersEl.addEventListener('click', function(e) {
+      var chip = e.target.closest('.filter-chip');
+      if (chip) clearSearchField(chip.dataset.filterKey);
     });
   }
 
@@ -682,6 +820,11 @@ const T = {
     dots.forEach(function(dot, i) {
       dot.classList.toggle('active', i === activeIndex);
     });
+    var counter = document.getElementById('lightbox-counter');
+    if (counter && dots.length > 1) {
+      var idx = Math.max(0, Math.min(activeIndex, dots.length - 1));
+      counter.textContent = (idx + 1) + '/' + dots.length;
+    }
   }
 
   document.getElementById('lightbox-gallery').addEventListener('scroll', function(e) {
@@ -708,6 +851,10 @@ const T = {
     dotsEl.innerHTML = allImages.map(function(_, i) {
       return '<span class="lightbox-dot' + (i === 0 ? ' active' : '') + '"></span>';
     }).join('');
+
+    // Photo counter ("1/9"); hidden for single-photo listings via :empty
+    var counterEl = document.getElementById('lightbox-counter');
+    if (counterEl) counterEl.textContent = allImages.length > 1 ? '1/' + allImages.length : '';
 
     var waSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.387 0-4.591-.813-6.344-2.18l-.443-.347-3.09 1.036 1.036-3.09-.347-.443A9.955 9.955 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>';
 
@@ -808,6 +955,24 @@ const T = {
 
   document.getElementById('lightbox').addEventListener('click', function(e) {
     if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+
+  // Trap focus inside the lightbox dialog while it is open
+  document.getElementById('lightbox').addEventListener('keydown', function(e) {
+    if (e.key !== 'Tab') return;
+    var lb = document.getElementById('lightbox');
+    var focusable = Array.prototype.filter.call(
+      lb.querySelectorAll('button, a[href]'),
+      function(el) { return el.offsetParent !== null; }
+    );
+    if (!focusable.length) return;
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
   });
   document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
   function scrollLightbox(direction) {
