@@ -7,9 +7,12 @@
   var grid = document.getElementById('commercialListingsGrid');
   if (!grid) return;
 
+  // Reference codes are 4 digits and never repeat — see generateCommercialCode().
+  var usedCommercialCodes = {};
+
   var COMMERCIAL_GID = '1301362763';
   var COMMERCIAL_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1yzmziGKMNNwomQldOxEJH7FfpUi1IwD4zRVdRE47hNQ/gviz/tq?tqx=out:csv&gid=' + COMMERCIAL_GID;
-  var CACHE_KEY = 'alice_commercial_cache_v3';
+  var CACHE_KEY = 'alice_commercial_cache_v4';
   var CACHE_TTL = 5 * 60 * 1000;
   var INITIAL_COUNT = 9;
   var BATCH_SIZE = 5;
@@ -74,13 +77,24 @@
       'See ' + next + ' More Space' + (next !== 1 ? 's' : '');
   }
 
+  function resetCommercialCodes() {
+    usedCommercialCodes = {};
+  }
+
+  // A listing keeps the number its title hashes to; if that number is already
+  // taken, we step forward until a free one turns up, so no two commercial
+  // listings can ever end up with the same code.
   function generateCommercialCode(title) {
     var hash = 0;
     for (var i = 0; i < title.length; i++) {
       hash = ((hash << 5) - hash + title.charCodeAt(i)) | 0;
     }
     var num = Math.abs(hash) % 1000;
-    return 'C' + ('00' + num).slice(-3);
+    for (var tries = 0; usedCommercialCodes[num] && tries < 10000; tries++) {
+      num = (num + 1) % 10000;
+    }
+    usedCommercialCodes[num] = true;
+    return 'C' + ('000' + num).slice(-4);
   }
 
   function mapCommercialRow(r) {
@@ -204,6 +218,7 @@
       var text = await response.text();
       var rows = parseCSV(text);
       rows.shift();
+      resetCommercialCodes();
       var listings = rows.map(mapCommercialRow)
         .filter(function(l) { return l.status === 'active'; })
         .sort(function(a, b) {

@@ -163,7 +163,7 @@ const T = {
 // ── Listings: Google Sheet CSV, render, filter ──
   // ── LISTINGS: Google Sheet CSV ──
   var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1yzmziGKMNNwomQldOxEJH7FfpUi1IwD4zRVdRE47hNQ/gviz/tq?tqx=out:csv';
-  var CACHE_KEY = 'alice_listings_cache_v2';
+  var CACHE_KEY = 'alice_listings_cache_v3';
   var CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
   var LOCATION_NAMES = {
@@ -204,13 +204,26 @@ const T = {
     return rows;
   }
 
+  // Reference codes are 4 digits and never repeat. A listing keeps the number its
+  // title hashes to; if that number is already taken, we step forward until a free
+  // one turns up, so no two listings can ever end up with the same code.
+  var usedCodes = {};
+
+  function resetCodes() {
+    usedCodes = {};
+  }
+
   function generateCode(title) {
     var hash = 0;
     for (var i = 0; i < title.length; i++) {
       hash = ((hash << 5) - hash + title.charCodeAt(i)) | 0;
     }
     var num = Math.abs(hash) % 1000;
-    return '#' + ('00' + num).slice(-3);
+    for (var tries = 0; usedCodes[num] && tries < 10000; tries++) {
+      num = (num + 1) % 10000;
+    }
+    usedCodes[num] = true;
+    return '#' + ('000' + num).slice(-4);
   }
 
   function normalizeCategory(raw) {
@@ -553,6 +566,7 @@ const T = {
         var rows = parseCSV(text);
         // Skip header row
         rows.shift();
+        resetCodes();
         listingsData = rows.map(mapRow)
           .filter(function(l) { return l.status === 'active'; })
           .sort(function(a, b) {
