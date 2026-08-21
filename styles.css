@@ -531,6 +531,8 @@
 
   /* ── SECTION SHARED ── */
   section { padding: 8rem 4vw; max-width: 1400px; margin: 0 auto; }
+  /* Keep anchored sections clear of the fixed header when jumped to */
+  section[id], [id].faq-section, footer[id] { scroll-margin-top: 6rem; }
   .section-tag {
     font-family: var(--mono); font-size: .65rem; font-weight: 600;
     letter-spacing: .12em; text-transform: uppercase; color: #157a5a;

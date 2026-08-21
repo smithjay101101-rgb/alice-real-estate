@@ -165,6 +165,12 @@
   margin-bottom: var(--space-lg);
 }
 .post-section { margin-bottom: var(--space-3xl); }
+/* Anchor targets are the sections themselves, so they carry the offset that
+   keeps a heading clear of the fixed header after a contents link is clicked. */
+.post-section,
+.page-body section,
+.post-main [id],
+.page-main [id] { scroll-margin-top: 6rem; }
 .post-section h2,
 .page-body h2 {
   font-family: var(--font-heading);
