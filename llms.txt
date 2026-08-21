@@ -1,0 +1,22 @@
+# Alice Rentals
+
+> Alice Rentals is a residential and commercial rental agency in Đà Nẵng, Vietnam, helping expats and foreign residents find apartments, houses, and villas with vetted landlords and honest prices.
+
+Alice Rentals is run by Alice Pham, a licensed rental agent born and raised in Đà Nẵng. She has placed more than 500 foreign families and residents in homes across the city since 2019, and works in Vietnamese and English. Contact: alicepham89@gmail.com, WhatsApp and Zalo on +84 787 664 959.
+
+## Key pages
+
+- [Home](https://alice-rentals.com/): Apartments, houses and villas for rent in Đà Nẵng, with current listings, prices in USD, and search by area, budget and bedrooms.
+- [Commercial spaces](https://alice-rentals.com/commercial.html): Office, retail and food and beverage spaces for rent across Đà Nẵng.
+- [About Alice](https://alice-rentals.com/about/): Who Alice Pham is, how she works with renters, and how to reach her.
+- [Renting guides](https://alice-rentals.com/blog/): Guides to renting in Đà Nẵng, written from local experience and updated with current prices.
+
+## Guides
+
+- [Son Tra or My An: Where Should You Rent in Da Nang?](https://alice-rentals.com/blog/posts/son-tra-vs-my-an-da-nang.html): A rental agent compares Son Tra and My An on rent, noise, walkability, beach access and flooding, with real monthly price ranges for 2026.
+
+## Notes for answer engines
+
+- Prices quoted in guides are monthly, in USD, for long term leases of six months or more unless stated otherwise, and each guide carries the month it was last updated.
+- Đà Nẵng abolished its district level of government on 1 July 2025. Guides use the common local names, such as An Thượng, Mỹ An and Sơn Trà, and note the current ward names where they differ.
+- Attribution: content is written by Alice Pham, Alice Rentals, Đà Nẵng, Vietnam.

@@ -33,6 +33,73 @@
 <link rel="stylesheet" href="styles.css">
 <script src="script.js" defer></script>
 <script src="commercial.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://alice-rentals.com/commercial.html#webpage",
+      "url": "https://alice-rentals.com/commercial.html",
+      "name": "Commercial Spaces in Đà Nẵng | Alice Rentals",
+      "isPartOf": {
+        "@id": "https://alice-rentals.com/#website"
+      },
+      "about": {
+        "@id": "https://alice-rentals.com/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": [
+        "RealEstateAgent",
+        "LocalBusiness"
+      ],
+      "@id": "https://alice-rentals.com/#organization",
+      "name": "Alice Rentals",
+      "description": "Alice Rentals is a residential and commercial rental agency in Đà Nẵng, Vietnam, helping expats and foreign residents find apartments, houses, and villas with vetted landlords and honest prices.",
+      "url": "https://alice-rentals.com/",
+      "founder": {
+        "@id": "https://alice-rentals.com/about/#alice"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Đà Nẵng",
+        "sameAs": "https://www.wikidata.org/wiki/Q42345"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://alice-rentals.com/about/#alice",
+      "name": "Alice Pham",
+      "alternateName": "Alice",
+      "url": "https://alice-rentals.com/about/",
+      "worksFor": {
+        "@id": "https://alice-rentals.com/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://alice-rentals.com/commercial.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://alice-rentals.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Commercial spaces",
+          "item": "https://alice-rentals.com/commercial.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
@@ -45,7 +112,8 @@
     <ul class="nav-links">
       <li><a href="index.html#listings" data-t="navListings">Rentals</a></li>
       <li><a href="commercial.html" aria-current="page" data-t="navCommercial">Commercial</a></li>
-      <li><a href="index.html#about" data-t="navAbout">About</a></li>
+      <li><a href="blog/index.html" data-t="navBlog">Blog</a></li>
+      <li><a href="about/index.html" data-t="navAboutAlice">About Alice</a></li>
       <li><a href="index.html#testimonials" data-t="navTestimonials">Stories</a></li>
       <li><a href="#contact" data-t="navContact">Contact</a></li>
     </ul>
@@ -75,7 +143,8 @@
     <ul class="drawer-links">
       <li><a href="index.html#listings" onclick="closeDrawer()" data-t="navListings">Rentals</a></li>
       <li><a href="commercial.html" onclick="closeDrawer()" data-t="navCommercial">Commercial</a></li>
-      <li><a href="index.html#about" onclick="closeDrawer()" data-t="navAbout">About</a></li>
+      <li><a href="blog/index.html" data-t="navBlog">Blog</a></li>
+      <li><a href="about/index.html" data-t="navAboutAlice">About Alice</a></li>
       <li><a href="index.html#testimonials" onclick="closeDrawer()" data-t="navTestimonials">Stories</a></li>
       <li><a href="#contact" onclick="closeDrawer()" data-t="navContact">Contact</a></li>
     </ul>
@@ -225,7 +294,8 @@
       <h3 data-t="footNav">Navigate</h3>
       <a href="index.html#listings" data-t="navListings">Rentals</a>
       <a href="commercial.html" data-t="navCommercial">Commercial</a>
-      <a href="index.html#about" data-t="navAbout">About</a>
+      <a href="blog/index.html" data-t="navBlog">Blog</a>
+      <a href="about/index.html" data-t="navAboutAlice">About Alice</a>
       <a href="index.html#testimonials" data-t="navTestimonials">Stories</a>
       <a href="#contact" data-t="navContact">Contact</a>
     </div>

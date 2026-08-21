@@ -2,6 +2,7 @@
 const T = {
   en: {
     navAbout: "About", navTestimonials: "Stories", navContact: "Contact", navListings: "Rentals",
+    navBlog: "Blog", navAboutAlice: "About Alice",
     navApartments: "Apartments", navHousesVillas: "Houses & Villas",
     navCta: "Message Alice",
     searchReset: "Reset", filterLabel: "Search:", filterClearAll: "Clear search",
@@ -23,6 +24,9 @@ const T = {
     h2Title: "7+ Years in Đà Nẵng", h2Sub: "Not a newcomer. Alice has placed 500+ families and knows every building, landlord, and neighborhood personally.",
     h3Title: "She Negotiates For You", h3Sub: "Alice speaks the language and knows the market rates. Her clients consistently pay less rent than they would on their own.",
     h4Title: "Your Lease, Fully Protected", h4Sub: "Alice reviews every clause before you sign. She makes sure your deposit is safe, your terms are fair, and there are no surprises buried in the fine print.",
+    faqTag: "Before you rent", faqTitle: "Questions renters ask Alice",
+    faqSub: "The things people message about before they sign anything. Prices are from listings that are live today.",
+    faqMore: "Read the full renting guides \u2192",
     testiTag: "From Renters", testiTitle: "Real people, real moves",
     testiSub: "A few stories from the 500+ families Alice has helped settle in Đà Nẵng.",
     t1Text: "\u201CAlice helped us find a great apartment within just 3 days. We met Alice in person, and afterwards she shared several options with us via WhatsApp. We visited a few places and chose the one we liked most. She also supported us with the contract and the check-in, which made the whole process very smooth. Highly recommended!\u201D",
@@ -40,7 +44,7 @@ const T = {
     footerDesc: "500+ families housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour.",
     modalTitle: "Get in touch", modalSub: "Pick whichever is easiest for you. Alice usually replies within an hour.", modalClose: "Maybe later",
     footNav: "Navigate", footContact: "Reach Alice",
-    copy: "\u00A9 2026 Alice Real Estate. All rights reserved.",
+    copy: "\u00A9 2026 Alice Rentals. All rights reserved.",
     navCommercial: "Commercial",
     commHeroH1: "Find the right space <em>for your business.</em>",
     commHeroSub: "Offices, retail, and F&amp;B spaces across Đà Nẵng. Alice knows which buildings have reliable landlords, fair rates, and the foot traffic you actually need.",
@@ -57,8 +61,12 @@ const T = {
     commCrossCta: "Browse Residential →",
     commFooterDesc: "500+ families and businesses housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour."
   },
+    faqTag: "Trước khi thuê", faqTitle: "Những câu hỏi khách thuê hay hỏi Alice",
+    faqSub: "Những điều mọi người hay nhắn hỏi trước khi ký hợp đồng. Giá lấy từ các tin đăng đang có sẵn.",
+    faqMore: "Xem các bài hướng dẫn thuê nhà \u2192",
   vi: {
     navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
+    navBlog: "Blog", navAboutAlice: "Về Alice",
     navApartments: "Căn hộ", navHousesVillas: "Nhà & Biệt thự",
     navCta: "Nhắn tin cho Alice",
     searchReset: "Đặt lại", filterLabel: "Tìm kiếm:", filterClearAll: "Xóa tìm kiếm",
@@ -97,7 +105,7 @@ const T = {
     footerDesc: "Hơn 500 gia đình đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice. Thường trả lời trong vòng một giờ.",
     modalTitle: "Nhắn tin cho Alice", modalSub: "Chọn cách bạn muốn liên hệ. Alice thường trả lời trong vòng một giờ.", modalClose: "Để sau",
     footNav: "Điều Hướng", footContact: "Liên Hệ Alice",
-    copy: "\u00A9 2026 Alice Real Estate. Bảo lưu mọi quyền.",
+    copy: "\u00A9 2026 Alice Rentals. Bảo lưu mọi quyền.",
     navCommercial: "Mặt bằng",
     commHeroH1: "Tìm không gian phù hợp <em>cho doanh nghiệp.</em>",
     commHeroSub: "Văn phòng, mặt bằng bán lẻ và nhà hàng/quán cà phê khắp Đà Nẵng. Alice biết tòa nhà nào có chủ tốt, giá hợp lý, và lượng khách phù hợp cho hoạt động kinh doanh của bạn.",
