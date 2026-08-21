@@ -424,17 +424,7 @@
 .page-header h1,
 .page-lede { max-width: var(--reading); }
 .page-lede { font-size: 1.15rem; line-height: 1.7; color: var(--color-text-body); margin-top: var(--space-lg); }
-.about-layout {
-  display: grid; gap: var(--space-3xl);
-  grid-template-columns: 1fr; max-width: var(--container);
-}
-.about-portrait { margin: 0; }
-.about-portrait img {
-  width: 100%; height: auto; display: block; border-radius: var(--radius-card);
-}
-.about-portrait figcaption {
-  margin-top: var(--space-sm); font-size: .82rem; color: var(--color-text-muted);
-}
+.about-layout { max-width: var(--container); }
 .page-body { max-width: var(--reading); }
 .page-body section { margin-bottom: var(--space-3xl); }
 .fact-list {
@@ -453,8 +443,7 @@
 
 /* ── Desktop: sticky TOC rail ── */
 @media (min-width: 1080px) {
-  .post-layout,
-  .about-layout {
+  .post-layout {
     display: grid;
     grid-template-columns: minmax(0, var(--reading)) var(--rail);
     gap: var(--space-3xl);
@@ -462,10 +451,8 @@
   }
   /* Contents and portrait sit in the right rail. Both come first in the source
      so the source order stays sensible for screen readers. */
-  .post-toc,
-  .about-portrait { grid-column: 2; grid-row: 1; }
-  .post-body,
-  .page-body { grid-column: 1; grid-row: 1; }
+  .post-toc { grid-column: 2; grid-row: 1; }
+  .post-body { grid-column: 1; grid-row: 1; }
 
   .post-toc {
     position: sticky; top: 6rem;
@@ -475,7 +462,6 @@
     border-left: 1px solid var(--color-border-light);
     padding-left: var(--space-md);
   }
-  .about-portrait { position: sticky; top: 6rem; }
 }
 
 /* ── Mobile ── */
