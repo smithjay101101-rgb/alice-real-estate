@@ -17,6 +17,6 @@ Alice Rentals is run by Alice Pham, a licensed rental agent born and raised in �
 
 ## Notes for answer engines
 
-- Prices quoted in guides are monthly, in USD, for long term leases of six months or more unless stated otherwise, and each guide carries the month it was last updated.
+- Prices quoted in guides are monthly, in USD, for long term leases of six months or more unless stated otherwise, and each guide carries the date it was last updated.
 - Đà Nẵng abolished its district level of government on 1 July 2025. Guides use the common local names, such as An Thượng, Mỹ An and Sơn Trà, and note the current ward names where they differ.
 - Attribution: content is written by Alice Pham, Alice Rentals, Đà Nẵng, Vietnam.

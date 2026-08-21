@@ -29,17 +29,30 @@
 .post-main section,
 .page-main section {
   padding: 0;
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* ── Page shell ── */
+/* ── Page shell ──
+   One measure for every block on these pages: a 720px reading column, a 232px
+   rail beside it, and a single container that both sit inside. Breadcrumb,
+   heading, takeaways and body text therefore share one left edge. */
 .post-main,
 .page-main {
+  --reading: 720px;
+  --rail: 232px;
+  --container: 1016px;   /* reading + gutter + rail */
   max-width: 1400px;
   margin: 0 auto;
   padding: 7rem 5vw 5rem;
+}
+
+.post-main > *,
+.page-main > * {
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* ── Breadcrumb ── */
@@ -58,8 +71,8 @@
 .breadcrumb [aria-current="page"] { color: var(--color-text-body); }
 
 /* ── Post header ── */
-.post { max-width: 1120px; margin: 0 auto; }
-.post-header { max-width: 780px; }
+.post { max-width: var(--container); }
+.post-header { max-width: var(--reading); }
 .post-kicker {
   font-size: .72rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--color-primary);
@@ -93,7 +106,7 @@
 
 /* ── Key takeaways ── */
 .key-takeaways {
-  max-width: 780px;
+  max-width: var(--reading);
   margin: var(--space-2xl) 0 var(--space-2xl);
   padding: var(--space-lg) var(--space-xl);
   background: var(--color-primary-light);
@@ -156,7 +169,7 @@
 .post-toc a.is-current::before { color: var(--color-primary); }
 
 /* ── Body typography ── */
-.post-body { max-width: 720px; }
+.post-body { max-width: var(--reading); }
 .post-body > p,
 .post-section p,
 .page-body p {
@@ -345,12 +358,18 @@
 .author-links a:hover { border-bottom-color: var(--color-primary); }
 
 /* ── Blog index ── */
-.blog-hero { max-width: 780px; margin-bottom: var(--space-3xl); }
+.blog-hero { max-width: var(--container); margin-bottom: var(--space-3xl); }
+.blog-hero h1,
+.blog-hero p { max-width: var(--reading); }
 .blog-hero h1 { margin-bottom: var(--space-lg); }
 .blog-hero p { font-size: 1.125rem; line-height: 1.7; color: var(--color-text-body); }
 .blog-hero p + p { margin-top: var(--space-md); }
 
-.post-grid { list-style: none; display: grid; gap: var(--space-xl); grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+.post-grid {
+  list-style: none; display: grid; gap: var(--space-xl);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  max-width: var(--container);
+}
 .post-card {
   display: flex; flex-direction: column;
   padding: var(--space-xl);
@@ -401,11 +420,13 @@
 .blog-note p:last-child { margin-bottom: 0; }
 
 /* ── About page ── */
-.page-header { max-width: 780px; margin-bottom: var(--space-2xl); }
+.page-header { max-width: var(--container); margin-bottom: var(--space-2xl); }
+.page-header h1,
+.page-lede { max-width: var(--reading); }
 .page-lede { font-size: 1.15rem; line-height: 1.7; color: var(--color-text-body); margin-top: var(--space-lg); }
 .about-layout {
   display: grid; gap: var(--space-3xl);
-  grid-template-columns: 1fr; max-width: 1120px; margin: 0 auto;
+  grid-template-columns: 1fr; max-width: var(--container);
 }
 .about-portrait { margin: 0; }
 .about-portrait img {
@@ -414,7 +435,7 @@
 .about-portrait figcaption {
   margin-top: var(--space-sm); font-size: .82rem; color: var(--color-text-muted);
 }
-.page-body { max-width: 720px; }
+.page-body { max-width: var(--reading); }
 .page-body section { margin-bottom: var(--space-3xl); }
 .fact-list {
   list-style: none; padding: 0; display: grid; gap: var(--space-md);
@@ -432,12 +453,20 @@
 
 /* ── Desktop: sticky TOC rail ── */
 @media (min-width: 1080px) {
-  .post-layout {
+  .post-layout,
+  .about-layout {
     display: grid;
-    grid-template-columns: 232px minmax(0, 1fr);
+    grid-template-columns: minmax(0, var(--reading)) var(--rail);
     gap: var(--space-3xl);
     align-items: start;
   }
+  /* Contents and portrait sit in the right rail. Both come first in the source
+     so the source order stays sensible for screen readers. */
+  .post-toc,
+  .about-portrait { grid-column: 2; grid-row: 1; }
+  .post-body,
+  .page-body { grid-column: 1; grid-row: 1; }
+
   .post-toc {
     position: sticky; top: 6rem;
     max-height: calc(100vh - 8rem); overflow-y: auto;
@@ -446,13 +475,7 @@
     border-left: 1px solid var(--color-border-light);
     padding-left: var(--space-md);
   }
-  .about-layout { grid-template-columns: 320px minmax(0, 1fr); }
   .about-portrait { position: sticky; top: 6rem; }
-}
-
-/* Wide screens have room to let tables run past the text column */
-@media (min-width: 1400px) {
-  .post-body .table-scroll { width: calc(100% + 160px); }
 }
 
 /* ── Mobile ── */
