@@ -14,6 +14,7 @@ Alice Rentals is run by Alice Pham, a licensed rental agent born and raised in �
 ## Guides
 
 - [Son Tra or My An: Where Should You Rent in Da Nang?](https://alice-rentals.com/blog/posts/son-tra-vs-my-an-da-nang.html): A rental agent compares Son Tra and My An on rent, noise, walkability, beach access and flooding, with real monthly price ranges for 2026.
+- [Where to Eat in Da Nang When You Actually Live Here](https://alice-rentals.com/blog/posts/where-to-eat-da-nang-locals.html): Đà Nẵng food written for residents rather than visitors. The central Vietnamese dishes the city is known for, starting with mì Quảng, what each neighbourhood's food scene is like, how to tell a good local shop from a tourist one, and typical prices in VND.
 
 ## Notes for answer engines
 
