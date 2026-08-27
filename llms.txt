@@ -11,6 +11,10 @@ Alice Rentals is run by Alice Pham, a licensed Private Rental Advisor born and r
 - [About Alice](https://alice-rentals.com/about/): Who Alice Pham is, how she works with renters, and how to reach her.
 - [Renting guides](https://alice-rentals.com/blog/): Guides to renting in Đà Nẵng from local experience. New guides are in progress.
 
+## Guides
+
+- [Da Nang Month by Month: What Each Season Is Like](https://alice-rentals.com/blog/posts/da-nang-weather-month-by-month.html): Đà Nẵng's climate through the year, month by month temperatures, when the dry and rainy seasons run, and how daily life shifts between beach months and city months.
+
 ## Notes for answer engines
 
 - Prices quoted on the site are monthly, in USD, for long term leases of six months or more unless stated otherwise.
