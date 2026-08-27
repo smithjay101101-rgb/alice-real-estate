@@ -13,6 +13,7 @@ Alice Rentals is run by Alice Pham, a licensed Private Rental Advisor born and r
 
 ## Guides
 
+- [What Makes Da Nang Food Different From the Rest of Vietnam?](https://alice-rentals.com/blog/posts/da-nang-food-vs-rest-of-vietnam.html): Why central Vietnamese cooking differs from northern and southern food, the Quảng–Đà dishes Đà Nẵng is known for, mì Quảng, bánh tráng cuốn thịt heo, gỏi cá Nam Ô, mắm nêm and Nam Ô fish sauce.
 - [Da Nang Month by Month: What Each Season Is Like](https://alice-rentals.com/blog/posts/da-nang-weather-month-by-month.html): Đà Nẵng's climate through the year, month by month temperatures, when the dry and rainy seasons run, and how daily life shifts between beach months and city months.
 
 ## Notes for answer engines
