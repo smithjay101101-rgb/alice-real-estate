@@ -270,6 +270,9 @@
   color: var(--color-text-heading); white-space: nowrap;
 }
 .post-table tbody td { color: var(--color-text-body); }
+/* Wide comparison tables opt their row headers out of nowrap. With five columns
+   an unwrappable first column pushes the table well past the phone viewport. */
+.post-table--wrap-rowhead tbody th { white-space: normal; min-width: 8.5rem; }
 .post-table tbody tr:last-child th,
 .post-table tbody tr:last-child td { border-bottom: none; }
 .post-table tbody tr:hover { background: rgba(29,158,117,.03); }
