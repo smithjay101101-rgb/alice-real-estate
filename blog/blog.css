@@ -198,6 +198,13 @@
   margin-bottom: var(--space-sm);
   scroll-margin-top: 6rem;
 }
+/* Address, cuisine and opening hours directly under a venue heading. Scoped to
+   .post-section so it outranks the base `.post-section p` size and spacing. */
+.post-section .post-meta-line {
+  font-size: .875rem; line-height: 1.55;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
 .post-section ul,
 .post-section ol,
 .page-body ul {
