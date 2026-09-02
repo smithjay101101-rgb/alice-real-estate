@@ -85,6 +85,15 @@
   line-height: 1.12; letter-spacing: -.02em;
   color: var(--color-text-heading);
 }
+/* Optional standfirst under a post H1. Set in small caps to read as a strapline
+   rather than a second heading, so it never competes with the H1. */
+.post-subtitle {
+  font-family: var(--font-body);
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
 .post-byline {
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm);
   margin-top: var(--space-lg);
