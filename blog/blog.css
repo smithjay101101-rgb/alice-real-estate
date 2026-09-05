@@ -214,6 +214,16 @@
   color: var(--color-text-muted);
   margin-bottom: var(--space-md);
 }
+/* Standalone takeaway line closing a section. Sized up and rule-marked so it
+   reads as a pull quote, and written to survive being lifted out on its own. */
+.post-section .post-pullquote {
+  font-family: var(--font-heading);
+  font-size: 1.15rem; line-height: 1.5;
+  color: var(--color-text-heading);
+  border-left: 2px solid var(--color-primary);
+  padding-left: var(--space-lg);
+  margin: var(--space-xl) 0 var(--space-lg);
+}
 .post-section ul,
 .post-section ol,
 .page-body ul {
