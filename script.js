@@ -687,7 +687,7 @@ function countWord(s, num, afterOf) {
 
   function setLang(lang) {
     currentLang = lang;
-    const s = T[lang];
+    const s = T[lang] || T.en;
     document.querySelectorAll('[data-t]').forEach(el => {
       if (el.hasAttribute('data-count-target')) return;
       const k = el.getAttribute('data-t');
