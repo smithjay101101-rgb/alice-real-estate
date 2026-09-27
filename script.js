@@ -61,10 +61,10 @@ const T = {
     commCrossCta: "Browse Residential →",
     commFooterDesc: "500+ families and businesses housed in Đà Nẵng since 2019. Send Alice a message. She usually replies within an hour."
   },
+  vi: {
     faqTag: "Trước khi thuê", faqTitle: "Những câu hỏi khách thuê hay hỏi Alice",
     faqSub: "Những điều mọi người hay nhắn hỏi trước khi ký hợp đồng. Giá lấy từ các tin đăng đang có sẵn.",
     faqMore: "Xem các bài hướng dẫn thuê nhà \u2192",
-  vi: {
     navAbout: "Về Alice", navTestimonials: "Câu chuyện", navContact: "Liên hệ", navListings: "Cho thuê",
     navBlog: "Blog", navAboutAlice: "Về Alice",
     navApartments: "Căn hộ", navHousesVillas: "Nhà & Biệt thự",
@@ -122,7 +122,85 @@ const T = {
     commCrossCta: "Xem Nhà Cho Thuê →",
     commFooterDesc: "Hơn 500 gia đình và doanh nghiệp đã an cư tại Đà Nẵng từ 2019. Nhắn tin cho Alice. Thường trả lời trong vòng một giờ."
   },
+  ru: {
+    navAbout: "Об Алисе", navTestimonials: "Отзывы", navContact: "Контакты", navListings: "Аренда",
+    navBlog: "Блог", navAboutAlice: "Об Алисе",
+    navApartments: "Квартиры", navHousesVillas: "Дома и виллы",
+    navCta: "Написать Алисе",
+    searchReset: "Сбросить", filterLabel: "Поиск:", filterClearAll: "Очистить поиск",
+    countOne: "объект", countFew: "объекта", countMany: "объектов", countOf: "из",
+    noResultsText: "Нет объектов по вашим фильтрам. Попробуйте изменить параметры поиска.",
+    noResultsClear: "Сбросить фильтры",
+    heroTag: "Аренда в Дананге для экспатов",
+    heroH1: 'Найдите свой дом в&nbsp;<span class="coral" style="white-space:nowrap">Дананге</span>',
+    heroSub: "Большинство экспатов тратят недели на плохие объявления и ненадёжных арендодателей. Алиса знает лучшие дома, честные цены и арендодателей, которым можно доверять. Расскажите ей, что вам нужно, и она пришлёт короткий список вариантов, которые стоит посмотреть.",
+    btnListings: "Смотреть объекты", btnCall: "Написать Алисе",
+    stat1: "500+", stat1L: "Семей заселено",
+    stat2: "7+", stat2L: "Лет в Дананге",
+    stat3: "98%", stat3L: "Порекомендуют другу",
+    areasLabel: "Где чаще всего снимают экспаты",
+    aboutTag: "Почему Алиса", aboutTitle: "Она берёт на себя сложное,<br>чтобы вам не пришлось",
+    aboutP1: "Переезд и так даётся нелегко, а тут ещё недели поиска квартиры. Алиса работает частным консультантом по аренде и с 2019 года подбирает жильё в Дананге. Она знает, в каких домах надёжные арендодатели, какие улицы затапливает в сезон дождей и где лучший утренний кофе.",
+    aboutP2: "Она говорит по-английски и по-вьетнамски, так что ничего не теряется при переводе. Назовите ей бюджет и обязательные требования, и она пришлёт короткий список мест, которые действительно подходят.",
+    h1Title: "Лицензия и страховка", h1Sub: "Каждый договор проверен. Каждый депозит защищён. У Алисы есть лицензия риелтора в Дананге, поэтому ваш договор аренды юридически надёжен.",
+    h2Title: "7+ лет в Дананге", h2Sub: "Не новичок. Алиса заселила более 500 семей и лично знает каждый дом, арендодателя и район.",
+    h3Title: "Она торгуется за вас", h3Sub: "Алиса говорит на местном языке и знает рыночные цены. Её клиенты стабильно платят за аренду меньше, чем если бы искали сами.",
+    h4Title: "Ваш договор под защитой", h4Sub: "Алиса проверяет каждый пункт до того, как вы подпишете. Она следит, чтобы депозит был в безопасности, условия были честными, а в мелком шрифте не пряталось сюрпризов.",
+    faqTag: "Перед арендой", faqTitle: "Вопросы, которые задают Алисе",
+    faqSub: "О чём спрашивают, прежде чем что-либо подписать. Цены взяты из актуальных объявлений.",
+    faqMore: "Читать все гиды по аренде →",
+    testiTag: "Отзывы арендаторов", testiTitle: "Реальные люди, реальные переезды",
+    testiSub: "Несколько историй из более чем 500 семей, которым Алиса помогла обустроиться в Дананге.",
+    t1Text: "«Алиса помогла нам найти отличную квартиру всего за 3 дня. Мы встретились с Алисой лично, а потом она прислала нам несколько вариантов в WhatsApp. Мы посмотрели несколько мест и выбрали то, что понравилось больше всего. Она также помогла с договором и заселением, и весь процесс прошёл очень гладко. Очень рекомендуем!»",
+    t1Name: "Mariëlle & Tom", t1Role: "Нидерланды",
+    t2Text: "«Благодаря Алисе я нашёл потрясающий трёхэтажный дом с очень красивой террасой. Я очень доволен планировкой, всё устроено именно так, как я хотел. А самое приятное? Я сказал, что хочу место, где можно устраивать барбекю, и она его нашла.»",
+    t2Name: "George", t2Role: "Венгрия",
+    t3Text: "«Благодаря Алисе я нашёл квартиру, которую просто обожаю. Она помогла во всём: и договориться о честной цене, и разобраться с договором. Она прошлась по каждой детали и помогла мне всё понять. Теперь Алиса стала моим надёжным другом здесь, во Вьетнаме, а заядлому путешественнику найти такого человека в чужой стране порой непросто.»",
+    t3Name: "Kenny", t3Role: "США",
+    listTag: "Свободно сейчас", listTitle: "Аренда в Дананге",
+    listSub: "Каждый объект здесь проверен Алисой. Честные цены, порядочные арендодатели, можно сразу заезжать.",
+    filterRent: "Аренда",
+    listMore: "Смотреть все объекты",
+    bedLabel: "Спальни", bathLabel: "Ванные", areaLabel: "м²",
+    badgeRent: "Аренда",
+    footerDesc: "Более 500 семей заселены в Дананге с 2019 года. Напишите Алисе, обычно она отвечает в течение часа.",
+    modalTitle: "Связаться", modalSub: "Выберите самый удобный способ. Алиса обычно отвечает в течение часа.", modalClose: "Может, позже",
+    footNav: "Навигация", footContact: "Связаться с Алисой",
+    copy: "© 2026 Alice Rentals. Все права защищены.",
+    navCommercial: "Коммерция",
+    commHeroH1: "Найдите подходящее помещение <em>для вашего бизнеса.</em>",
+    commHeroSub: "Офисы, торговые площади и помещения под кафе и рестораны по всему Данангу. Алиса знает, в каких зданиях надёжные арендодатели, честные ставки и тот поток посетителей, который вам действительно нужен.",
+    commBtnBrowse: "Смотреть помещения",
+    commListTag: "СВОБОДНЫЕ ПОМЕЩЕНИЯ",
+    commListTitle: "Коммерческая недвижимость",
+    commListSub: "Обновляется каждую неделю. Нажмите на объявление, чтобы увидеть фото, планировки и подробности.",
+    commH2Sub: "Не новичок. Алиса помогла более чем 500 семьям и компаниям и лично знает каждое здание, арендодателя и район.",
+    commAboutP1: "Переезд бизнеса и так даётся нелегко, а тут ещё недели просмотров. Алиса подбирает помещения для арендаторов в Дананге с 2019 года. Она знает, в каких зданиях надёжные арендодатели, на каких улицах нужный поток покупателей и где лучшие предложения в этом квартале.",
+    commAboutP2: "Она говорит по-английски и по-вьетнамски, так что ничего не теряется при переводе. Назовите ей бюджет и обязательные требования, и она пришлёт короткий список мест, которые действительно подходят.",
+    commCrossEyebrow: "Ищете жильё?",
+    commCrossTitle: "Жильё в аренду",
+    commCrossDesc: "Квартиры, виллы и дома по всему Данангу для экспатов, удалённых работников и семей.",
+    commCrossCta: "Смотреть жильё →",
+    commFooterDesc: "Более 500 семей и компаний нашли жильё и помещения в Дананге с 2019 года. Напишите Алисе, обычно она отвечает в течение часа."
+  },
 };
+
+// Button labels for the language switcher, read by screen readers
+const LANG_NAMES = { en: 'English', vi: 'Tiếng Việt', ru: 'Русский' };
+const LANG_SWITCH = { en: 'English', vi: 'Vietnamese', ru: 'Russian' };
+
+// "rental" or "rentals". Russian has three plural forms, and after "из"
+// ("of") the noun takes the genitive, so it needs its own rule.
+function countWord(s, num, afterOf) {
+  if (!s.countFew) return num === 1 ? s.countOne : s.countMany;
+  var m10 = num % 10, m100 = num % 100;
+  var endsInOne = m10 === 1 && m100 !== 11;
+  if (afterOf) return endsInOne ? s.countFew : s.countMany;
+  if (endsInOne) return s.countOne;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return s.countFew;
+  return s.countMany;
+}
+
 
 // ── Modal + Mobile drawer ──
   function openModal() { document.getElementById('contactModal').classList.add('open'); }
@@ -404,7 +482,7 @@ const T = {
     var s = T[currentLang] || T.en;
     var n = allListings.length;
     var total = listingsData.length;
-    var word = n === 1 ? s.countOne : s.countMany;
+    var word = countWord(s, n < total ? total : n, n < total);
     el.textContent = (n < total) ? (n + ' ' + s.countOf + ' ' + total + ' ' + word) : (n + ' ' + word);
     el.hidden = false;
   }
@@ -622,12 +700,13 @@ const T = {
     document.querySelectorAll('.lang-btn').forEach(b => {
       const isActive = b.textContent.trim().toLowerCase() === lang;
       b.classList.toggle('active', isActive);
+      const btnLang = b.textContent.trim().toLowerCase();
       if (isActive) {
         b.setAttribute('aria-current', 'true');
-        b.setAttribute('aria-label', lang === 'en' ? 'English' : 'Tiếng Việt');
+        b.setAttribute('aria-label', LANG_NAMES[btnLang]);
       } else {
         b.removeAttribute('aria-current');
-        b.setAttribute('aria-label', lang === 'en' ? 'Switch to Vietnamese' : 'Switch to English');
+        b.setAttribute('aria-label', 'Switch to ' + LANG_SWITCH[btnLang]);
       }
     });
     document.documentElement.lang = lang;

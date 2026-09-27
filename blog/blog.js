@@ -24,12 +24,30 @@ var BLOG_T = {
     modalTitle: "Liên hệ",
     modalSub: "Chọn cách tiện nhất cho bạn. Alice thường trả lời trong vòng một giờ.",
     modalClose: "Để sau",
-    copy: "© 2026 Alice Rentals. Bảo lưu mọi quyền."
+    copy: "© 2026 Alice Rentals. Bảo lưu mọi quyền.",
+    fallbackNote: "Bài viết này hiện chỉ có bản tiếng Anh. Menu và phần điều hướng đã chuyển sang tiếng Việt. Alice nói tiếng Việt và tiếng Anh, nhắn tin cho cô nếu bạn cần giải thích bằng tiếng Việt."
+  },
+  ru: {
+    navApartments: "Квартиры", navHousesVillas: "Дома и виллы", navCommercial: "Коммерция",
+    navBlog: "Блог", navAboutAlice: "Об Алисе", navContact: "Контакты",
+    navListings: "Аренда", navTestimonials: "Отзывы", navCta: "Написать Алисе",
+    footNav: "Навигация", footContact: "Связаться с Алисой",
+    footerDesc: "Более 500 семей заселены в Дананге с 2019 года. Напишите Алисе, обычно она отвечает в течение часа.",
+    modalTitle: "Связаться",
+    modalSub: "Выберите самый удобный способ. Алиса обычно отвечает в течение часа.",
+    modalClose: "Может, позже",
+    copy: "© 2026 Alice Rentals. Все права защищены.",
+    fallbackNote: "Эта статья пока доступна только на английском. Меню и навигация переведены на русский. Алиса говорит по-английски и по-вьетнамски, напишите ей, если что-то нужно пояснить."
   }
 };
 
+// Button labels for the language switcher, read by screen readers
+var LANG_NAMES = { en: 'English', vi: 'Tiếng Việt', ru: 'Русский' };
+var LANG_SWITCH = { en: 'English', vi: 'Vietnamese', ru: 'Russian' };
+
 // Language switch. Posts are written in English, so switching to Vietnamese
-// translates the interface and shows a note rather than emptying the page.
+// or Russian translates the interface and shows a note rather than emptying
+// the page.
 function setLang(lang) {
   var strings = BLOG_T[lang] || BLOG_T.en;
 
@@ -41,18 +59,22 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     var isActive = btn.textContent.trim().toLowerCase() === lang;
     btn.classList.toggle('active', isActive);
+    var btnLang = btn.textContent.trim().toLowerCase();
     if (isActive) {
       btn.setAttribute('aria-current', 'true');
-      btn.setAttribute('aria-label', lang === 'en' ? 'English' : 'Tiếng Việt');
+      btn.setAttribute('aria-label', LANG_NAMES[btnLang]);
     } else {
       btn.removeAttribute('aria-current');
-      btn.setAttribute('aria-label', lang === 'en' ? 'Switch to Vietnamese' : 'Switch to English');
+      btn.setAttribute('aria-label', 'Switch to ' + LANG_SWITCH[btnLang]);
     }
   });
 
   // The article stays in English. Say so instead of showing an empty page.
   var fallback = document.getElementById('langFallback');
-  if (fallback) fallback.hidden = (lang === 'en');
+  if (fallback) {
+    if (strings.fallbackNote) fallback.textContent = strings.fallbackNote;
+    fallback.hidden = (lang === 'en');
+  }
 
   // The document language attribute keeps describing the article, which is
   // English on every page for now.
