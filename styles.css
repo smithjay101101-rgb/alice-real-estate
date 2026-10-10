@@ -1415,44 +1415,6 @@
     margin-bottom: var(--space-xs);
   }
 
-  /* ── NAV: Stories sits under About Alice ── */
-  .nav-has-sub { position: relative; }
-  .nav-caret {
-    width: 9px; height: 9px; margin-left: 5px; vertical-align: 1px;
-    transition: transform var(--transition-fast);
-  }
-  .nav-has-sub:hover .nav-caret,
-  .nav-has-sub:focus-within .nav-caret { transform: rotate(180deg); }
-  .nav-sub {
-    position: absolute; top: calc(100% + 10px); left: -14px;
-    min-width: 190px; list-style: none; margin: 0; padding: 6px;
-    background: var(--color-bg-white);
-    border: 1px solid var(--color-border-light); border-radius: var(--radius-md);
-    box-shadow: 0 14px 34px rgba(0,0,0,.09);
-    opacity: 0; visibility: hidden; transform: translateY(4px);
-    transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
-  }
-  /* Bridges the gap so the menu stays open on the way down */
-  .nav-sub::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
-  .nav-has-sub:hover .nav-sub,
-  .nav-has-sub:focus-within .nav-sub { opacity: 1; visibility: visible; transform: none; }
-  .nav-links .nav-sub a {
-    display: block; padding: 10px 12px; border-radius: var(--radius-sm);
-    white-space: nowrap;
-  }
-  .nav-links .nav-sub a::after { display: none; }
-  .nav-links .nav-sub a:hover { background: var(--color-primary-light); }
-  @media (prefers-reduced-motion: reduce) {
-    .nav-sub, .nav-caret { transition: none; }
-  }
-
-  .drawer-links .drawer-sub a {
-    padding-left: 2.5rem; font-size: .8rem; color: var(--secondary);
-  }
-  .drawer-links .drawer-sub a::before {
-    content: ''; width: 10px; height: 1px; background: var(--gold); margin-right: .6rem;
-  }
-
   /* ── BUY PAGE ──
      Kept deliberately plain: one heading, one line of copy, two buttons.
      No panels, gradients, badges or shadows beyond the site's own button. */

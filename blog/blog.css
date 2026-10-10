@@ -509,3 +509,17 @@
   .post-grid { grid-template-columns: 1fr; }
   .fact-list li { grid-template-columns: 1fr; gap: var(--space-xs); }
 }
+
+/* Client stories on the About page */
+.story {
+  margin: 0 0 var(--space-xl);
+  padding-left: var(--space-lg);
+  border-left: 2px solid var(--color-primary);
+}
+.story blockquote { margin: 0; }
+.page-body .story blockquote p {
+  font-style: italic; color: var(--color-text-heading);
+  margin-bottom: var(--space-sm);
+}
+.story figcaption { font-size: .9rem; color: var(--color-text-muted); }
+.story-name { font-weight: 600; color: var(--color-text-heading); margin-right: 6px; }
