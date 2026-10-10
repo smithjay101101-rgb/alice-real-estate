@@ -33,7 +33,7 @@ var BLOG_T = {
     navApartments: "Квартиры", navHousesVillas: "Дома и виллы", navCommercial: "Коммерция",
     navBlog: "Блог", navAboutAlice: "Об Алисе", navContact: "Контакты",
     navListings: "Аренда", navTestimonials: "Отзывы", navCta: "Написать Алисе",
-    navBuy: "Купить жильё",
+    navBuy: "Купить",
     footNav: "Навигация", footContact: "Связаться с Алисой",
     footerDesc: "Более 500 семей заселены в Дананге с 2019 года. Напишите Алисе, обычно она отвечает в течение часа.",
     modalTitle: "Связаться",

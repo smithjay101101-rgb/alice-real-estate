@@ -1315,7 +1315,7 @@
   }
 
   /* Seven nav items need tighter spacing before the drawer takes over at 767px */
-  @media (max-width: 1180px) {
+  @media (max-width: 1360px) {
     .nav-mid { gap: 1.5rem; }
     .nav-links { gap: 1.5rem; }
   }
