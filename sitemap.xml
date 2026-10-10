@@ -13,6 +13,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://alice-rentals.com/buy</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://alice-rentals.com/blog/posts/da-nang-with-kids</loc>
     <lastmod>2026-10-10</lastmod>
     <changefreq>monthly</changefreq>

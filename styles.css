@@ -1414,3 +1414,120 @@
     color: var(--color-primary);
     margin-bottom: var(--space-xs);
   }
+
+  /* ── NAV: Stories sits under About Alice ── */
+  .nav-has-sub { position: relative; }
+  .nav-caret {
+    width: 9px; height: 9px; margin-left: 5px; vertical-align: 1px;
+    transition: transform var(--transition-fast);
+  }
+  .nav-has-sub:hover .nav-caret,
+  .nav-has-sub:focus-within .nav-caret { transform: rotate(180deg); }
+  .nav-sub {
+    position: absolute; top: calc(100% + 10px); left: -14px;
+    min-width: 190px; list-style: none; margin: 0; padding: 6px;
+    background: var(--color-bg-white);
+    border: 1px solid var(--color-border-light); border-radius: var(--radius-md);
+    box-shadow: 0 14px 34px rgba(0,0,0,.09);
+    opacity: 0; visibility: hidden; transform: translateY(4px);
+    transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  }
+  /* Bridges the gap so the menu stays open on the way down */
+  .nav-sub::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+  .nav-has-sub:hover .nav-sub,
+  .nav-has-sub:focus-within .nav-sub { opacity: 1; visibility: visible; transform: none; }
+  .nav-links .nav-sub a {
+    display: block; padding: 10px 12px; border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+  .nav-links .nav-sub a::after { display: none; }
+  .nav-links .nav-sub a:hover { background: var(--color-primary-light); }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-sub, .nav-caret { transition: none; }
+  }
+
+  .drawer-links .drawer-sub a {
+    padding-left: 2.5rem; font-size: .8rem; color: var(--secondary);
+  }
+  .drawer-links .drawer-sub a::before {
+    content: ''; width: 10px; height: 1px; background: var(--gold); margin-right: .6rem;
+  }
+
+  /* ── BUY PAGE ── */
+  .hero--buy { min-height: 82dvh; }
+  .buy-request { padding: var(--space-3xl) 0; scroll-margin-top: 5rem; }
+  .buy-panel {
+    margin-top: var(--space-md);
+    padding: clamp(28px, 5vw, 56px);
+    border: 1px solid var(--color-border-light); border-radius: var(--radius-card);
+    background: linear-gradient(160deg, var(--color-primary-light) 0%, #fff 70%);
+  }
+  .buy-badge {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-family: var(--font-mono); font-size: .68rem; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; color: #157a5a;
+    padding: 6px 12px; border-radius: var(--radius-pill);
+    background: #fff; border: 1px solid rgba(29,158,117,.25);
+  }
+  .buy-badge::before {
+    content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+  }
+  .buy-panel-title {
+    font-family: var(--font-heading); font-weight: 400;
+    font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.15; letter-spacing: -.01em;
+    color: var(--color-text-heading); margin-top: var(--space-lg); max-width: 22ch;
+  }
+  .buy-panel-text {
+    margin-top: var(--space-md); font-size: 1.05rem; line-height: 1.7;
+    color: var(--color-text-body); max-width: 60ch;
+  }
+  .buy-options {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md); margin-top: var(--space-xl);
+  }
+  .buy-option {
+    display: flex; align-items: center; gap: var(--space-md);
+    min-height: 112px; padding: 22px 24px;
+    border-radius: var(--radius-lg); text-decoration: none;
+    background: var(--color-primary); color: #fff;
+    box-shadow: 0 10px 28px rgba(15,110,86,.18);
+    transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .buy-option:hover {
+    background: var(--color-primary-dark); transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(15,110,86,.26);
+  }
+  .buy-option:active { transform: translateY(0); }
+  .buy-option:focus-visible { outline: 2px solid var(--color-primary-dark); outline-offset: 4px; }
+  .buy-option-icon {
+    flex-shrink: 0; width: 52px; height: 52px; border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,.14);
+  }
+  .buy-option-icon svg { width: 26px; height: 26px; }
+  .buy-option-text { display: grid; gap: 4px; flex: 1; min-width: 0; }
+  .buy-option-title { font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+  .buy-option-sub { font-size: .9rem; line-height: 1.45; color: rgba(255,255,255,.85); }
+  .buy-option-go { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 500; opacity: .9; }
+  .buy-option-go svg { width: 18px; height: 18px; }
+  .buy-alt { margin-top: var(--space-lg); font-size: .92rem; color: var(--color-text-body); }
+  .buy-alt a { color: var(--color-primary-dark); font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(29,158,117,.35); }
+  .buy-alt a:hover { border-bottom-color: var(--color-primary); }
+  .buy-steps { padding: 0 0 var(--space-3xl); }
+  .buy-steps-grid {
+    list-style: none; padding: 0; margin: var(--space-xl) 0 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-md);
+  }
+  .buy-faq { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-xl) var(--space-3xl); }
+  .buy-faq .faq-a a { color: var(--color-primary-dark); }
+  @media (max-width: 767px) {
+    .hero--buy { min-height: 0; }
+    .buy-request { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+    .buy-request .listings-container, .buy-steps .listings-container { padding: 0; }
+    .buy-panel { padding: 24px 18px; }
+    .buy-options, .buy-steps-grid { grid-template-columns: 1fr; }
+    .buy-option { min-height: 96px; padding: 18px; }
+    .buy-option-go span { display: none; }
+    .buy-steps { padding-top: 0; }
+    .buy-faq { padding-top: 0; }
+  }

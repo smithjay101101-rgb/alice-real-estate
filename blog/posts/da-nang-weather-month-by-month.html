@@ -31,9 +31,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../styles.css?v=ccb3cb1a">
+<link rel="stylesheet" href="../../styles.css?v=83645360">
 <link rel="stylesheet" href="../../blog/blog.css?v=99bbd8ba">
-<script src="../../blog/blog.js?v=3b8d8df4" defer></script>
+<script src="../../blog/blog.js?v=8bec5432" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -247,9 +247,14 @@
       <li><a href="/#listings" data-t="navApartments">Apartments</a></li>
       <li><a href="/#listings" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="/commercial" data-t="navCommercial">Commercial</a></li>
+      <li><a href="/buy" data-t="navBuy">Buy Property</a></li>
       <li><a href="/blog/" aria-current="page" data-t="navBlog">Blog</a></li>
-      <li><a href="/about/" data-t="navAboutAlice">About Alice</a></li>
-      <li><a href="/#testimonials" data-t="navTestimonials">Stories</a></li>
+      <li class="nav-has-sub">
+        <a href="/about/"><span data-t="navAboutAlice">About Alice</span><svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1.5 3.5 5 7l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <ul class="nav-sub">
+          <li><a href="/#testimonials" data-t="navTestimonials">Stories</a></li>
+        </ul>
+      </li>
       <li><a href="/#contact" data-t="navContact">Contact</a></li>
     </ul>
   </div>
@@ -280,9 +285,10 @@
       <li><a href="/#listings" data-t="navApartments">Apartments</a></li>
       <li><a href="/#listings" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="/commercial" data-t="navCommercial">Commercial</a></li>
+      <li><a href="/buy" data-t="navBuy">Buy Property</a></li>
       <li><a href="/blog/" data-t="navBlog">Blog</a></li>
       <li><a href="/about/" data-t="navAboutAlice">About Alice</a></li>
-      <li><a href="/#testimonials" data-t="navTestimonials">Stories</a></li>
+      <li class="drawer-sub"><a href="/#testimonials" data-t="navTestimonials">Stories</a></li>
       <li><a href="/#contact" data-t="navContact">Contact</a></li>
     </ul>
     <div class="drawer-footer">
@@ -517,6 +523,7 @@
       <h3 data-t="footNav">Navigate</h3>
       <a href="/#listings" data-t="navListings">Rentals</a>
       <a href="/commercial" data-t="navCommercial">Commercial</a>
+      <a href="/buy" data-t="navBuy">Buy Property</a>
       <a href="/blog/" data-t="navBlog">Blog</a>
       <a href="/about/" data-t="navAboutAlice">About Alice</a>
       <a href="/#testimonials" data-t="navTestimonials">Stories</a>

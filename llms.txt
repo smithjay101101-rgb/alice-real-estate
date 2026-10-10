@@ -8,6 +8,7 @@ Alice Rentals is run by Alice Pham, a licensed Private Rental Advisor born and r
 
 - [Home](https://alice-rentals.com/): Apartments, houses and villas for rent in Đà Nẵng, with current listings, prices in USD, and search by area, budget and bedrooms.
 - [Commercial spaces](https://alice-rentals.com/commercial): Office, retail and food and beverage spaces for rent across Đà Nẵng.
+- [Buy a home](https://alice-rentals.com/buy): Apartments, houses and villas for sale in Đà Nẵng. Sale listings are coming soon; until then Alice finds homes for sale on request via WhatsApp.
 - [About Alice](https://alice-rentals.com/about/): Who Alice Pham is, how she works with renters, and how to reach her.
 - [Renting guides](https://alice-rentals.com/blog/): Guides to renting in Đà Nẵng from local experience. New guides are in progress.
 
