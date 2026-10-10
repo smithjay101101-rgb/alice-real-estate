@@ -1,0 +1,4 @@
+# Serve the Search Console verification file at its exact .html URL.
+# Pages otherwise 308s it to the extensionless path, and Google does not
+# follow redirects when it checks the file.
+/googlefa37199fb8bb8d52.html /googlefa37199fb8bb8d52 200
