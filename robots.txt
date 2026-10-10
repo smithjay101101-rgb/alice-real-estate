@@ -59,3 +59,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://alice-rentals.com/sitemap.xml
+Sitemap: https://alice-rentals.com/sitemap-rentals.xml

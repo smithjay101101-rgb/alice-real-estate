@@ -32,7 +32,7 @@
 <link rel="dns-prefetch" href="https://docs.google.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=ccb3cb1a">
-<script src="script.js?v=7b06a616" defer></script>
+<script src="script.js?v=0f960dfa" defer></script>
 
 <!-- Structured data: one Organization entity, one Person entity, explicitly linked -->
 <script type="application/ld+json">
@@ -427,15 +427,15 @@
 <div class="areas">
   <div class="areas-label" data-t="areasLabel">Where most expats rent</div>
   <div class="neighborhoods-grid">
-    <a href="/?location=my-khe#listings" class="neighborhood-card neighborhood-card--featured">
+    <a href="/rentals/my-khe" data-location="my-khe" class="neighborhood-card neighborhood-card--featured">
       <span class="neighborhood-card-title">Mỹ Khê</span>
       <span class="neighborhood-card-subtitle">Walk to the beach. Cafes and gyms everywhere.</span>
     </a>
-    <a href="/?location=son-tra#listings" class="neighborhood-card">
+    <a href="/rentals/son-tra" data-location="son-tra" class="neighborhood-card">
       <span class="neighborhood-card-title">Sơn Trà</span>
       <span class="neighborhood-card-subtitle">Quiet streets, big villas, close to the peninsula.</span>
     </a>
-    <a href="/?location=hai-chau#listings" class="neighborhood-card">
+    <a href="/rentals/hai-chau" data-location="hai-chau" class="neighborhood-card">
       <span class="neighborhood-card-title">Hải Châu</span>
       <span class="neighborhood-card-subtitle">City center. Best for nightlife and restaurants.</span>
     </a>
@@ -469,6 +469,7 @@
         </svg>
       </button>
     </div>
+    <p class="faq-more"><a href="/rentals/">See every rental on one page, by area and type →</a></p>
   </div>
 </section>
 

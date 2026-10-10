@@ -1,0 +1,44 @@
+name: Build listing pages
+
+# Rebuilds /rentals/ from the Google Sheet so the static listing pages follow
+# Alice's edits. Commits only when the sheet changed; Cloudflare Pages deploys
+# the push like any other.
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "tools/build_listings.py"
+      - "rentals/rentals.css"
+      - "404.html"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: listings
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build pages from the sheet
+        run: python3 tools/build_listings.py
+
+      - name: Commit and push if anything changed
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Sheet unchanged, nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rentals sitemap-rentals.xml llms.txt _redirects tools/listings-manifest.json
+          git commit -m "Update listing pages from the sheet"
+          git pull --rebase origin main
+          git push origin HEAD:main

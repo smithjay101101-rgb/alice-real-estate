@@ -338,6 +338,24 @@ function countWord(s, num, afterOf) {
     };
   }
 
+  // Address of a listing's static page, written by tools/build_listings.py.
+  // page_slug() there builds the same path; change the two together.
+  function slugPart(value) {
+    return (value || '').toString().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function listingPagePath(l) {
+    var digits = (l.code || '').replace(/[^0-9]/g, '');
+    var area = slugPart(l.location) || 'da-nang';
+    if ((l.code || '').charAt(0) === 'C') {
+      var bt = slugPart(l.businessType);
+      return '/rentals/' + (bt && bt !== 'general' ? bt : 'commercial') + '-space-' + area + '-c' + digits;
+    }
+    var type = l.category === 'house-villa' ? (/villa/i.test(l.title) ? 'villa' : 'house') : 'apartment';
+    var head = l.bedrooms > 0 ? l.bedrooms + '-bedroom-' + type : (type === 'apartment' ? 'studio' : type);
+    return '/rentals/' + head + '-' + area + '-' + digits;
+  }
+
   function slugify(text) {
     return text
       .toString()
@@ -882,9 +900,10 @@ function countWord(s, num, afterOf) {
   document.querySelectorAll('.neighborhood-card').forEach(function(card) {
     card.addEventListener('click', function(e) {
       e.preventDefault();
-      var href = card.getAttribute('href');
-      var url = new URL(href, window.location.origin);
-      var location = url.searchParams.get('location');
+      // The href goes to the area's own page for crawlers and new tabs; a
+      // normal click filters the grid on this page instead.
+      var location = card.dataset.location ||
+        new URL(card.getAttribute('href'), window.location.origin).searchParams.get('location');
       filterListings(location, '', '', '');
       document.getElementById('listings').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -982,6 +1001,22 @@ function countWord(s, num, afterOf) {
           '<path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>' +
         '</svg> Share property</button>';
 
+    // Link to the listing's own page once the builder has published it. A
+    // listing added to the sheet minutes ago has no page yet, so ask first.
+    var pagePath = listingPagePath(listing);
+    var shareBtn = info.querySelector('.lightbox-copy-link');
+    info.dataset.page = pagePath;
+    fetch(pagePath, { method: 'HEAD' }).then(function(r) {
+      if (!r.ok || info.dataset.page !== pagePath) return;
+      var link = document.createElement('a');
+      link.href = pagePath;
+      link.className = 'lightbox-page-link';
+      link.textContent = 'Open the full listing page';
+      link.style.cssText = 'display:block;margin-top:14px;text-align:center;font-size:.95rem;color:var(--color-primary-dark,#0F6E56);';
+      info.appendChild(link);
+      if (shareBtn) shareBtn.dataset.pageUrl = window.location.origin + pagePath;
+    }).catch(function() {});
+
     lightbox.hidden = false;
     requestAnimationFrame(function() { lightbox.classList.add('is-open'); });
     lockScroll();
@@ -1010,7 +1045,7 @@ function countWord(s, num, afterOf) {
   }
 
   function copyListingLink(button) {
-    var url = window.location.href;
+    var url = button.dataset.pageUrl || window.location.href;
     var restoreHtml = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg> Share property';
     var copiedHtml = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
 

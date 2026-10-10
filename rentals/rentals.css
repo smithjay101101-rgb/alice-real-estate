@@ -1,0 +1,125 @@
+/* ── Listing and rentals hub pages ──
+   Pages in /rentals/ are written by tools/build_listings.py. They sit on the
+   same shell as the blog (styles.css, then blog/blog.css), so this file only
+   adds what a listing needs: the price, the photo grid, the details layout and
+   the contact box. */
+
+/* Listing header */
+.rl-header { max-width: var(--container); margin-bottom: var(--space-xl); }
+.rl-header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.14; letter-spacing: -.02em;
+  color: var(--color-text-heading);
+  max-width: var(--reading);
+  text-wrap: balance;
+}
+.rl-code { font-family: var(--font-mono); letter-spacing: .04em; color: var(--color-text-muted); margin-left: var(--space-sm); }
+.rl-price-big {
+  font-family: var(--font-heading); font-size: 2.1rem; line-height: 1.1;
+  color: var(--color-text-heading); margin-top: var(--space-lg);
+  font-variant-numeric: tabular-nums;
+}
+.rl-price-big span { font-family: var(--font-body); font-size: 1rem; color: var(--color-text-muted); }
+.rl-facts {
+  list-style: none; padding: 0; margin: var(--space-md) 0 0;
+  display: flex; flex-wrap: wrap; gap: var(--space-sm);
+}
+.rl-facts li {
+  padding: 6px 12px; border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-pill); font-size: .9rem; color: var(--color-text-body);
+  background: var(--color-bg-white);
+}
+.rl-status {
+  margin-top: var(--space-lg); padding: var(--space-md);
+  border-left: 3px solid var(--gold); background: var(--gold-soft);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: .95rem; color: var(--color-text-body); max-width: var(--reading);
+}
+
+/* Photos: the first one wide, the rest in a grid */
+.rl-gallery {
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: var(--space-2xl);
+}
+.rl-photo {
+  display: block; overflow: hidden; border-radius: var(--radius-md);
+  background: var(--color-bg-light);
+}
+.rl-photo img { display: block; width: 100%; height: 100%; aspect-ratio: 3 / 2; object-fit: cover; transition: transform var(--transition-base); }
+.rl-photo:hover img { transform: scale(1.02); }
+.rl-photo.is-main { grid-column: 1 / -1; border-radius: var(--radius-lg); }
+.rl-photo.is-main img { aspect-ratio: 16 / 9; }
+.rl-photo:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+@media (max-width: 720px) { .rl-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .rl-photo img { transition: none; } .rl-photo:hover img { transform: none; } }
+
+/* Body and contact box */
+.rl-layout {
+  display: grid; gap: var(--space-2xl);
+  grid-template-columns: minmax(0, 1fr) 300px;
+  align-items: start;
+}
+.rl-body { min-width: 0; max-width: var(--reading); }
+.rl-body section { margin-bottom: var(--space-2xl); }
+.rl-body h2 {
+  font-family: var(--font-heading); font-size: 1.6rem; line-height: 1.2;
+  color: var(--color-text-heading); margin-bottom: var(--space-md);
+}
+.rl-body p, .rl-body li { font-size: 1.0625rem; line-height: 1.7; color: var(--color-text-body); }
+.rl-body p + p { margin-top: var(--space-md); }
+.rl-body ul { padding-left: 1.2em; display: grid; gap: var(--space-sm); }
+.rl-body a { color: var(--color-primary-dark); }
+.rl-note { margin-top: var(--space-md); font-size: .9rem !important; color: var(--color-text-muted) !important; }
+.rl-cta {
+  position: sticky; top: 6.5rem;
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border-light); border-radius: var(--radius-card);
+  background: var(--color-primary-light);
+  display: grid; gap: var(--space-md);
+}
+.rl-cta h2 { font-family: var(--font-heading); font-size: 1.4rem; line-height: 1.25; color: var(--color-text-heading); }
+.rl-cta p { font-size: .95rem; line-height: 1.6; color: var(--color-text-body); }
+.rl-cta .btn-primary, .rl-cta .btn-outline { width: 100%; justify-content: center; text-decoration: none; padding-left: 16px; padding-right: 16px; }
+.rl-cta .btn-outline { background: var(--color-bg-white); }
+.rl-cta-small a { color: var(--color-primary-dark); font-size: .9rem; }
+@media (max-width: 900px) {
+  .rl-layout { grid-template-columns: minmax(0, 1fr); }
+  .rl-cta { position: static; }
+}
+
+/* Cards (on hubs and under a listing) reuse .post-card from blog.css */
+.rl-more { margin-top: var(--space-3xl); max-width: var(--container); }
+.rl-more > h2 {
+  font-family: var(--font-heading); font-size: 1.8rem; color: var(--color-text-heading);
+  margin-bottom: var(--space-xl);
+}
+.rl-card h3 { font-family: var(--font-heading); font-size: 1.3rem; line-height: 1.3; margin-bottom: var(--space-sm); }
+.rl-card h3 a, .rl-card h2 a { color: var(--color-text-heading); text-decoration: none; }
+.rl-card h3 a:hover, .rl-card h2 a:hover { color: var(--color-primary); }
+.rl-card h2 { font-size: 1.3rem; margin-bottom: var(--space-sm); }
+.rl-card .post-card-media img { aspect-ratio: 16 / 9; }
+.rl-price { font-weight: 600; color: var(--color-text-heading) !important; font-variant-numeric: tabular-nums; margin-bottom: var(--space-md) !important; }
+
+/* Hubs */
+.rl-hub-meta { font-family: var(--font-mono); font-size: .82rem !important; color: var(--color-text-muted) !important; }
+.rl-filter { max-width: var(--container); margin-bottom: var(--space-2xl); }
+.rl-filter ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.rl-filter a {
+  display: inline-block; padding: 7px 14px;
+  border: 1px solid var(--color-border-light); border-radius: var(--radius-pill);
+  font-size: .9rem; color: var(--color-text-body); text-decoration: none; background: var(--color-bg-white);
+}
+.rl-filter a:hover { border-color: var(--color-primary); color: var(--color-primary-dark); }
+.rl-filter a[aria-current="page"] { background: var(--color-primary-dark); border-color: var(--color-primary-dark); color: #fff; }
+.rl-group { margin-bottom: var(--space-3xl); }
+.rl-group-title {
+  font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-text-heading);
+  margin-bottom: var(--space-lg);
+}
+.rl-group-title a { color: inherit; text-decoration: none; }
+.rl-group-title a:hover { color: var(--color-primary); }
+.rl-group-title span { font-family: var(--font-mono); font-size: .9rem; color: var(--color-text-muted); margin-left: var(--space-sm); }
+.rl-empty { font-size: 1.05rem; color: var(--color-text-body); }
+.rl-hub .post-cta { margin-top: var(--space-xl); }
