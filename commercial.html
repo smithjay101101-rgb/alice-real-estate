@@ -29,10 +29,10 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://res.cloudinary.com">
 <link rel="dns-prefetch" href="https://docs.google.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=36d3f450">
-<script src="script.js?v=7ac204c1" defer></script>
-<script src="commercial.js?v=223e756a" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=25c619c1">
+<script src="script.js?v=69330555" defer></script>
+<script src="commercial.js?v=168148c7" defer></script>
 
 <script type="application/ld+json">
 {
@@ -110,7 +110,8 @@
   <div class="logo"><a href="/" style="color:inherit;text-decoration:none;">Alice<span>.</span></a></div>
   <div class="nav-mid">
     <ul class="nav-links">
-      <li><a href="/#listings" data-t="navListings">Rentals</a></li>
+      <li><a href="/#listings" data-t="navApartments">Apartments</a></li>
+      <li><a href="/#listings" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="/commercial" aria-current="page" data-t="navCommercial">Commercial</a></li>
       <li><a href="/buy" data-t="navBuy">Buy Property</a></li>
       <li><a href="/blog/" data-t="navBlog">Blog</a></li>
@@ -142,7 +143,8 @@
       </button>
     </div>
     <ul class="drawer-links">
-      <li><a href="/#listings" onclick="closeDrawer()" data-t="navListings">Rentals</a></li>
+      <li><a href="/#listings" data-t="navApartments">Apartments</a></li>
+      <li><a href="/#listings" data-t="navHousesVillas">Houses &amp; Villas</a></li>
       <li><a href="/commercial" onclick="closeDrawer()" data-t="navCommercial">Commercial</a></li>
       <li><a href="/buy" onclick="closeDrawer()" data-t="navBuy">Buy Property</a></li>
       <li><a href="/blog/" data-t="navBlog">Blog</a></li>
@@ -171,6 +173,7 @@
       <a href="#listings" class="btn-primary" data-t="commBtnBrowse">Browse Commercial</a>
       <button class="btn-outline" onclick="openModal()" data-t="navCta">Message Alice</button>
     </div>
+    <button type="button" class="search-toggle" aria-expanded="false" aria-controls="commercialSearchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span data-t="commSearchToggle">Filter spaces</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
     <form class="search-bar" id="commercialSearchForm">
       <div class="search-field">
         <label for="commercial-location" class="search-label">Location</label>

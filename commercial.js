@@ -15,7 +15,8 @@
   var CACHE_KEY = 'alice_commercial_cache_v4';
   var CACHE_TTL = 5 * 60 * 1000;
   var INITIAL_COUNT = 9;
-  var BATCH_SIZE = 5;
+  var CLD_CARD = 'c_fill,g_auto,w_640,h_427,f_auto,q_auto';
+  var BATCH_SIZE = 6;
 
   // ── PREVIEW MODE — flip to false before delivering to Alice ──
   var USE_MOCK_DATA = false;
@@ -126,7 +127,7 @@
 
     return '<article class="listing-card commercial-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-sqm="' + l.sqm + '" data-type="' + (l.businessType || '').toLowerCase() + '" data-code="' + l.code + '">' +
       '<div class="listing-card-image">' +
-        '<img src="' + l.imageMain + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
+        '<img src="' + (typeof cldUrl === 'function' ? cldUrl(l.imageMain, CLD_CARD) : l.imageMain) + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
         '<span class="listing-badge-photos">' + camSvg + ' ' + photoCount + ' photo' + (photoCount !== 1 ? 's' : '') + '</span>' +
       '</div>' +
       '<div class="listing-card-body">' +

@@ -30,9 +30,9 @@
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://res.cloudinary.com">
 <link rel="dns-prefetch" href="https://docs.google.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=36d3f450">
-<script src="script.js?v=7ac204c1" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=25c619c1">
+<script src="script.js?v=69330555" defer></script>
 
 <!-- Structured data: one Organization entity, one Person entity, explicitly linked -->
 <script type="application/ld+json">
@@ -363,6 +363,7 @@
         <span data-t="btnCall">Message Alice</span>
       </button>
     </div>
+    <button type="button" class="search-toggle" aria-expanded="false" aria-controls="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span data-t="searchToggle">Filter homes</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
     <form class="search-bar" action="/rentals" method="get" id="searchForm">
       <div class="search-field">
         <label for="ptype" class="search-label">Type</label>
@@ -416,9 +417,8 @@
       </div>
     </form>
     <div class="hero-stats" id="heroStats">
-      <div><div class="stat-num" data-t="stat1" data-count-target="500" data-count-suffix="+">500+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
-      <div><div class="stat-num" data-t="stat2" data-count-target="7" data-count-suffix="+">7+</div><div class="stat-label" data-t="stat2L">Years in Đà Nẵng</div></div>
-      <div><div class="stat-num" data-t="stat3" data-count-target="98" data-count-suffix="%">98%</div><div class="stat-label" data-t="stat3L">Would Refer a Friend</div></div>
+      <div><div class="stat-num" data-t="stat1">500+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
+      <div><div class="stat-num" data-t="stat2">7+</div><div class="stat-label" data-t="stat2L">Years in Đà Nẵng</div></div>
     </div>
   </div>
 </section>
@@ -585,6 +585,7 @@
     <div class="footer-col">
       <h3 data-t="footNav">Navigate</h3>
       <a href="#listings" data-t="navListings">Rentals</a>
+      <a href="/commercial" data-t="navCommercial">Commercial</a>
       <a href="/buy" data-t="navBuy">Buy Property</a>
       <a href="/blog/" data-t="navBlog">Blog</a>
       <a href="/about/" data-t="navAboutAlice">About Alice</a>

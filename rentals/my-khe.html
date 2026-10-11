@@ -28,11 +28,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css?v=36d3f450">
-<link rel="stylesheet" href="/blog/blog.css?v=c163e177">
-<link rel="stylesheet" href="/rentals/rentals.css?v=17f74a30">
-<script src="/blog/blog.js?v=37148dc1" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css?v=25c619c1">
+<link rel="stylesheet" href="/blog/blog.css?v=a8a078d7">
+<link rel="stylesheet" href="/rentals/rentals.css?v=533b1d93">
+<script src="/blog/blog.js?v=53fb049e" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -175,6 +175,58 @@
   <p>Mỹ Khê is the beach strip along the east side of the city. You can walk to the sand, and cafes and gyms are everywhere.</p>
   <p class="rl-hub-meta">3 homes listed, updated 10 October 2026. Monthly rents in US dollars, for leases of six months or more.</p>
 </header>
+
+<form class="search-bar search-bar--hub" action="/" method="get" id="searchForm" aria-label="Search rentals">
+      <div class="search-field">
+        <label for="ptype" class="search-label">Type</label>
+        <select id="ptype" name="type" class="search-select">
+          <option value="">All</option>
+          <option value="apartment">Apartments</option>
+          <option value="house-villa">Houses &amp; Villas</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="location" class="search-label">Location</label>
+        <select id="location" name="location" class="search-select">
+          <option value="">All</option>
+          <option selected value="my-khe">Mỹ Khê</option>
+          <option value="my-an">Mỹ An</option>
+          <option value="son-tra">Sơn Trà</option>
+          <option value="hai-chau">Hải Châu</option>
+          <option value="ngu-hanh-son">Ngũ Hành Sơn</option>
+          <option value="cam-le">Cẩm Lệ</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="budget" class="search-label">Budget</label>
+        <select id="budget" name="budget" class="search-select">
+          <option value="">Any price</option>
+          <option value="500-1000">$500 – $1,000/mo</option>
+          <option value="1000-1500">$1,000 – $1,500/mo</option>
+          <option value="1500-2000">$1,500 – $2,000/mo</option>
+          <option value="2000-3000">$2,000 – $3,000/mo</option>
+          <option value="3000-5000">$3,000 – $5,000/mo</option>
+          <option value="5000+">$5,000+/mo</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="bedrooms" class="search-label">Bedrooms</label>
+        <select id="bedrooms" name="bedrooms" class="search-select">
+          <option value="">Any</option>
+          <option value="1">1 bed</option>
+          <option value="2">2 beds</option>
+          <option value="3">3 beds</option>
+          <option value="4">4+ beds</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="code" class="search-label">Code</label>
+        <input type="text" id="code" name="code" class="search-input" placeholder="#0038" maxlength="6" autocomplete="off">
+      </div>
+      <div class="search-actions">
+        <button type="submit" class="btn-primary search-btn">Search</button>
+      </div>
+    </form>
 
 <div class="rl-filter" role="navigation" aria-label="Browse rentals">
   <ul>

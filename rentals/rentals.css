@@ -40,7 +40,7 @@
 /* Photos: the first one wide, the rest in a grid */
 .rl-gallery {
   display: grid; gap: 8px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: var(--space-2xl);
 }
 .rl-photo {

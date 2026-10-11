@@ -348,7 +348,7 @@ def head(title, description, canonical, robots, og_image, ld, versions):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://res.cloudinary.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v={v_styles}">
 <link rel="stylesheet" href="/blog/blog.css?v={v_blog}">
 <link rel="stylesheet" href="/rentals/rentals.css?v={v_rentals}">
@@ -521,7 +521,9 @@ def listing_page(l, peers, shell, versions, area_count):
             '<img src="%s" alt="%s, photo %d of %d" width="%d" height="%d"%s decoding="async"></a>'
             % (" is-main" if main else "", e(cld(u, IMG_FULL)), e(cld(u, IMG_MAIN if main else IMG_THUMB)),
                e(l["title"]), i + 1, len(imgs), 1400 if main else 600, 933 if main else 400,
-               ' fetchpriority="high"' if main else ' loading="lazy"'))
+               (' fetchpriority="high" srcset="%s" sizes="(max-width: 1080px) 100vw, 1016px"'
+                % e(", ".join("%s %dw" % (cld(u, "c_limit,w_%d,f_auto,q_auto" % w), w) for w in (640, 960, 1400))))
+               if main else ' loading="lazy"'))
     rows = [("Monthly rent", price_text + (" a month" if l["price"] else ""))]
     if l["kind"] == "commercial":
         if l["sqm"]:
@@ -646,7 +648,7 @@ def listing_page(l, peers, shell, versions, area_count):
     <p>Quote listing code <strong>{code}</strong>. Alice usually replies within an hour.</p>
     <a class="btn-primary" href="{wa}" target="_blank" rel="noopener">Message Alice on WhatsApp</a>
     <a class="btn-outline" href="{zalo}" target="_blank" rel="noopener">Message on Zalo</a>
-    <p class="rl-cta-small"><a href="/rentals/">Browse all rentals</a></p>
+    <p class="rl-cta-small"><a href="/#listings">Search all rentals</a></p>
   </aside>
 </div>
 
@@ -665,6 +667,33 @@ def listing_page(l, peers, shell, versions, area_count):
 
 
 # ── Hub pages ──
+
+def search_form(path):
+    """The homepage search bar, sent to the homepage with the choices in the URL.
+
+    Copied from index.html at build time so the fields never drift apart. Area
+    and type pages open with their own area or type already chosen."""
+    if path == "/rentals/commercial-spaces":
+        return ('<p class="rl-search-alt"><a class="btn-primary" href="/commercial#listings">'
+                'Search commercial spaces by area, budget and size</a></p>')
+    src = (ROOT / "index.html").read_text(encoding="utf-8")
+    start = src.index('<form class="search-bar"'); end = src.index("</form>", start) + len("</form>")
+    form = src[start:end]
+    form = form.replace('<form class="search-bar" action="/rentals" method="get" id="searchForm">',
+                        '<form class="search-bar search-bar--hub" action="/" method="get" id="searchForm" aria-label="Search rentals">')
+    form = re.sub(r'\s*<button type="button" class="search-reset"[^>]*>[^<]*</button>', "", form)
+    slug = path.rstrip("/").rsplit("/", 1)[-1]
+    preset = {"apartments": ("ptype", "apartment"), "houses-and-villas": ("ptype", "house-villa")}.get(slug)
+    if not preset and slug in AREA_NAMES:
+        preset = ("location", slug)
+    if preset:
+        sel_id, val = preset
+        i = form.index('<select id="%s"' % sel_id)
+        j = form.index('<option value="%s"' % val, i)
+        form = form[:j] + '<option selected value="%s"' % val + form[j + len('<option value="%s"' % val):]
+    return form
+
+
 
 def filter_nav(current, area_count, has_commercial):
     links = [("All rentals", "/rentals/"), ("Apartments", "/rentals/apartments"), ("Houses and villas", "/rentals/houses-and-villas")]
@@ -727,12 +756,14 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
   <p class="rl-hub-meta">{meta}</p>
 </header>
 
+{search}
+
 {nav}
 
 {grid}
 
 {cta}
-</main>""".format(crumbs=breadcrumb_html(crumbs), kicker=e(kicker), h1=e(h1), intro=e(intro), meta=e(meta),
+</main>""".format(search=search_form(path), crumbs=breadcrumb_html(crumbs), kicker=e(kicker), h1=e(h1), intro=e(intro), meta=e(meta),
                   nav=filter_nav(path, area_count, has_commercial), grid=grid,
                   cta=cta_aside("Not seeing the right one?",
                                 "Tell Alice your budget, the area you like and your move-in date, and she will send you a shortlist that fits.",

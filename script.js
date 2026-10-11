@@ -84,7 +84,9 @@ const T = {
     buyCrossEyebrow: "Not ready to buy yet?",
     buyCrossTitle: "Rent first and get to know the city",
     buyCrossDesc: "A few months in a rental is a good way to find the area you want to buy in. Alice has apartments, houses and villas for rent across Đà Nẵng.",
-    buyCrossCta: "Browse rentals →"
+    buyCrossCta: "Browse rentals →",
+    searchToggle: "Filter homes",
+    commSearchToggle: "Filter spaces"
   },
   vi: {
     faqTag: "Trước khi thuê", faqTitle: "Những câu hỏi khách thuê hay hỏi Alice",
@@ -170,7 +172,9 @@ const T = {
     buyCrossEyebrow: "Chưa sẵn sàng mua?",
     buyCrossTitle: "Thuê trước để hiểu thành phố",
     buyCrossDesc: "Thuê vài tháng là cách tốt để tìm ra khu vực bạn muốn mua. Alice có căn hộ, nhà và biệt thự cho thuê khắp Đà Nẵng.",
-    buyCrossCta: "Xem nhà cho thuê →"
+    buyCrossCta: "Xem nhà cho thuê →",
+    searchToggle: "Lọc nhà",
+    commSearchToggle: "Lọc mặt bằng"
   },
   ru: {
     navAbout: "Об Алисе", navTestimonials: "Отзывы", navContact: "Контакты", navListings: "Аренда",
@@ -256,7 +260,9 @@ const T = {
     buyCrossEyebrow: "Пока не готовы покупать?",
     buyCrossTitle: "Сначала снимите и узнайте город",
     buyCrossDesc: "Несколько месяцев аренды помогут найти район, в котором хочется купить. У Алисы есть квартиры, дома и виллы в аренду по всему Данангу.",
-    buyCrossCta: "Смотреть аренду →"
+    buyCrossCta: "Смотреть аренду →",
+    searchToggle: "Фильтр жилья",
+    commSearchToggle: "Фильтр помещений"
   },
 };
 
@@ -277,9 +283,67 @@ function countWord(s, num, afterOf) {
 }
 
 
+// ── Listing photos at the size they are shown ──
+// Same rule as cld() in tools/build_listings.py: add a Cloudinary transformation
+// unless the URL already carries one.
+var CLD_CARD = 'c_fill,g_auto,w_640,h_427,f_auto,q_auto';
+var CLD_FULL = 'c_limit,w_1400,f_auto,q_auto';
+function cldUrl(url, transform) {
+  var m = /^(https:\/\/res\.cloudinary\.com\/[^\/]+\/image\/upload\/)(.+)$/.exec(url || '');
+  if (!m) return url;
+  var first = m[2].split('/')[0];
+  if (/^[a-z]{1,4}_[^,\/]+(,[a-z]{1,4}_[^,\/]+)*$/.test(first) && !/^v\d+$/.test(first)) return url;
+  return m[1] + transform + '/' + m[2];
+}
+
 // ── Modal + Mobile drawer ──
-  function openModal() { document.getElementById('contactModal').classList.add('open'); }
-  function closeModal() { document.getElementById('contactModal').classList.remove('open'); }
+  // The contact popup is a dialog: focus moves in, Escape closes it, focus goes back.
+  var modalOpener = null;
+  (function() {
+    var box = document.querySelector('#contactModal .modal');
+    if (!box) return;
+    var title = box.querySelector('h3');
+    if (title && !title.id) title.id = 'contactModalTitle';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    if (title) box.setAttribute('aria-labelledby', title.id);
+  })();
+  function openModal() {
+    var modal = document.getElementById('contactModal');
+    modalOpener = document.activeElement;
+    modal.classList.add('open');
+    var first = modal.querySelector('.modal-btn, button, a[href]');
+    if (first) setTimeout(function() { first.focus(); }, 30);
+  }
+  function closeModal() {
+    var modal = document.getElementById('contactModal');
+    if (!modal.classList.contains('open')) return;
+    modal.classList.remove('open');
+    if (modalOpener && modalOpener.focus) modalOpener.focus();
+    modalOpener = null;
+  }
+  document.addEventListener('keydown', function(e) {
+    var modal = document.getElementById('contactModal');
+    if (!modal || !modal.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    var items = Array.prototype.filter.call(modal.querySelectorAll('a[href], button'), function(el) { return el.offsetParent !== null; });
+    if (!items.length) return;
+    if (e.shiftKey && document.activeElement === items[0]) { e.preventDefault(); items[items.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === items[items.length - 1]) { e.preventDefault(); items[0].focus(); }
+  });
+
+  // Phones: the search form opens from one button instead of filling the hero
+  document.querySelectorAll('.search-toggle').forEach(function(btn) {
+    var form = document.getElementById(btn.getAttribute('aria-controls'));
+    if (!form) return;
+    btn.addEventListener('click', function() {
+      var open = !form.classList.contains('is-open');
+      form.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open) { var f = form.querySelector('select, input'); if (f) f.focus(); }
+    });
+  });
 
   // ── MOBILE DRAWER ──
   const drawerBackdrop = document.getElementById('drawerBackdrop');
@@ -454,7 +518,7 @@ function countWord(s, num, afterOf) {
 
     return '<article class="listing-card" tabindex="0" id="listing-' + slug + '" data-slug="' + slug + '" data-location="' + l.location + '" data-price="' + l.price + '" data-bedrooms="' + l.bedrooms + '" data-category="' + l.category + '" data-code="' + l.code + '">' +
       '<div class="listing-card-image">' +
-        '<img src="' + l.imageMain + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
+        '<img src="' + cldUrl(l.imageMain, CLD_CARD) + '" alt="' + l.title.replace(/"/g, '&quot;') + '" loading="lazy" width="600" height="400">' +
         '<span class="listing-badge-photos">' + camSvg + ' ' + photoCount + ' photo' + (photoCount !== 1 ? 's' : '') + '</span>' +
       '</div>' +
       '<div class="listing-card-body">' +
@@ -471,7 +535,7 @@ function countWord(s, num, afterOf) {
   }
 
   var INITIAL_COUNT = 9;
-  var BATCH_SIZE = 5;
+  var BATCH_SIZE = 6;
 
   // ── Listings state (source of truth) ──
   var allListings = [];        // current filtered subset being shown (sorted newest-first)
@@ -952,6 +1016,20 @@ function countWord(s, num, afterOf) {
     var codeField = document.getElementById('code');
     if (codeField) codeField.addEventListener('input', updateSearchUI);
 
+    // Arriving from a rentals page search: /?type=…&location=…&budget=…&bedrooms=…&code=…
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var fields = { type: 'ptype', location: 'location', budget: 'budget', bedrooms: 'bedrooms', code: 'code' };
+      var given = Object.keys(fields).filter(function(k) { return params.get(k); });
+      if (!given.length) return;
+      given.forEach(function(k) { var el = document.getElementById(fields[k]); if (el) el.value = params.get(k); });
+      var tries = 0;
+      (function run() {
+        if (listingsData.length) searchForm.dispatchEvent(new Event('submit', { cancelable: true }));
+        else if (tries++ < 50) setTimeout(run, 200);
+      })();
+    })();
+
     // Reset clears the whole form, including Type → All
     var searchResetBtn = document.getElementById('searchReset');
     if (searchResetBtn) {
@@ -1038,7 +1116,7 @@ function countWord(s, num, afterOf) {
 
     var allImages = [listing.imageMain].concat(listing.imageGallery);
     gallery.innerHTML = allImages.map(function(url) {
-      return '<img src="' + url + '" alt="' + listing.title.replace(/"/g, '&quot;') + '" loading="lazy">';
+      return '<img src="' + cldUrl(url, CLD_FULL) + '" alt="' + listing.title.replace(/"/g, '&quot;') + '" loading="lazy">';
     }).join('');
     gallery.scrollLeft = 0;
 

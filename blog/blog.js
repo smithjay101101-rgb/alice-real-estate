@@ -85,13 +85,30 @@ function setLang(lang) {
 }
 
 // ── Contact modal ──
+var modalOpener = null;
+(function() {
+  var box = document.querySelector('#contactModal .modal');
+  if (!box) return;
+  var title = box.querySelector('h3');
+  if (title && !title.id) title.id = 'contactModalTitle';
+  box.setAttribute('role', 'dialog');
+  box.setAttribute('aria-modal', 'true');
+  if (title) box.setAttribute('aria-labelledby', title.id);
+})();
 function openModal() {
   var modal = document.getElementById('contactModal');
-  if (modal) modal.classList.add('open');
+  if (!modal) return;
+  modalOpener = document.activeElement;
+  modal.classList.add('open');
+  var first = modal.querySelector('.modal-btn, button, a[href]');
+  if (first) setTimeout(function() { first.focus(); }, 30);
 }
 function closeModal() {
   var modal = document.getElementById('contactModal');
-  if (modal) modal.classList.remove('open');
+  if (!modal || !modal.classList.contains('open')) return;
+  modal.classList.remove('open');
+  if (modalOpener && modalOpener.focus) modalOpener.focus();
+  modalOpener = null;
 }
 
 // ── Mobile drawer ──

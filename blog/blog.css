@@ -74,7 +74,7 @@
 .post { max-width: var(--container); }
 .post-header { max-width: var(--reading); }
 .post-kicker {
-  font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+  font-size: .78rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--color-primary);
   margin-bottom: var(--space-md);
 }
@@ -124,7 +124,7 @@
 }
 .kt-heading {
   font-family: var(--font-body);
-  font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+  font-size: .78rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--color-primary-dark);
   margin-bottom: var(--space-md);
 }
@@ -151,7 +151,7 @@
 }
 .toc-heading {
   font-family: var(--font-body);
-  font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+  font-size: .78rem; font-weight: 600; letter-spacing: .14em;
   text-transform: uppercase; color: var(--color-text-muted);
   margin-bottom: var(--space-md);
 }
@@ -167,7 +167,7 @@
 .post-toc a::before {
   content: counter(toc, decimal-leading-zero);
   position: absolute; left: .55rem; top: .1em;
-  font-family: var(--font-mono); font-size: .7rem;
+  font-family: var(--font-mono); font-size: .78rem;
   color: var(--color-text-muted);
 }
 .post-toc a:hover { color: var(--color-primary); }
@@ -278,7 +278,7 @@
 .post-table .caption-note { display: block; color: var(--color-text-muted); font-size: .8rem; margin-top: 2px; }
 .post-table thead th {
   font-family: var(--font-body);
-  font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
   color: var(--color-text-heading);
   text-align: left; vertical-align: bottom;
   padding: var(--space-md) var(--space-lg);
@@ -368,7 +368,7 @@
   object-fit: cover; display: block;
 }
 .author-eyebrow {
-  font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
   color: var(--color-text-muted); margin-bottom: var(--space-xs);
 }
 .author-name { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: var(--space-xs); }
@@ -427,7 +427,7 @@
   .post-card:hover .post-card-media img { transform: none; }
 }
 .post-card-kicker {
-  font-size: .7rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
   color: var(--color-primary); margin-bottom: var(--space-md);
 }
 .post-card h2 { font-family: var(--font-heading); font-size: 1.4rem; line-height: 1.3; margin-bottom: var(--space-md); }
@@ -466,7 +466,7 @@
   font-size: 1rem;
 }
 .fact-list .fact-key {
-  font-size: .74rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
   color: var(--color-text-muted); padding-top: .28em;
 }
 
@@ -523,3 +523,12 @@
 }
 .story figcaption { font-size: .9rem; color: var(--color-text-muted); }
 .story-name { font-weight: 600; color: var(--color-text-heading); margin-right: 6px; }
+
+/* Links in plain pages (404, blog index note) take the site's link colour */
+.page-body a:not([class]), .blog-note a:not([class]) {
+  color: var(--color-primary-dark);
+  text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-thickness: 1px; text-decoration-color: rgba(21,122,90,.4);
+}
+.page-body a:not([class]):hover, .blog-note a:not([class]):hover { text-decoration-color: var(--color-primary); }
+.reach-alt { font-size: .98rem; color: var(--color-text-body); }
