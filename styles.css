@@ -1076,7 +1076,8 @@
     gap: 1.5rem; margin-top: 3.5rem; text-align: left;
   }
   /* Plain quotes, the same treatment as the stories on the About page */
-  .testi-card { padding-left: var(--space-lg); border-left: 2px solid var(--color-primary); }
+  .testi-card { margin: 0; padding-left: var(--space-lg); border-left: 2px solid var(--color-primary); }
+  .testi-text { margin: 0; }
   .testi-stars, .testi-avatar { display: none; }
   .testi-text {
     font-size: 1rem; line-height: 1.75; color: var(--color-text-heading);
@@ -1085,6 +1086,13 @@
   .testi-author { margin-top: var(--space-md); }
   .testi-name { font-weight: 600; font-size: .9rem; color: var(--color-text-heading); }
   .testi-role { font-size: .9rem; color: var(--muted); }
+  .testi-source {
+    display: inline-block; margin-top: 2px; padding: 4px 0;
+    font-size: .9rem; color: var(--color-primary); text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .testi-source:hover { color: var(--color-primary-dark); }
+  .testi-all { margin-top: 3rem; text-decoration: none; }
 
   /* ── FOOTER ── */
   footer {
