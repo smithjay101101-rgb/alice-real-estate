@@ -58,6 +58,18 @@ WHATSAPP = "84787664959"
 ZALO = "https://zalo.me/84787664959"
 ORG_ID = SITE + "/#organization"
 WEBSITE_ID = SITE + "/#website"
+# The business, written onto every listing and rentals page so "offeredBy" resolves on the page.
+# The full version (services, knowsAbout, contact points) lives on the homepage, About and the guides.
+ORG_NODE = {
+    "@type": ["RealEstateAgent", "LocalBusiness"], "@id": ORG_ID, "name": "Alice Rentals", "alternateName": "Alice Rentals Da Nang",
+    "url": SITE + "/", "telephone": "+84 787 664 959",
+    "address": {"@type": "PostalAddress", "streetAddress": "08 Khuê Mỹ Đông 14, Ngũ Hành Sơn", "addressLocality": "Đà Nẵng",
+                "addressRegion": "Đà Nẵng", "postalCode": "550000", "addressCountry": "VN"},
+    "geo": {"@type": "GeoCoordinates", "latitude": 16.0374211, "longitude": 108.2476157},
+    "hasMap": "https://www.google.com/maps?cid=5715202714673134094",
+    "areaServed": {"@type": "City", "name": "Đà Nẵng", "sameAs": "https://www.wikidata.org/wiki/Q25282"},
+    "sameAs": ["https://www.google.com/maps?cid=5715202714673134094", ZALO],
+}
 
 AREA_NAMES = {   # LOCATION_NAMES in script.js
     "my-khe": "Mỹ Khê", "son-tra": "Sơn Trà", "hai-chau": "Hải Châu",
@@ -510,7 +522,7 @@ def listing_page(l, peers, shell, versions, area_count):
                                    "unitText": "MONTH", "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MON"}},
             "offeredBy": {"@id": ORG_ID},
         }
-    ld = {"@context": "https://schema.org", "@graph": [listing_ld, breadcrumb_ld(crumbs, url)]}
+    ld = {"@context": "https://schema.org", "@graph": [listing_ld, breadcrumb_ld(crumbs, url), ORG_NODE]}
 
     # Body
     gallery = []
@@ -729,7 +741,7 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
          "mainEntity": {"@type": "ItemList", "numberOfItems": count, "itemListElement": [
              {"@type": "ListItem", "position": i + 1, "url": SITE + "/rentals/" + l["slug"], "name": l["title"]}
              for i, l in enumerate(listings)]}},
-        breadcrumb_ld(crumbs, url)]}
+        breadcrumb_ld(crumbs, url), ORG_NODE]}
 
     if groups:
         sections = []
