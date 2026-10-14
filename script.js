@@ -15,7 +15,7 @@ const T = {
     btnListings: "Browse Rentals", btnCall: "Message Alice",
     stat1: "500+", stat1L: "Families Housed",
     stat2: "7+", stat2L: "Years in Đà Nẵng",
-    stat3: "98%", stat3L: "Would Refer a Friend",
+    stat3L: "Google Rating",
     areasLabel: "Where most expats rent",
     aboutTag: "Why Alice", aboutTitle: "She does the hard part<br>so you don't have to",
     aboutP1: "Relocating is stressful enough without spending weeks on apartment hunting. Alice is a Private Rental Advisor and has been matching renters with homes in Đà Nẵng since 2019. She knows which buildings have reliable landlords, which streets flood in rainy season, and where the best morning coffee is.",
@@ -82,9 +82,7 @@ const T = {
     buyCrossEyebrow: "Not ready to buy yet?",
     buyCrossTitle: "Rent first and get to know the city",
     buyCrossDesc: "A few months in a rental is a good way to find the area you want to buy in. Alice has apartments, houses and villas for rent across Đà Nẵng.",
-    buyCrossCta: "Browse rentals →",
-    searchToggle: "Filter homes",
-    commSearchToggle: "Filter spaces"
+    buyCrossCta: "Browse rentals →"
   },
   vi: {
     guidesTag: "Cẩm nang thuê nhà", guidesTitle: "Nên đọc trước khi ký hợp đồng", guidesAll: "Tất cả cẩm nang thuê nhà \u2192",
@@ -108,7 +106,7 @@ const T = {
     btnListings: "Xem Nhà Trống", btnCall: "Nhắn Tin Cho Alice",
     stat1: "500+", stat1L: "Gia Đình Đã An Cư",
     stat2: "7+", stat2L: "Năm tại Đà Nẵng",
-    stat3: "98%", stat3L: "Khách Thuê Hài Lòng",
+    stat3L: "Đánh giá Google",
     areasLabel: "Khu vực chúng tôi am hiểu",
     aboutTag: "Vì sao chọn Alice", aboutTitle: "Việc tìm nhà,<br>để Alice lo",
     aboutP1: "Chuyển đến thành phố mới đã đủ vất vả. Tìm nhà không nên khó thêm. Alice là chuyên viên tư vấn thuê nhà. Với hơn 7 năm kinh nghiệm tại thị trường cho thuê Đà Nẵng, Alice biết chủ nhà nào uy tín, con đường nào hay ngập mùa mưa, và quán cà phê sáng nào ngon nhất.",
@@ -168,9 +166,7 @@ const T = {
     buyCrossEyebrow: "Chưa sẵn sàng mua?",
     buyCrossTitle: "Thuê trước để hiểu thành phố",
     buyCrossDesc: "Thuê vài tháng là cách tốt để tìm ra khu vực bạn muốn mua. Alice có căn hộ, nhà và biệt thự cho thuê khắp Đà Nẵng.",
-    buyCrossCta: "Xem nhà cho thuê →",
-    searchToggle: "Lọc nhà",
-    commSearchToggle: "Lọc mặt bằng"
+    buyCrossCta: "Xem nhà cho thuê →"
   },
   ru: {
     navAbout: "Об Алисе", navTestimonials: "Отзывы", navContact: "Контакты", navListings: "Аренда",
@@ -187,7 +183,7 @@ const T = {
     btnListings: "Смотреть объекты", btnCall: "Написать Алисе",
     stat1: "500+", stat1L: "Семей заселено",
     stat2: "7+", stat2L: "Лет в Дананге",
-    stat3: "98%", stat3L: "Порекомендуют другу",
+    stat3L: "Рейтинг Google",
     areasLabel: "Где чаще всего снимают экспаты",
     aboutTag: "Почему Алиса", aboutTitle: "Она берёт на себя сложное,<br>чтобы вам не пришлось",
     aboutP1: "Переезд и так даётся нелегко, а тут ещё недели поиска квартиры. Алиса работает частным консультантом по аренде и с 2019 года подбирает жильё в Дананге. Она знает, в каких домах надёжные арендодатели, какие улицы затапливает в сезон дождей и где лучший утренний кофе.",
@@ -254,9 +250,7 @@ const T = {
     buyCrossEyebrow: "Пока не готовы покупать?",
     buyCrossTitle: "Сначала снимите и узнайте город",
     buyCrossDesc: "Несколько месяцев аренды помогут найти район, в котором хочется купить. У Алисы есть квартиры, дома и виллы в аренду по всему Данангу.",
-    buyCrossCta: "Смотреть аренду →",
-    searchToggle: "Фильтр жилья",
-    commSearchToggle: "Фильтр помещений"
+    buyCrossCta: "Смотреть аренду →"
   },
 };
 
@@ -325,18 +319,6 @@ function cldUrl(url, transform) {
     if (!items.length) return;
     if (e.shiftKey && document.activeElement === items[0]) { e.preventDefault(); items[items.length - 1].focus(); }
     else if (!e.shiftKey && document.activeElement === items[items.length - 1]) { e.preventDefault(); items[0].focus(); }
-  });
-
-  // Phones: the search form opens from one button instead of filling the hero
-  document.querySelectorAll('.search-toggle').forEach(function(btn) {
-    var form = document.getElementById(btn.getAttribute('aria-controls'));
-    if (!form) return;
-    btn.addEventListener('click', function() {
-      var open = !form.classList.contains('is-open');
-      form.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) { var f = form.querySelector('select, input'); if (f) f.focus(); }
-    });
   });
 
   // ── MOBILE DRAWER ──
@@ -923,19 +905,22 @@ function cldUrl(url, transform) {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
   // ── STATS COUNT-UP ANIMATION ──
-  function animateCountUp(element, target, suffix, duration) {
+  function animateCountUp(element, target, suffix, duration, decimals) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    element.textContent = '0' + suffix;
+    decimals = decimals || 0;
+    function show(v) { element.textContent = v.toFixed(decimals) + suffix; }
+    show(0);
     var startTime = null;
     function step(timestamp) {
       if (!startTime) startTime = timestamp;
       var progress = Math.min((timestamp - startTime) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      element.textContent = Math.floor(eased * target) + suffix;
+      var factor = Math.pow(10, decimals);
+      show(Math.floor(eased * target * factor) / factor);
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        element.textContent = target + suffix;
+        show(target);
       }
     }
     requestAnimationFrame(step);
@@ -944,23 +929,31 @@ function cldUrl(url, transform) {
   (function initStatsAnimation() {
     var statNumbers = document.querySelectorAll('[data-count-target]');
     if (!statNumbers.length) return;
+    // The page holds the real numbers for crawlers and reduced motion; everyone else
+    // sees them start at zero and count up when the stats come into view.
+    var counts = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function parts(el) {
+      return { target: parseFloat(el.dataset.countTarget), suffix: el.dataset.countSuffix || '', decimals: parseInt(el.dataset.countDecimals || '0', 10) };
+    }
+    if (counts) statNumbers.forEach(function(el) { var p = parts(el); el.textContent = (0).toFixed(p.decimals) + p.suffix; });
     var hasAnimated = false;
     var statsObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting && !hasAnimated) {
           hasAnimated = true;
+          // On load the stats fade in after about a second; start counting once they are visible
+          var wait = Math.max(0, 1100 - performance.now());
           statNumbers.forEach(function(el, index) {
-            var target = parseInt(el.dataset.countTarget, 10);
-            var suffix = el.dataset.countSuffix || '';
-            if (isNaN(target)) return;
+            var p = parts(el);
+            if (isNaN(p.target)) return;
             setTimeout(function() {
-              animateCountUp(el, target, suffix, 2000);
-            }, index * 200);
+              animateCountUp(el, p.target, p.suffix, 1800, p.decimals);
+            }, wait + index * 200);
           });
           statsObserver.disconnect();
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0 });   // start as soon as any part of the stats shows, so nobody sees a zero waiting
     var container = statNumbers[0].closest('.hero-stats') || statNumbers[0].parentElement.parentElement;
     statsObserver.observe(container);
   })();

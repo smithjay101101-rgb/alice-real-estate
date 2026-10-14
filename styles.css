@@ -1468,21 +1468,6 @@
   .listings-container > .faq-more { text-align: center; }
   /* D18: 44px tap height for the search fields */
   .search-select, .search-input { min-height: 44px; }
-  /* D6: on phones the search form opens from one button */
-  .search-toggle { display: none; }
-  @media (max-width: 767px) {
-    .search-toggle {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      width: 100%; min-height: 48px; margin-top: 12px;
-      background: var(--color-bg-white); color: var(--color-text-heading);
-      border: 1.5px solid var(--color-border-light); border-radius: var(--radius-md);
-      font: 500 1rem var(--font-body); cursor: pointer;
-    }
-    .search-toggle svg { width: 18px; height: 18px; transition: transform var(--transition-fast); }
-    .search-toggle[aria-expanded="true"] svg.chev { transform: rotate(180deg); }
-    .search-bar { display: none; }
-    .search-bar.is-open { display: grid; }
-  }
   /* D22: without scripts, nothing waits for a scroll animation to appear */
   @media (scripting: none) {
     .reveal { opacity: 1; transform: none; }
@@ -1496,3 +1481,17 @@
   .search-bar--hub { margin: 0 0 var(--space-2xl); max-width: 760px; }
   @media (max-width: 767px) { .search-bar.search-bar--hub { display: grid; } }
   .rl-search-alt { margin: 0 0 var(--space-2xl); }
+
+  /* Hero stats: the Google rating links to the reviews; three in a row on phones too */
+  .stat-link {
+    position: relative; z-index: 1; color: inherit; text-decoration: none;
+    border-radius: var(--radius-md);
+  }
+  .stat-link:hover .stat-label { color: var(--color-primary-dark); text-decoration: underline; text-underline-offset: 3px; }
+  .stat-link:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 6px; }
+  .stat-star { width: .6em; height: .6em; margin-left: .12em; fill: var(--gold); vertical-align: .08em; }
+  @media (max-width: 767px) {
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-sm); }
+    .stat-label { letter-spacing: .06em; }
+  }
+

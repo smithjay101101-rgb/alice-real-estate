@@ -31,8 +31,8 @@
 <link rel="preconnect" href="https://res.cloudinary.com">
 <link rel="dns-prefetch" href="https://docs.google.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2c86e101">
-<script src="script.js?v=0edc2efb" defer></script>
+<link rel="stylesheet" href="styles.css?v=9ea2c1e6">
+<script src="script.js?v=1c26e737" defer></script>
 
 <!-- Structured data: one Organization entity, one Person entity, explicitly linked -->
 <script type="application/ld+json">
@@ -363,7 +363,6 @@
         <span data-t="btnCall">Message Alice</span>
       </button>
     </div>
-    <button type="button" class="search-toggle" aria-expanded="false" aria-controls="searchForm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span data-t="searchToggle">Filter homes</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
     <form class="search-bar" action="/rentals" method="get" id="searchForm">
       <div class="search-field">
         <label for="ptype" class="search-label">Type</label>
@@ -417,8 +416,9 @@
       </div>
     </form>
     <div class="hero-stats" id="heroStats">
-      <div><div class="stat-num" data-t="stat1">500+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
-      <div><div class="stat-num" data-t="stat2">7+</div><div class="stat-label" data-t="stat2L">Years in Đà Nẵng</div></div>
+      <div><div class="stat-num" data-t="stat1" data-count-target="500" data-count-suffix="+">500+</div><div class="stat-label" data-t="stat1L">Families Housed</div></div>
+      <div><div class="stat-num" data-t="stat2" data-count-target="7" data-count-suffix="+">7+</div><div class="stat-label" data-t="stat2L">Years in Đà Nẵng</div></div>
+      <a class="stat-link" href="https://www.google.com/maps/place/Alice+Rentals+Da+Nang/@16.0374262,108.2450408,17z/data=!4m8!3m7!1s0x314217005c09a8e3:0x4f507a96ab70ba0e!8m2!3d16.0374211!4d108.2476157!9m1!1b1!16s%2Fg%2F11lw76nkn0" target="_blank" rel="noopener"><div class="stat-num"><span data-count-target="4.8" data-count-decimals="1">4.8</span><svg class="stat-star" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.5 5.3 5.8.7-4.3 4 1.1 5.7L10 14.5l-5.1 2.8 1.1-5.7-4.3-4 5.8-.7z"/></svg></div><div class="stat-label" data-t="stat3L">Google Rating</div></a>
     </div>
   </div>
 </section>
