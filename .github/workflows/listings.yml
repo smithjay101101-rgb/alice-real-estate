@@ -31,6 +31,7 @@ jobs:
         run: python3 tools/build_listings.py
 
       - name: Commit and push if anything changed
+        id: commit
         run: |
           if [ -z "$(git status --porcelain)" ]; then
             echo "Sheet unchanged, nothing to commit."
@@ -42,3 +43,9 @@ jobs:
           git commit -m "Update listing pages from the sheet"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # Pushes made with the workflow token don't start other workflows, so ping here
+      - name: Send changed listing pages to IndexNow
+        if: steps.commit.outputs.pushed == 'true'
+        run: python3 tools/indexnow.py --since HEAD~1

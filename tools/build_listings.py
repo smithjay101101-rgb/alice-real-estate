@@ -68,8 +68,20 @@ ORG_NODE = {
     "geo": {"@type": "GeoCoordinates", "latitude": 16.0374211, "longitude": 108.2476157},
     "hasMap": "https://www.google.com/maps?cid=5715202714673134094",
     "areaServed": {"@type": "City", "name": "Đà Nẵng", "sameAs": "https://www.wikidata.org/wiki/Q25282"},
-    "sameAs": ["https://www.google.com/maps?cid=5715202714673134094", ZALO],
+    "contactPoint": [{"@type": "ContactPoint", "contactType": "customer service", "url": "https://wa.me/" + WHATSAPP,
+                      "telephone": "+84 787 664 959", "availableLanguage": ["English", "Vietnamese"]},
+                     {"@type": "ContactPoint", "contactType": "customer service", "url": ZALO,
+                      "availableLanguage": ["English", "Vietnamese"]}],
+    "sameAs": ["https://www.google.com/maps?cid=5715202714673134094"],
 }
+CITY = {"@type": "City", "name": "Đà Nẵng", "sameAs": "https://www.wikidata.org/wiki/Q25282"}
+
+
+def area_place(a):
+    """The neighbourhood a listing or hub is about, inside Đà Nẵng."""
+    if a in AREA_NAMES:
+        return {"@type": "Place", "name": "%s, Đà Nẵng" % area_name(a), "containedInPlace": CITY}
+    return CITY
 
 AREA_NAMES = {   # LOCATION_NAMES in script.js
     "my-khe": "Mỹ Khê", "son-tra": "Sơn Trà", "hai-chau": "Hải Châu",
@@ -397,6 +409,27 @@ def wa_link(text):
     return "https://wa.me/%s?text=%s" % (WHATSAPP, urllib.parse.quote(text, safe=""))
 
 
+# The menu, popup and footer copied from 404.html carry this general message; each generated
+# page swaps it for its own, so the first WhatsApp message tells Alice which page sent the chat.
+GENERIC_WA_TEXT = "Hi Alice, I'm looking for a rental in Đà Nẵng"
+
+
+def with_page_wa(html, text):
+    return html.replace(e(wa_link(GENERIC_WA_TEXT)), e(wa_link(text)))
+
+
+def hub_wa_text(path):
+    if path == "/rentals/":
+        return "Hi Alice, I'm looking at your rentals in Đà Nẵng."
+    if path == "/rentals/apartments":
+        return "Hi Alice, I'm looking at your apartments for rent in Đà Nẵng."
+    if path == "/rentals/houses-and-villas":
+        return "Hi Alice, I'm looking at your houses and villas for rent in Đà Nẵng."
+    if path == "/rentals/commercial-spaces":
+        return "Hi Alice, I'm looking at your commercial spaces for rent in Đà Nẵng."
+    return "Hi Alice, I'm looking at homes for rent in %s." % area_name(path.rsplit("/", 1)[-1])
+
+
 def card(l, heading="h2"):
     url = "/rentals/" + l["slug"]
     imgs = images_of(l)
@@ -485,7 +518,14 @@ def listing_page(l, peers, shell, versions, area_count):
             props.append({"@type": "PropertyValue", "name": "Floor", "value": l["floor"]})
         if l["business_type"]:
             props.append({"@type": "PropertyValue", "name": "Use", "value": l["business_type"]})
-        entity = {"@type": "Place", "name": l["title"], "address": address}
+        entity = {"@type": "Accommodation", "name": l["title"], "address": address}
+        if l["business_type"]:
+            # The sheet says "general" for a space that suits any business
+            entity["permittedUsage"] = "Any business" if l["business_type"].lower() == "general" else l["business_type"]
+        if l["sqm"]:
+            entity["floorSize"] = {"@type": "QuantitativeValue", "value": l["sqm"], "unitCode": "MTK"}
+        if l["floor"]:
+            entity["floorLevel"] = l["floor"]
         if props:
             entity["additionalProperty"] = props
     else:
@@ -496,8 +536,10 @@ def listing_page(l, peers, shell, versions, area_count):
             entity["numberOfBathroomsTotal"] = l["bathrooms"]
         if l["sqm"]:
             entity["floorSize"] = {"@type": "QuantitativeValue", "value": l["sqm"], "unitCode": "MTK"}
+    entity["containedInPlace"] = area_place(a)
     listing_ld = {
         "@type": "RealEstateListing",
+        "identifier": l["code"],
         "@id": url + "#listing",
         "url": url,
         "name": l["title"],
@@ -675,7 +717,7 @@ def listing_page(l, peers, shell, versions, area_count):
 
     robots = "noindex, follow" if rented else "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     og = cld(imgs[0], IMG_SHARE) if imgs else SITE + "/underlay.jpg"
-    return head(title_tag, desc, url, robots, og, ld, versions) + top + body + bottom
+    return with_page_wa(head(title_tag, desc, url, robots, og, ld, versions) + top + body + bottom, wa_text)
 
 
 # ── Hub pages ──
@@ -736,7 +778,9 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
     og = cld(imgs[0], IMG_SHARE) if imgs else SITE + "/underlay.jpg"
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "CollectionPage", "@id": url + "#page", "url": url, "name": h1, "description": desc,
-         "inLanguage": "en", "isPartOf": {"@id": WEBSITE_ID}, "about": {"@id": ORG_ID},
+         "inLanguage": "en", "isPartOf": {"@id": WEBSITE_ID},
+         "about": area_place(path.rsplit("/", 1)[-1]) if path.rsplit("/", 1)[-1] in AREA_NAMES else CITY,
+         "publisher": {"@id": ORG_ID},
          **({"dateModified": lastmod} if lastmod else {}),
          "mainEntity": {"@type": "ItemList", "numberOfItems": count, "itemListElement": [
              {"@type": "ListItem", "position": i + 1, "url": SITE + "/rentals/" + l["slug"], "name": l["title"]}
@@ -779,8 +823,8 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
                   nav=filter_nav(path, area_count, has_commercial), grid=grid,
                   cta=cta_aside("Not seeing the right one?",
                                 "Tell Alice your budget, the area you like and your move-in date, and she will send you a shortlist that fits.",
-                                "Hi Alice, I'm looking for a rental in Đà Nẵng"))
-    return head(title_tag, desc, url, robots, og, ld, versions) + top + body + bottom, lastmod
+                                hub_wa_text(path)))
+    return with_page_wa(head(title_tag, desc, url, robots, og, ld, versions) + top + body + bottom, hub_wa_text(path)), lastmod
 
 
 # ── Managed blocks in shared files ──

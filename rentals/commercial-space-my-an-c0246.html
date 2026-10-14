@@ -39,6 +39,7 @@
   "@graph": [
     {
       "@type": "RealEstateListing",
+      "identifier": "C0246",
       "@id": "https://alice-rentals.com/rentals/commercial-space-my-an-c0246#listing",
       "url": "https://alice-rentals.com/rentals/commercial-space-my-an-c0246",
       "name": "Prime Commercial Space for Lease – 2nd & 3rd Floors in An Thuong Tourist Area, Da Nang",
@@ -49,7 +50,7 @@
       },
       "dateModified": "2026-10-10",
       "mainEntity": {
-        "@type": "Place",
+        "@type": "Accommodation",
         "name": "Prime Commercial Space for Lease – 2nd & 3rd Floors in An Thuong Tourist Area, Da Nang",
         "address": {
           "@type": "PostalAddress",
@@ -57,6 +58,13 @@
           "addressRegion": "Đà Nẵng",
           "addressCountry": "VN"
         },
+        "permittedUsage": "Any business",
+        "floorSize": {
+          "@type": "QuantitativeValue",
+          "value": 200,
+          "unitCode": "MTK"
+        },
+        "floorLevel": "2",
         "additionalProperty": [
           {
             "@type": "PropertyValue",
@@ -74,7 +82,16 @@
             "name": "Use",
             "value": "general"
           }
-        ]
+        ],
+        "containedInPlace": {
+          "@type": "Place",
+          "name": "Mỹ An, Đà Nẵng",
+          "containedInPlace": {
+            "@type": "City",
+            "name": "Đà Nẵng",
+            "sameAs": "https://www.wikidata.org/wiki/Q25282"
+          }
+        }
       },
       "image": [
         "https://res.cloudinary.com/dth3sjv4x/image/upload/c_fill,g_auto,w_1200,h_630,f_jpg,q_auto/v1780731640/z7757802807432_030339d8fd843d11b24bacd41455f024_fwxo0a.jpg",
@@ -163,9 +180,29 @@
         "name": "Đà Nẵng",
         "sameAs": "https://www.wikidata.org/wiki/Q25282"
       },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "url": "https://wa.me/84787664959",
+          "telephone": "+84 787 664 959",
+          "availableLanguage": [
+            "English",
+            "Vietnamese"
+          ]
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "url": "https://zalo.me/84787664959",
+          "availableLanguage": [
+            "English",
+            "Vietnamese"
+          ]
+        }
+      ],
       "sameAs": [
-        "https://www.google.com/maps?cid=5715202714673134094",
-        "https://zalo.me/84787664959"
+        "https://www.google.com/maps?cid=5715202714673134094"
       ]
     }
   ]
@@ -371,7 +408,7 @@
     <h3 data-t="modalTitle">Get in touch</h3>
     <p data-t="modalSub">Pick whichever is easiest for you. Alice usually replies within an hour.</p>
     <div class="modal-btns">
-      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20a%20rental%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" rel="noopener" class="modal-btn whatsapp">WhatsApp</a>
+      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20interested%20in%20Prime%20Commercial%20Space%20for%20Lease%20%E2%80%93%202nd%20%26%203rd%20Floors%20in%20An%20Thuong%20Tourist%20Area%2C%20Da%20Nang%20%28C0246%29%3A%20https%3A%2F%2Falice-rentals.com%2Frentals%2Fcommercial-space-my-an-c0246" target="_blank" rel="noopener" class="modal-btn whatsapp">WhatsApp</a>
       <a href="https://zalo.me/84787664959" target="_blank" rel="noopener" class="modal-btn zalo">
         <img src="/zalo.png" alt="Zalo" width="24" height="24" loading="lazy" style="width:24px;height:24px;object-fit:contain;">
         Zalo
@@ -403,7 +440,7 @@
       <!--email_off--><a href="mailto:alicepham89@gmail.com">alicepham89@gmail.com</a><!--/email_off-->
       <a href="tel:+84787664959">+84 787 664 959</a>
       <a href="https://zalo.me/84787664959" target="_blank" rel="noopener">Zalo</a>
-      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20looking%20for%20a%20rental%20in%20%C4%90%C3%A0%20N%E1%BA%B5ng" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://wa.me/84787664959?text=Hi%20Alice%2C%20I%27m%20interested%20in%20Prime%20Commercial%20Space%20for%20Lease%20%E2%80%93%202nd%20%26%203rd%20Floors%20in%20An%20Thuong%20Tourist%20Area%2C%20Da%20Nang%20%28C0246%29%3A%20https%3A%2F%2Falice-rentals.com%2Frentals%2Fcommercial-space-my-an-c0246" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
   <div class="footer-address">08 Khuê Mỹ Đông 14, Khuê Mỹ, Ngũ Hành Sơn, Đà Nẵng</div>
