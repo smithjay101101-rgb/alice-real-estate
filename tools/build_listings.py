@@ -74,6 +74,9 @@ ORG_NODE = {
                       "availableLanguage": ["English", "Vietnamese"]}],
     "sameAs": ["https://www.google.com/maps?cid=5715202714673134094"],
 }
+# Pages point "isPartOf" at the site, so the site node goes on the page too.
+WEBSITE_NODE = {"@type": "WebSite", "@id": WEBSITE_ID, "url": SITE + "/", "name": "Alice Rentals", "inLanguage": "en",
+                "publisher": {"@id": ORG_ID}}
 CITY = {"@type": "City", "name": "Đà Nẵng", "sameAs": "https://www.wikidata.org/wiki/Q25282"}
 
 
@@ -107,7 +110,16 @@ AREA_GUIDES = {
     "hai-chau": ("/blog/posts/luxury-apartments-da-nang", "What Are the Best Luxury Apartment Buildings in Da Nang?"),
     "ngu-hanh-son": ("/blog/posts/da-nang-with-kids", "Is Da Nang a Good Place to Live With Kids?"),
 }
-HOMEPAGE_AREAS = ("my-khe", "son-tra", "hai-chau")   # the homepage area cards link to these
+# The search snippet for each area page. Ascii names, since that is how people type them.
+AREA_META = {
+    "my-khe": "Apartments for rent in My Khe, Da Nang, on the beach strip. Walk to the sand, with cafes and gyms everywhere.",
+    "my-an": "Homes for rent in My An (An Thuong), Da Nang, the walkable grid behind My Khe beach with the most cafes, gyms and coworking.",
+    "son-tra": "Homes for rent in Son Tra, Da Nang. Quieter and greener, toward the peninsula, with the cheapest standalone houses in the city.",
+    "hai-chau": "Homes for rent in Hai Chau, Da Nang's city centre on the Han River, with riverside towers and the shortest ride to offices.",
+    "ngu-hanh-son": "Homes for rent in Ngu Hanh Son, Da Nang, toward the Marble Mountains and Hoi An, where most villas and garden houses are.",
+    "cam-le": "Homes for rent in Cam Le, a residential area south-west of Da Nang city centre.",
+}
+HOMEPAGE_AREAS = ("my-khe", "my-an", "son-tra", "hai-chau", "ngu-hanh-son")   # the homepage area cards link to these
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
@@ -315,6 +327,25 @@ def clip(text, limit):
     return text[:limit].rsplit(" ", 1)[0].rstrip(",;:.") + "…"
 
 
+def meta_desc(parts, limit=155):
+    """Whole sentences only, as many as fit, so search snippets never end mid-sentence."""
+    out = ""
+    for p in parts:
+        p = re.sub(r"\s+", " ", p or "").strip()
+        if not p:
+            continue
+        cand = (out + " " + p).strip()
+        if len(cand) <= limit:
+            out = cand
+        elif not out:
+            out = clip(p, limit)
+    return out
+
+
+def with_brand(title):
+    return title + " | Alice Rentals" if len(title) <= 44 else title
+
+
 def paragraphs(text):
     parts = [p.strip() for p in re.split(r"\n\s*\n|\r?\n", text or "") if p.strip()]
     return "\n".join("      <p>%s</p>" % html.escape(p, quote=False) for p in parts)
@@ -501,7 +532,8 @@ def listing_page(l, peers, shell, versions, area_count):
         bits.append("%d bathroom%s" % (l["bathrooms"], "" if l["bathrooms"] == 1 else "s"))
     if l["sqm"]:
         bits.append("%d m²" % l["sqm"])
-    desc = clip("%s: %s. %s" % (lead[0].upper() + lead[1:], ", ".join(bits), first_sentence(l["description"], 120)), 158)
+    desc = meta_desc(["%s: %s." % (lead[0].upper() + lead[1:], ", ".join(bits)), first_sentence(l["description"], 500),
+                      "Checked by Alice. Message her on WhatsApp for a viewing."])
 
     crumbs = [("Home", "/"), ("Rentals", "/rentals/"), (area_name(a), "/rentals/" + a), (clip(l["title"], 60), "/rentals/" + l["slug"])]
     if a not in area_count:
@@ -564,7 +596,7 @@ def listing_page(l, peers, shell, versions, area_count):
                                    "unitText": "MONTH", "referenceQuantity": {"@type": "QuantitativeValue", "value": 1, "unitCode": "MON"}},
             "offeredBy": {"@id": ORG_ID},
         }
-    ld = {"@context": "https://schema.org", "@graph": [listing_ld, breadcrumb_ld(crumbs, url), ORG_NODE]}
+    ld = {"@context": "https://schema.org", "@graph": [listing_ld, breadcrumb_ld(crumbs, url), ORG_NODE, WEBSITE_NODE]}
 
     # Body
     gallery = []
@@ -759,7 +791,7 @@ def filter_nav(current, area_count, has_commercial):
     return '<div class="rl-filter" role="navigation" aria-label="Browse rentals">\n  <ul>\n%s\n  </ul>\n</div>' % items
 
 
-def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area_count, has_commercial,
+def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area_count, has_commercial, lead=None,
              robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1", groups=None, crumb_name=None):
     top, bottom, _ = shell
     url = SITE + path
@@ -773,7 +805,7 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
     meta = "%d %s listed%s. Monthly rents in US dollars%s." % (
         count, noun if count != 1 else noun[:-1], (", updated " + fmt_date(lastmod)) if lastmod else "",
         "" if noun == "spaces" else ", for leases of six months or more")
-    desc = clip("%s %s" % (intro, meta), 158)
+    desc = meta_desc([lead or intro] + re.split(r"(?<=\.) ", meta))
     imgs = [images_of(l)[0] for l in listings if images_of(l)]
     og = cld(imgs[0], IMG_SHARE) if imgs else SITE + "/underlay.jpg"
     ld = {"@context": "https://schema.org", "@graph": [
@@ -785,7 +817,7 @@ def hub_page(path, title_tag, h1, kicker, intro, listings, shell, versions, area
          "mainEntity": {"@type": "ItemList", "numberOfItems": count, "itemListElement": [
              {"@type": "ListItem", "position": i + 1, "url": SITE + "/rentals/" + l["slug"], "name": l["title"]}
              for i, l in enumerate(listings)]}},
-        breadcrumb_ld(crumbs, url), ORG_NODE]}
+        breadcrumb_ld(crumbs, url), ORG_NODE, WEBSITE_NODE]}
 
     if groups:
         sections = []
@@ -958,30 +990,34 @@ def main():
     other = [l for l in residential if l["area"] not in AREA_NAMES]
     if other:
         groups.append(("other", "Elsewhere in Đà Nẵng", other, "/rentals/"))
-    page, lm = hub_page("/rentals/", "Apartments, Houses and Villas for Rent in Da Nang | Alice Rentals",
+    page, lm = hub_page("/rentals/", "Da Nang Rentals: Apartments, Houses, Villas | Alice Rentals",
                         "Apartments, houses and villas for rent in Đà Nẵng", "Rentals",
                         "Every home Alice has available right now, grouped by area. Each one has been checked by Alice and has its own page with photos, the full details and a WhatsApp button that sends her the listing code.",
-                        residential, shell, versions, area_count, has_com, groups=groups, crumb_name="Rentals")
+                        residential, shell, versions, area_count, has_com, groups=groups, crumb_name="Rentals",
+                        lead="Long-term apartments, houses and villas for rent in Da Nang, by area. Each has photos, the monthly price and a WhatsApp button.")
     outputs[OUT_DIR / "index.html"] = page
     hubs.append(("/rentals/", lm, True))
     apts = [l for l in residential if l["category"] == "apartment"]
     page, lm = hub_page("/rentals/apartments", "Apartments for Rent in Da Nang | Alice Rentals", "Apartments for rent in Đà Nẵng",
                         "Rentals", "Apartments for rent across Đà Nẵng, from one bedroom units near the beach to large sea view apartments in the riverside towers. Every listing has been checked by Alice.",
-                        apts, shell, versions, area_count, has_com)
+                        apts, shell, versions, area_count, has_com,
+                        lead="Apartments for rent in Da Nang, from one-bedrooms near the beach to sea view apartments in the riverside towers.")
     outputs[OUT_DIR / "apartments.html"] = page
     hubs.append(("/rentals/apartments", lm, bool(apts)))
     houses = [l for l in residential if l["category"] == "house-villa"]
     page, lm = hub_page("/rentals/houses-and-villas", "Houses and Villas for Rent in Da Nang | Alice Rentals",
                         "Houses and villas for rent in Đà Nẵng", "Rentals",
                         "Houses and villas for rent across Đà Nẵng, for families and anyone who wants more space and outdoor room. Every listing has been checked by Alice.",
-                        houses, shell, versions, area_count, has_com)
+                        houses, shell, versions, area_count, has_com,
+                        lead="Houses and villas for rent in Da Nang, for families and anyone who wants more space and outdoor room.")
     outputs[OUT_DIR / "houses-and-villas.html"] = page
     hubs.append(("/rentals/houses-and-villas", lm, bool(houses)))
     if has_com:
         page, lm = hub_page("/rentals/commercial-spaces", "Commercial Spaces for Rent in Da Nang | Alice Rentals",
                             "Commercial spaces for rent in Đà Nẵng", "Rentals",
                             "Shops, offices and restaurant spaces for rent in Đà Nẵng. Every listing has been checked by Alice.",
-                            commercial, shell, versions, area_count, has_com)
+                            commercial, shell, versions, area_count, has_com,
+                            lead="Shops, offices and restaurant spaces for rent in Da Nang. Every listing has been checked by Alice.")
         outputs[OUT_DIR / "commercial-spaces.html"] = page
         hubs.append(("/rentals/commercial-spaces", lm, True))
     for a in AREA_NAMES:
@@ -989,9 +1025,12 @@ def main():
             continue
         ls = [l for l in residential if l["area"] == a]
         indexable = len(ls) >= MIN_INDEXABLE_AREA
-        page, lm = hub_page("/rentals/" + a, "Homes for Rent in %s, Da Nang | Alice Rentals" % area_ascii(a),
+        cats = {l["category"] for l in ls}
+        kinds = "Apartments and Houses" if cats >= {"apartment", "house-villa"} else \
+            "Apartments" if cats == {"apartment"} else "Houses and Villas" if cats == {"house-villa"} else "Homes"
+        page, lm = hub_page("/rentals/" + a, with_brand("%s for Rent in %s, Da Nang" % (kinds, area_ascii(a))),
                             "Homes for rent in %s" % area_name(a), "Rentals by area", AREA_BLURBS.get(a, ""),
-                            ls, shell, versions, area_count, has_com,
+                            ls, shell, versions, area_count, has_com, lead=AREA_META.get(a),
                             robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" if indexable else "noindex, follow")
         outputs[OUT_DIR / (a + ".html")] = page
         hubs.append(("/rentals/" + a, lm, indexable))
