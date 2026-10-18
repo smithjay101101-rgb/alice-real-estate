@@ -14,7 +14,7 @@
   var COMMERCIAL_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1yzmziGKMNNwomQldOxEJH7FfpUi1IwD4zRVdRE47hNQ/gviz/tq?tqx=out:csv&gid=' + COMMERCIAL_GID;
   var CACHE_KEY = 'alice_commercial_cache_v4';
   var CACHE_TTL = 5 * 60 * 1000;
-  var INITIAL_COUNT = 9;
+  var INITIAL_COUNT = 6;
   var CLD_CARD = 'c_fill,g_auto,w_640,h_427,f_auto,q_auto';
   var BATCH_SIZE = 6;
 

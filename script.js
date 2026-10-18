@@ -510,7 +510,7 @@ function cldUrl(url, transform) {
     '</article>';
   }
 
-  var INITIAL_COUNT = 9;
+  var INITIAL_COUNT = 6;
   var BATCH_SIZE = 6;
 
   // ── Listings state (source of truth) ──
