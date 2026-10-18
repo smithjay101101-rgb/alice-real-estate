@@ -119,7 +119,7 @@ AREA_META = {
     "ngu-hanh-son": "Homes for rent in Ngu Hanh Son, Da Nang, toward the Marble Mountains and Hoi An, where most villas and garden houses are.",
     "cam-le": "Homes for rent in Cam Le, a residential area south-west of Da Nang city centre.",
 }
-HOMEPAGE_AREAS = ("my-khe", "my-an", "son-tra", "hai-chau", "ngu-hanh-son")   # the homepage area cards link to these
+HOMEPAGE_AREAS = ("my-khe", "my-an", "son-tra", "hai-chau", "ngu-hanh-son")   # always built, even with no listings, since guides link to them
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
