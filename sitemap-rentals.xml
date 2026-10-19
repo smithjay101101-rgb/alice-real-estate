@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://alice-rentals.com/rentals/</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/apartments</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/houses-and-villas</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/commercial-spaces</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/hai-chau</loc>
-    <lastmod>2026-10-10</lastmod>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/my-an</loc>
@@ -403,6 +403,10 @@
   <url>
     <loc>https://alice-rentals.com/rentals/1-bedroom-apartment-son-tra-0161</loc>
     <lastmod>2026-10-10</lastmod>
+  </url>
+  <url>
+    <loc>https://alice-rentals.com/rentals/5-bedroom-villa-hai-chau-0048</loc>
+    <lastmod>2026-10-19</lastmod>
   </url>
   <url>
     <loc>https://alice-rentals.com/rentals/commercial-space-my-an-c0871</loc>
