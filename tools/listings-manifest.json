@@ -330,6 +330,13 @@
    "lastmod": "2026-10-10",
    "status": "active"
   },
+  "2-bedroom-apartment-ngu-hanh-son-0059": {
+   "area": "ngu-hanh-son",
+   "hash": "e6bd65b977c64b41",
+   "kind": "residential",
+   "lastmod": "2026-10-20",
+   "status": "active"
+  },
   "2-bedroom-apartment-ngu-hanh-son-0085": {
    "area": "ngu-hanh-son",
    "hash": "34d2023a6a064d06",
@@ -598,9 +605,9 @@
   },
   "5-bedroom-villa-hai-chau-0048": {
    "area": "hai-chau",
-   "hash": "9bac1dda218d72d7",
+   "hash": "c9a404587b50a40f",
    "kind": "residential",
-   "lastmod": "2026-10-19",
+   "lastmod": "2026-10-20",
    "status": "active"
   },
   "5-bedroom-villa-hai-chau-0230": {
