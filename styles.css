@@ -768,6 +768,7 @@
     font-family: var(--font-heading); font-size: 1.35rem;
     color: var(--color-primary); margin: 0 0 var(--space-xs);
   }
+  .listing-card-link { color: inherit; text-decoration: none; }
   .listing-card-title {
     font-family: var(--font-body); font-size: .95rem; font-weight: 500;
     color: var(--color-text-heading); margin: 0 0 var(--space-md); line-height: 1.4;

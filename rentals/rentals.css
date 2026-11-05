@@ -123,3 +123,9 @@
 .rl-group-title span { font-family: var(--font-mono); font-size: .9rem; color: var(--color-text-muted); margin-left: var(--space-sm); }
 .rl-empty { font-size: 1.05rem; color: var(--color-text-body); }
 .rl-hub .post-cta { margin-top: var(--space-xl); }
+
+/* The listing details table has two short columns, so it fits a phone without
+   the blog tables' 560px minimum and its sideways scroll. */
+.post-table--facts { min-width: 0; }
+.post-table--facts tbody th { width: 42%; }
+.post-table--facts tbody td { overflow-wrap: anywhere; }

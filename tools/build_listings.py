@@ -714,7 +714,7 @@ def listing_page(l, peers, shell, versions, area_count):
     <section aria-labelledby="h-details">
       <h2 id="h-details">Details</h2>
       <div class="table-scroll" tabindex="0" role="region" aria-label="Details of listing {code}">
-        <table class="post-table">
+        <table class="post-table post-table--facts">
         <tbody>
 {table}
         </tbody>
@@ -869,6 +869,87 @@ def replace_block(text, begin, end, block, insert_before=None):
     if insert_before and insert_before in text:
         return text.replace(insert_before, new + "\n\n" + insert_before, 1)
     return text.rstrip("\n") + "\n\n" + new + "\n"
+
+
+# ── Homepage cards ──
+# The first screen of the homepage grid, written into index.html so crawlers and
+# visitors without JavaScript see real listings. The markup must stay identical to
+# buildListingCard() in script.js: the page script keeps these nodes when they
+# match what it would build (isEqualNode), so a mismatch means a visible swap.
+HOMEPAGE = ROOT / "index.html"
+HOMEPAGE_COUNT = 6   # INITIAL_COUNT in script.js
+CLD_HOME_CARD = "c_fill,g_auto,w_640,h_427,f_auto,q_auto"   # CLD_CARD in script.js
+CARD_SVG = {
+    "bed": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 7v11"/><path d="M21 7v11"/><path d="M3 13h18"/><path d="M3 7h18v3a3 3 0 01-3 3H6a3 3 0 01-3-3V7z"/></svg>',
+    "bath": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5z"/><path d="M6 12V7a4 4 0 018 0v5"/></svg>',
+    "area": '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18"/></svg>',
+    "cam": '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+}
+SKELETON_CARD = '      <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-text wide"></div><div class="skeleton-text narrow"></div><div class="skeleton-text wide"></div></div>\n'
+
+
+def js_slugify(text):
+    """slugify() in script.js: JavaScript's \\w is ASCII-only, so Vietnamese letters drop out."""
+    s = re.sub(r"\s+", "-", (text or "").lower().strip())
+    s = re.sub(r"[^\w\-]+", "", s, flags=re.ASCII)
+    return re.sub(r"-+$", "", re.sub(r"^-+", "", re.sub(r"--+", "-", s)))
+
+
+def homepage_order(listings):
+    """loadListings() in script.js: active rows in sheet order, newest dateAdded first (stable)."""
+    active = [l for l in listings if l["kind"] == "residential" and l["status"] == "active"]
+    return sorted(active, key=lambda l: l["date_added"] or "", reverse=True)
+
+
+def homepage_card(l):
+    photos = len(l["images"])   # images = [imageMain] + gallery, so 1 + gallery like photoCount
+    slug = js_slugify(l["title"])
+    return (
+        '<article class="listing-card" tabindex="0" id="listing-%s" data-slug="%s" data-location="%s" data-price="%d" '
+        'data-bedrooms="%d" data-category="%s" data-code="%s" data-prerendered="">'
+        '<div class="listing-card-image">'
+        '<img src="%s" alt="%s" loading="lazy" width="600" height="400">'
+        '<span class="listing-badge-photos">%s %d photo%s</span>'
+        '</div>'
+        '<div class="listing-card-body">'
+        '<p class="listing-card-location">%s <span class="listing-card-ref">%s</span></p>'
+        '<p class="listing-card-price">$%s/mo</p>'
+        '<h3 class="listing-card-title"><a href="/rentals/%s" class="listing-card-link" tabindex="-1">%s</a></h3>'
+        '<div class="listing-card-meta">'
+        '<span>%s %d bed</span><span>%s %d bath</span><span>%s %d sqm</span>'
+        '</div>'
+        '</div>'
+        '</article>'
+    ) % (e(slug), e(slug), e(l["location"]), l["price"], l["bedrooms"], e(l["category"]), e(l["code"]),
+         e(cld(l["images"][0], CLD_HOME_CARD)), e(l["title"]), CARD_SVG["cam"], photos, "" if photos == 1 else "s",
+         e(AREA_NAMES.get(l["location"]) or l["location"]), e(l["code"]), "{:,}".format(l["price"]),
+         e(l["slug"]), e(l["title"]),
+         CARD_SVG["bed"], l["bedrooms"], CARD_SVG["bath"], l["bathrooms"], CARD_SVG["area"], l["sqm"])
+
+
+def replace_marked(text, start, end, body, what):
+    i, j = text.find(start), text.find(end)
+    if i < 0 or j < 0 or j < i:
+        sys.exit("index.html is missing its %s markers (%s ... %s). Nothing changed." % (what, start, end))
+    i = text.index("-->", i) + 3
+    return text[:i] + "\n" + body + text[j:]
+
+
+def homepage_html(listings):
+    first = homepage_order(listings)[:HOMEPAGE_COUNT]
+    if first:
+        cards = "".join("      %s\n" % homepage_card(l) for l in first)
+        ld = {"@context": "https://schema.org", "@type": "ItemList", "@id": SITE + "/#latest-rentals",
+              "name": "Latest rentals in Đà Nẵng", "numberOfItems": len(first),
+              "itemListElement": [{"@type": "ListItem", "position": n + 1, "url": SITE + "/rentals/" + l["slug"], "name": l["title"]}
+                                  for n, l in enumerate(first)]}
+        ld_html = '<script type="application/ld+json">\n%s\n</script>\n' % json.dumps(ld, ensure_ascii=False, indent=2)
+    else:   # nothing active: keep the loading skeleton
+        cards, ld_html = SKELETON_CARD * 4, ""
+    text = HOMEPAGE.read_text(encoding="utf-8")
+    text = replace_marked(text, "<!-- LISTINGS:START", "      <!-- LISTINGS:END -->", cards, "listing grid")
+    text = replace_marked(text, "<!-- LISTINGS-LD:START", "<!-- LISTINGS-LD:END -->", ld_html, "listing JSON-LD")
+    return text, first
 
 
 def write_if_changed(path, content):
@@ -1034,6 +1115,15 @@ def main():
                             robots="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" if indexable else "noindex, follow")
         outputs[OUT_DIR / (a + ".html")] = page
         hubs.append(("/rentals/" + a, lm, indexable))
+
+    # The homepage's first screen of cards
+    home, home_first = homepage_html(all_listings)
+    outputs[HOMEPAGE] = home
+    if "--homepage-json" in sys.argv:   # used by tools/check_homepage_parity.mjs
+        print(json.dumps({"codes": [l["code"] for l in all_listings if l["kind"] == "residential"],
+                          "cards": [{"code": l["code"], "slug": l["slug"], "id": js_slugify(l["title"]), "html": homepage_card(l)}
+                                    for l in home_first]}, ensure_ascii=False))
+        return
 
     # Write pages, then remove generated pages that no longer exist
     changed = []
