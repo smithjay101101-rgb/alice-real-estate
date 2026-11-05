@@ -500,7 +500,7 @@ function cldUrl(url, transform) {
       '<div class="listing-card-body">' +
         '<p class="listing-card-location">' + locName + ' <span class="listing-card-ref">' + l.code + '</span></p>' +
         '<p class="listing-card-price">$' + l.price.toLocaleString() + '/mo</p>' +
-        '<h3 class="listing-card-title">' + l.title + '</h3>' +
+        '<h3 class="listing-card-title"><a href="' + listingPagePath(l) + '" class="listing-card-link" tabindex="-1">' + l.title + '</a></h3>' +
         '<div class="listing-card-meta">' +
           '<span>' + bedSvg + ' ' + l.bedrooms + ' bed</span>' +
           '<span>' + bathSvg + ' ' + l.bathrooms + ' bath</span>' +
@@ -636,10 +636,33 @@ function cldUrl(url, transform) {
     applyFilters();
   }
 
-  function appendCard(l) {
+  // tools/build_listings.py writes the first cards into index.html. On the first
+  // render each one is kept if it is identical to the card built here, so its
+  // image is never reloaded; any card that differs is rebuilt.
+  var prerenderedCards = null;
+
+  function appendCard(l, prerendered) {
     var grid = document.getElementById('listingsGrid');
-    grid.insertAdjacentHTML('beforeend', buildListingCard(l));
-    var card = grid.lastElementChild;
+    var card = null;
+    if (prerendered) {
+      prerendered.removeAttribute('data-prerendered');
+      var tpl = document.createElement('template');
+      tpl.innerHTML = buildListingCard(l);
+      if (prerendered.isEqualNode(tpl.content.firstElementChild)) card = prerendered;
+    }
+    if (card) {
+      grid.appendChild(card);
+    } else {
+      grid.insertAdjacentHTML('beforeend', buildListingCard(l));
+      card = grid.lastElementChild;
+    }
+    // The title links to the listing's own page for crawlers and new tabs; a plain
+    // click opens the lightbox like the rest of the card.
+    var link = card.querySelector('.listing-card-link');
+    if (link) link.addEventListener('click', function(e) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { e.stopPropagation(); return; }
+      e.preventDefault();
+    });
     card.addEventListener('click', function() { openLightbox(l); });
     card.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(l); }
@@ -688,7 +711,12 @@ function cldUrl(url, transform) {
     var grid = document.getElementById('listingsGrid');
     if (!grid) return;
 
+    var reuse = [];
     if (reset) {
+      if (prerenderedCards === null) {
+        prerenderedCards = Array.prototype.slice.call(grid.querySelectorAll('.listing-card[data-prerendered]'));
+        reuse = prerenderedCards;
+      }
       shownCount = 0;
       grid.innerHTML = '';
     }
@@ -715,7 +743,7 @@ function cldUrl(url, transform) {
     var take = reset ? INITIAL_COUNT : BATCH_SIZE;
     var startIndex = shownCount;
     var next = allListings.slice(shownCount, shownCount + take);
-    next.forEach(function(l) { appendCard(l); });
+    next.forEach(function(l, i) { appendCard(l, reuse[i]); });
     shownCount += next.length;
 
     // Stagger-in animation for appended batches only (initial paint stays instant)
@@ -761,7 +789,7 @@ function cldUrl(url, transform) {
     for (var i = 0; i < listingsData.length; i++) {
       if (slugify(listingsData[i].title) === slug) { match = listingsData[i]; break; }
     }
-    if (match) setTimeout(function() { openLightbox(match); }, 300);
+    if (match) setTimeout(function() { openLightbox(match, 'hash'); }, 300);
   }
 
   function loadListings() {
@@ -1091,7 +1119,33 @@ function cldUrl(url, transform) {
     updateDots(e.target);
   }, { passive: true });
 
-  function openLightbox(listing) {
+  // Address bar while the pop-up is open. Opening it from a card pushes a history
+  // entry, so Back closes it; an old #listing- link replaces the address instead.
+  // The address becomes the listing's own page once a HEAD request shows it
+  // exists; a listing added since the last build keeps its #listing- address.
+  var pageBase = window.location.pathname + window.location.search;
+  var knownPages = {};
+  var lightboxOpenFor = null;   // listing code while the pop-up is open
+  var lightboxPushed = false;   // whether opening it added a history entry
+
+  function setLightboxAddress(listing, pagePath, how) {
+    var url = knownPages[pagePath] ? pagePath : pageBase + '#listing-' + slugify(listing.title);
+    var state = { aliceListing: listing.code };
+    if (lightboxOpenFor !== null) {          // switching listing inside an open pop-up
+      window.history.replaceState(state, '', url);
+    } else if (how === 'restore') {          // Forward button: the entry already exists
+      lightboxPushed = true;
+    } else if (how === 'hash') {             // arrived on an old #listing- link
+      lightboxPushed = false;
+      window.history.replaceState(state, '', url);
+    } else {
+      lightboxPushed = true;
+      window.history.pushState(state, '', url);
+    }
+    lightboxOpenFor = listing.code;
+  }
+
+  function openLightbox(listing, how) {
     var lightbox = document.getElementById('lightbox');
     var gallery = document.getElementById('lightbox-gallery');
     var info = document.getElementById('lightbox-info');
@@ -1146,8 +1200,11 @@ function cldUrl(url, transform) {
     var pagePath = listingPagePath(listing);
     var shareBtn = info.querySelector('.lightbox-copy-link');
     info.dataset.page = pagePath;
+    setLightboxAddress(listing, pagePath, how);
     fetch(pagePath, { method: 'HEAD' }).then(function(r) {
       if (!r.ok || info.dataset.page !== pagePath) return;
+      knownPages[pagePath] = true;
+      if (lightboxOpenFor === listing.code) window.history.replaceState(window.history.state, '', pagePath);
       var link = document.createElement('a');
       link.href = pagePath;
       link.className = 'lightbox-page-link';
@@ -1162,8 +1219,6 @@ function cldUrl(url, transform) {
     lockScroll();
     lightbox.querySelector('.lightbox-close').focus();
 
-    var slug = slugify(listing.title);
-    window.history.replaceState(null, '', '#listing-' + slug);
 
     // Swipe hint
     setTimeout(function() {
@@ -1176,13 +1231,30 @@ function cldUrl(url, transform) {
     }, 500);
   }
 
-  function closeLightbox() {
+  // fromHistory: the Back button (or a hash edit) already changed the address.
+  function closeLightbox(fromHistory) {
     var lightbox = document.getElementById('lightbox');
     lightbox.classList.remove('is-open');
     unlockScroll();
     setTimeout(function() { lightbox.hidden = true; }, 300);
-    window.history.replaceState(null, '', window.location.pathname);
+    var wasPushed = lightboxPushed;
+    lightboxOpenFor = null;
+    lightboxPushed = false;
+    if (fromHistory === true) return;
+    if (wasPushed) window.history.back();
+    else window.history.replaceState(null, '', pageBase);
   }
+
+  window.addEventListener('popstate', function(e) {
+    var code = e.state && e.state.aliceListing;
+    if (lightboxOpenFor !== null && !code) { closeLightbox(true); return; }
+    if (lightboxOpenFor === null && code) {
+      for (var i = 0; i < listingsData.length; i++) {
+        if (listingsData[i].code === code) { openLightbox(listingsData[i], 'restore'); return; }
+      }
+      window.history.replaceState(null, '', pageBase);
+    }
+  });
 
   function copyListingLink(button) {
     var url = button.dataset.pageUrl || window.location.href;
@@ -1225,7 +1297,7 @@ function cldUrl(url, transform) {
   window.addEventListener('hashchange', function() {
     var lightbox = document.getElementById('lightbox');
     if (!window.location.hash || window.location.hash.indexOf('#listing-') !== 0) {
-      if (lightbox && !lightbox.hidden) closeLightbox();
+      if (lightbox && !lightbox.hidden && lightboxOpenFor !== null) closeLightbox(true);
     }
   });
 

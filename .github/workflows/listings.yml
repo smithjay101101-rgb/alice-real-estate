@@ -1,11 +1,12 @@
 name: Build listing pages
 
-# Rebuilds /rentals/ from the Google Sheet so the static listing pages follow
+# Rebuilds /rentals/ and the homepage's first screen of cards (between the
+# LISTINGS markers in index.html) from the Google Sheet so the static pages follow
 # Alice's edits. Commits only when the sheet changed; Cloudflare Pages deploys
 # the push like any other.
 on:
   schedule:
-    - cron: "17 */6 * * *"   # every 6 hours
+    - cron: "17 2 * * *"   # once a day, 09:17 in Đà Nẵng (02:17 UTC)
   workflow_dispatch:
   push:
     branches: ["main"]
@@ -39,7 +40,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rentals sitemap-rentals.xml llms.txt _redirects tools/listings-manifest.json
+          git add index.html rentals sitemap-rentals.xml llms.txt _redirects tools/listings-manifest.json
           git commit -m "Update listing pages from the sheet"
           git pull --rebase origin main
           git push origin HEAD:main
