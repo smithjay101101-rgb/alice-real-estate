@@ -640,6 +640,8 @@ def listing_page(l, peers, shell, versions, area_count):
         links.append('<a href="/rentals/%s">See all %d home%s for rent in %s</a>' % (a, n, "" if n == 1 else "s", e(area_name(a))))
     if a in AREA_GUIDES:
         links.append('<a href="%s">%s</a>' % AREA_GUIDES[a])
+    if l["kind"] == "residential" and l["category"] == "house-villa":
+        links.append('<a href="/blog/posts/renting-a-house-or-villa-da-nang">Should You Rent a House or a Villa in Da Nang?</a>')
     if links:
         area_bits.append("      <p>%s</p>" % " · ".join(links))
     area_section = ""
