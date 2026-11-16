@@ -62,6 +62,7 @@ WEBSITE_ID = SITE + "/#website"
 # The full version (services, knowsAbout, contact points) lives on the homepage, About and the guides.
 ORG_NODE = {
     "@type": ["RealEstateAgent", "LocalBusiness"], "@id": ORG_ID, "name": "Alice Rentals", "alternateName": "Alice Rentals Da Nang",
+    "description": "Licensed real estate agent for long-term apartment, house and villa rentals in Đà Nẵng, Vietnam.",
     "url": SITE + "/", "telephone": "+84 787 664 959",
     "address": {"@type": "PostalAddress", "streetAddress": "08 Khuê Mỹ Đông 14, Ngũ Hành Sơn", "addressLocality": "Đà Nẵng",
                 "addressRegion": "Đà Nẵng", "postalCode": "550000", "addressCountry": "VN"},
