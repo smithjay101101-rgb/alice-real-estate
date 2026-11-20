@@ -157,12 +157,24 @@
 }
 .post-toc ol { list-style: none; counter-reset: toc; display: grid; gap: var(--space-sm); }
 .post-toc li { counter-increment: toc; }
+.post-toc ol { position: relative; }
 .post-toc a {
   display: block; padding-left: 1.9rem; position: relative;
   font-size: .9rem; line-height: 1.45;
   color: var(--color-text-body); text-decoration: none;
-  border-left: 2px solid transparent; margin-left: -2px;
-  transition: color var(--transition-fast);
+  transition: color .35s ease;
+}
+/* One line that glides to the section in view (blog.js sets its position and height) */
+.toc-marker {
+  position: absolute; left: -2px; top: 0;
+  width: 2px; height: 0; border-radius: 2px;
+  background: var(--color-primary);
+  opacity: 0; pointer-events: none;
+  transition: transform .5s cubic-bezier(.22, 1, .36, 1), height .5s cubic-bezier(.22, 1, .36, 1), opacity .3s ease;
+}
+.toc-marker.is-on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .toc-marker, .post-toc a, .post-toc a::before { transition: none; }
 }
 .post-toc a::before {
   content: counter(toc, decimal-leading-zero);
@@ -171,10 +183,8 @@
   color: var(--color-text-muted);
 }
 .post-toc a:hover { color: var(--color-primary); }
-.post-toc a.is-current {
-  color: var(--color-primary-dark); font-weight: 500;
-  border-left-color: var(--color-primary);
-}
+.post-toc a.is-current { color: var(--color-primary-dark); }
+.post-toc a::before { transition: color .35s ease; }
 .post-toc a.is-current::before { color: var(--color-primary); }
 
 /* ── Body typography ── */

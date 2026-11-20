@@ -171,9 +171,10 @@ function closeDrawer() {
     });
   }
 
-  // ── Table of contents: highlight the section currently in view ──
+  // ── Table of contents: one line glides to the section currently in view ──
   var toc = document.getElementById('postToc');
-  if (toc && 'IntersectionObserver' in window) {
+  var tocList = toc && toc.querySelector('ol');
+  if (tocList) {
     var links = {};
     toc.querySelectorAll('a[href^="#"]').forEach(function(link) {
       links[link.getAttribute('href').slice(1)] = link;
@@ -181,23 +182,48 @@ function closeDrawer() {
     var sections = Object.keys(links)
       .map(function(id) { return document.getElementById(id); })
       .filter(Boolean);
+    var marker = document.createElement('span');
+    marker.className = 'toc-marker';
+    marker.setAttribute('aria-hidden', 'true');
+    tocList.appendChild(marker);
 
-    var visible = {};
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        visible[entry.target.id] = entry.isIntersecting;
-      });
-      var current = null;
+    var currentId = null;
+    function moveMarker(link) {
+      marker.style.transform = 'translateY(' + link.offsetTop + 'px)';
+      marker.style.height = link.offsetHeight + 'px';
+    }
+    function update() {
+      ticking = false;
+      // The current section is the last one whose top has passed just under the header
+      var line = 120, id = null;
       sections.forEach(function(section) {
-        if (visible[section.id] && !current) current = section.id;
+        if (section.getBoundingClientRect().top <= line) id = section.id;
       });
-      if (!current) return;
-      Object.keys(links).forEach(function(id) {
-        links[id].classList.toggle('is-current', id === current);
-      });
-    }, { rootMargin: '-96px 0px -60% 0px', threshold: 0 });
-
-    sections.forEach(function(section) { observer.observe(section); });
+      if (id === currentId) return;
+      if (currentId && links[currentId]) links[currentId].classList.remove('is-current');
+      currentId = id;
+      if (!id) { marker.classList.remove('is-on'); return; }
+      var link = links[id];
+      link.classList.add('is-current');
+      moveMarker(link);
+      marker.classList.add('is-on');
+      // Keep the current item visible when the contents rail scrolls on its own
+      if (toc.scrollHeight > toc.clientHeight) {
+        var top = link.offsetTop + tocList.offsetTop, bottom = top + link.offsetHeight;
+        if (top < toc.scrollTop || bottom > toc.scrollTop + toc.clientHeight) {
+          toc.scrollTo({ top: top - toc.clientHeight / 3, behavior: 'smooth' });
+        }
+      }
+    }
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function() {
+      if (currentId && links[currentId]) moveMarker(links[currentId]);
+    });
+    update();
   }
 
   setLang('en');
