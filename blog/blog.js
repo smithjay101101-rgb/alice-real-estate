@@ -226,5 +226,42 @@ function closeDrawer() {
     update();
   }
 
+  // ── Blog index: topic filter and a wide card for the newest guide ──
+  var grid = document.getElementById('postGrid');
+  var filter = document.getElementById('postFilter');
+  if (grid) {
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.post-card'));
+    var topicOf = function(card) {
+      var k = card.querySelector('.post-card-kicker');
+      return k ? k.textContent.trim() : '';
+    };
+    var feature = function() {
+      var first = true;
+      cards.forEach(function(card) {
+        card.classList.toggle('is-featured', !card.hidden && first);
+        if (!card.hidden) first = false;
+      });
+    };
+    feature();
+    if (filter) {
+      var buttons = Array.prototype.slice.call(filter.querySelectorAll('.post-filter-btn'));
+      buttons.forEach(function(btn) {
+        var topic = btn.getAttribute('data-topic');
+        var n = topic ? cards.filter(function(c) { return topicOf(c) === topic; }).length : cards.length;
+        if (topic && !n) { btn.remove(); return; }
+        var count = document.createElement('span');
+        count.className = 'post-filter-count';
+        count.textContent = n;
+        btn.appendChild(count);
+        btn.addEventListener('click', function() {
+          buttons.forEach(function(b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+          cards.forEach(function(card) { card.hidden = !!topic && topicOf(card) !== topic; });
+          feature();
+        });
+      });
+      filter.hidden = false;
+    }
+  }
+
   setLang('en');
 })();

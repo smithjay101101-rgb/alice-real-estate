@@ -29,8 +29,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css?v=157bf067">
-<link rel="stylesheet" href="../blog/blog.css?v=e1fca1a5">
-<script src="../blog/blog.js?v=3fd793a7" defer></script>
+<link rel="stylesheet" href="../blog/blog.css?v=5d15a6e7">
+<script src="../blog/blog.js?v=0d546cb7" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -664,12 +664,18 @@
 
 <section aria-labelledby="all-guides">
   <h2 id="all-guides" class="toc-heading">All guides</h2>
-  <ul class="post-grid">
+  <div class="post-filter" id="postFilter" role="group" aria-label="Filter guides by topic" hidden>
+    <button type="button" class="post-filter-btn" data-topic="" aria-pressed="true">All</button>
+    <button type="button" class="post-filter-btn" data-topic="Renting guides" aria-pressed="false">Renting guides</button>
+    <button type="button" class="post-filter-btn" data-topic="Living here" aria-pressed="false">Living here</button>
+    <button type="button" class="post-filter-btn" data-topic="Neighbourhood guides" aria-pressed="false">Neighbourhood guides</button>
+  </div>
+  <ul class="post-grid" id="postGrid">
       <li class="post-card">
         <a class="post-card-media" href="/blog/posts/top-5-coffee-shops-da-nang" tabindex="-1" aria-hidden="true">
           <img src="../images/da-nang-remote-work-river-view.jpg" alt="A laptop and Vietnamese iced coffee on a balcony table in Da Nang, overlooking the Dragon Bridge and the Han River at sunset" width="831" height="554" loading="lazy" decoding="async">
         </a>
-        <p class="post-card-kicker">Renting guides</p>
+        <p class="post-card-kicker">Living here</p>
         <h2><a href="/blog/posts/top-5-coffee-shops-da-nang">What Are the Best Coffee Shops in Da Nang?</a></h2>
         <p>The 5 best coffee shops in Da Nang: a specialty roaster, coconut coffee by the river, avocado coffee, a bakery and a quiet cafe to work from.</p>
         <p class="post-card-meta">
@@ -682,7 +688,7 @@
         <a class="post-card-media" href="/blog/posts/top-5-places-to-visit-da-nang" tabindex="-1" aria-hidden="true">
           <img src="../images/da-nang-dragon-bridge-golden-hour.jpg" alt="The Dragon Bridge over the Han River in Da Nang at sunset, with the city skyline and the mountains under an orange sky" width="831" height="554" loading="lazy" decoding="async">
         </a>
-        <p class="post-card-kicker">Renting guides</p>
+        <p class="post-card-kicker">Living here</p>
         <h2><a href="/blog/posts/top-5-places-to-visit-da-nang">What Are the Top 5 Places to Visit in Da Nang?</a></h2>
         <p>The 5 places to visit in Da Nang: Marble Mountains, Son Tra and Lady Buddha, the Dragon Bridge, Ba Na Hills and Hoi An, with 2026 prices and times.</p>
         <p class="post-card-meta">

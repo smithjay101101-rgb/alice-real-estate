@@ -449,6 +449,52 @@
   font-size: .78rem; color: var(--color-text-muted);
   font-family: var(--font-mono);
 }
+/* Topic filter above the guide grid (shown by blog.js) */
+.post-filter {
+  display: flex; flex-wrap: wrap; gap: var(--space-sm);
+  margin: 0 0 var(--space-xl);
+}
+.post-filter-btn {
+  min-height: 44px; padding: 0 1.1rem;
+  border: 1px solid var(--color-border-light); border-radius: 999px;
+  background: var(--color-bg-white); color: var(--color-text-body);
+  font: inherit; font-size: .9rem; cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+.post-filter-btn:hover { border-color: var(--color-primary); color: var(--color-primary-dark); }
+.post-filter-btn[aria-pressed="true"] {
+  background: var(--color-primary); border-color: var(--color-primary); color: #fff;
+}
+.post-filter-btn:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.post-filter-count { margin-left: .4em; opacity: .7; font-variant-numeric: tabular-nums; }
+.post-card[hidden] { display: none; }
+
+/* The whole card opens the guide, not only the title */
+.post-card { position: relative; }
+.post-card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.post-card:focus-within { box-shadow: var(--shadow-hover); }
+.post-card h2 a:focus-visible { outline: none; }
+.post-card:has(h2 a:focus-visible) { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+.post-card:hover h2 a { color: var(--color-primary); }
+
+/* The newest guide leads, wide, on larger screens */
+@media (min-width: 900px) {
+  .post-grid > .post-card.is-featured {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: 1.15fr 1fr; column-gap: var(--space-2xl);
+    align-content: center;
+  }
+  .post-card.is-featured .post-card-media {
+    grid-row: 1 / span 5;
+    margin: calc(-1 * var(--space-xl)) 0 calc(-1 * var(--space-xl)) calc(-1 * var(--space-xl));
+    border-radius: var(--radius-card) 0 0 var(--radius-card);
+  }
+  .post-card.is-featured .post-card-media img { height: 100%; aspect-ratio: 4 / 3; }
+  .post-card.is-featured .post-card-kicker { margin-top: var(--space-md); }
+  .post-card.is-featured h2 { font-size: 1.85rem; }
+  .post-card.is-featured .post-card-meta { margin-top: 0; }
+}
+
 .page-main .blog-note {
   margin-top: var(--space-3xl); padding: var(--space-xl);
   background: var(--color-bg-light); border-radius: var(--radius-card);
