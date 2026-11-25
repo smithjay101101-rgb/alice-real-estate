@@ -1063,6 +1063,19 @@
   }
   .testi-source:hover { color: var(--color-primary-dark); }
   .testi-all { margin-top: 3rem; text-decoration: none; }
+  /* A long review spans the row, with the rest behind "Read the full review" */
+  .testi-card--wide { grid-column: 1 / -1; }
+  .testi-card--wide .testi-text { max-width: 72ch; }
+  .testi-card--wide .testi-text p + p,
+  .testi-more p { margin-top: var(--space-md); }
+  .testi-more summary {
+    display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-sm);
+    font-style: normal; font-size: .9rem; color: var(--color-primary);
+    cursor: pointer; list-style: none; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .testi-more summary::-webkit-details-marker { display: none; }
+  .testi-more summary:hover { color: var(--color-primary-dark); }
+  .testi-more[open] summary { display: none; }
 
   /* ── FOOTER ── */
   footer {
